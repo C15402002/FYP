@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Login</string>
-    <string name="hint_username">Username</string>
+    <string name="hint_email">email</string>
     <string name="hint_password">Password</string>
 </resources>
