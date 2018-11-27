@@ -2,16 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3e2a471-27d4-45c5-a74c-19f1558a90a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../FYP MEETING LOGS.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../FYP MEETING LOGS.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FYP_Interim_Report_Template.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../FYP_Interim_Report_Template.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FYP_MeetingMinutes_Template(1) copy.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../FYP_MeetingMinutes_Template(1) copy.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Login/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Login/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyApplication/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ReaderActivity/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../ReaderActivity/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../plan.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../plan.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../screenshot/Screen Shot 2018-11-05 at 16.27.40.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../~$P_Interim_Report_Template.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.PDF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../3.PDF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FYP_MeetingMinutes_Template(1) copy.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/app/src/main/java/com/example/angelapeng/test/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/app/src/main/java/com/example/angelapeng/test/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyApplication/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../MyApplication/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/copyright/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/androidTest/java/com/example/angelapeng/readeractivity/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/java/com/example/angelapeng/readeractivity/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/java/com/example/angelapeng/readeractivity/scannerActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/layout/scanner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/main/res/values/styles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/app/src/test/java/com/example/angelapeng/readeractivity/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReaderActivity/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../meeting logs/FYP_MeetingMinutes_3.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../meeting logs/FYP_MeetingMinutes_3.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../meeting logs/FYP_MeetingMinutes_4.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../meeting logs/FYP_MeetingMinutes_4.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../screenshot/ERD.png" beforeDir="false" afterPath="$PROJECT_DIR$/../screenshot/ERD.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test.png" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,9 +62,10 @@
     <session id="-211298750">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
     </session>
@@ -45,9 +82,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="223" />
-    <option name="y" value="81" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="46" />
+    <option name="y" value="22" />
     <option name="width" value="1234" />
     <option name="height" value="778" />
   </component>
@@ -104,22 +141,19 @@
       <option name="presentableId" value="Default" />
       <updated>1542138459531</updated>
       <workItem from="1542138461049" duration="1018000" />
+      <workItem from="1542798687883" duration="158000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1018000" />
+    <option name="totallyTimeSpent" value="1176000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="46" y="22" width="1234" height="778" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2497939" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -127,6 +161,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />

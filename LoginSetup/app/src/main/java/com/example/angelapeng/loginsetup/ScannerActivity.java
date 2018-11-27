@@ -1,9 +1,7 @@
-package com.example.angelapeng.test;
+package com.example.angelapeng.loginsetup;
 
 import android.app.Activity;
 import android.content.Intent;
-
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,19 +11,15 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-
-
-public class MainActivity extends AppCompatActivity {
-
-    private Button scan_btn;
-
+public class ScannerActivity extends AppCompatActivity {
+     Button scan_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scanner);
 
-        scan_btn = (Button) findViewById(R.id.scan_btn);
+        scan_btn = findViewById(R.id.scan_btn);
         final Activity activity = this;
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //                Intent i = new Intent(Intent.ACTION_VIEW);
 //                i.setData(Uri.parse(url));
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-               // startActivity(i);
+                // startActivity(i);
             }
 
         }else {

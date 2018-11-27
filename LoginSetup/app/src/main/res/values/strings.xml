@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LoginSetup</string>
+    <string name="app_desc">welcome</string>
+    <string name="btnLogin">Login</string>
+    <string name="email"> Enter Email </string>
+    <string name="password">Enter password</string>
+    <string name="btnSignup">Sign up</string>
+    <string name="fname_input">First name</string>
+    <string name="sname_input">Surname</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="scanbtn">Press to scan</string>
+
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+</resources>
