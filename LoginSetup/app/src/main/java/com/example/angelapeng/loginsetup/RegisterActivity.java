@@ -16,6 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class RegisterActivity extends AppCompatActivity {
 
     Button signupBtn;
@@ -83,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         confPasswrapper.requestFocus();
                         return;
                     }
-                    if (password != cpass) {
+                    if (!password.equals(confPass)) {
                         confPasswrapper.setError("password does not match");
                         confPasswrapper.requestFocus();
                         return;

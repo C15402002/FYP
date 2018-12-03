@@ -2,6 +2,7 @@ package com.example.angelapeng.loginsetup;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,9 +49,8 @@ public class ScannerActivity extends AppCompatActivity {
 
             }
             else {
-//                String url = result.getContents();
-//                Intent i = new Intent(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse(url));
+                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getContents()));
+                startActivity(browserIntent);
                 Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                 // startActivity(i);
             }
