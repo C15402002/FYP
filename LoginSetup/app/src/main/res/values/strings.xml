@@ -5,9 +5,9 @@
     <string name="email"> Enter Email </string>
     <string name="password">Enter password</string>
     <string name="btnSignup">Sign up</string>
-    <string name="fname_input">First name</string>
+    <string name="fname_input">Enter Name </string>
     <string name="sname_input">Surname</string>
-    <string name="confirm_pass">Confirm Password</string>
+    <string name="btn_logout">Logout</string>
     <string name="contact_number">Contact Number</string>
     <string name="scanbtn">Press to scan</string>
 

@@ -1,14 +1,31 @@
 package com.example.angelapeng.loginsetup;
 
-public class User {
-    String firstname, surname, email;
+class User {
+    String Displayname;
 
-    public User() {
+
+    String email_input;
+
+    long createdAt;
+
+    public User (){};
+    public User(String displayname,String email,long createdAt){
+        this.Displayname=displayname;
+        this.email_input=email;
+        this.createdAt=createdAt;
     }
 
-    public User(String firstname, String surname, String email) {
-        this.firstname = firstname;
-        this.surname = surname;
-        this.email = email;
+
+    public String getDisplayname() {
+        return Displayname;
     }
+
+    public String getEmail() {
+        return email_input;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
 }
