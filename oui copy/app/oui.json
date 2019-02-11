@@ -1,0 +1,48 @@
+{
+  "Product_Type": {
+    "1": {
+      "Name": "Chicken",
+      "Image": "https://cdn.pixabay.com/photo/2017/07/16/12/39/chicken-2509164_1280.jpg"
+    },
+    "2": {
+      "Name": "Beef",
+      "Image": "https://cdn.pixabay.com/photo/2018/09/21/18/25/fillet-3693670_1280.jpg"
+    },
+    "3": {
+      "Name": "Lamb",
+      "Image": "https://cdn.pixabay.com/photo/2018/05/17/15/33/cocktail-3408834_1280.jpg"
+    },
+    "4": {
+      "Name": "Pork",
+      "Image": "https://cdn.pixabay.com/photo/2018/07/08/20/18/grill-party-3524649_1280.jpg"
+    },
+    "5": {
+      "Name": "Seafood",
+      "Image": "https://cdn.pixabay.com/photo/2016/06/28/17/32/salmon-1485014_1280.jpg"
+    },
+    "6": {
+      "Name": "Vegan",
+      "Image": "https://cdn.pixabay.com/photo/2018/08/17/20/49/acai-bowl-3613793_1280.jpg"
+    },
+    "7": {
+      "Name": "Gluten Free",
+      "Image": "https://cdn.pixabay.com/photo/2017/03/16/09/53/watercress-2148629_1280.jpg"
+    },
+    "8": {
+      "Name": "Dessert",
+      "Image": "https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971552_1280.jpg"
+    },
+    "9": {
+      "Name": "Drinks",
+      "Image": "https://cdn.pixabay.com/photo/2018/05/17/15/33/cocktail-3408834_1280.jpg"
+    }
+  },
+
+  "Users" : {
+    "rQHuyJANgeQ26w0RstF6mmCIUJR2": {
+      "Name": "test",
+      "Email": "test@test.com"
+    }
+  }
+}
+   
