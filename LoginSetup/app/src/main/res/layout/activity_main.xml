@@ -4,57 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.angelapeng.loginsetup.MainActivity">
+    android:background="@drawable/food"
+    tools:context="com.example.angelapeng.loginsetup.MainActivity"
+>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10sp"
         android:orientation="vertical"
+        android:background="@color/greyOverlay"
         >
-        <ImageView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="80sp"
-            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="22sp"
-            android:textAllCaps="true"
+            android:textSize="120sp"
+            android:textAllCaps="false"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginTop="80sp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_desc"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textAlignment="center"
-            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lucidacalligraphy"
+            android:layout_marginTop="50dp"
             />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="80sp"
             android:text="@string/btnLogin"
             android:textSize="20sp"
+            android:textAllCaps="false"
             android:textColor="#fff"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center"
             android:id="@+id/btnUserLogin"
             />
         <Button
             android:id="@+id/btnUserSignup"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
+            android:textAllCaps="false"
+            android:layout_marginTop="20sp"
+            android:background="@color/grey"
             android:textSize="20sp"
+            android:layout_gravity="center"
             android:text="@string/btnSignup"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            />
 
 
     </LinearLayout>
