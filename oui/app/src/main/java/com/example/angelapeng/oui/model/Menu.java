@@ -1,50 +1,50 @@
 package com.example.angelapeng.oui.model;
 
 public class Menu {
-    private String Name, Description, Image, Price, ProductTypeID;
+    private String fdName, fdDescription, fdImage, fdPrice, ProductTypeID;
 
     public Menu(){
 
     }
 
     public Menu(String name, String description, String image, String price, String productTypeId) {
-        Name = name;
-        Description = description;
-        Image = image;
-        Price = price;
+        fdName = name;
+        fdDescription = description;
+        fdImage = image;
+        fdPrice = price;
         ProductTypeID = productTypeId;
     }
 
     public String getDescription() {
-        return Description;
+        return fdDescription;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        fdDescription = description;
     }
 
     public String getImage() {
-        return Image;
+        return fdImage;
     }
 
     public void setImage(String image) {
-        Image = image;
+        fdImage = image;
     }
 
     public String getName() {
-        return Name;
+        return fdName;
     }
 
     public void setName(String name) {
-        Name = name;
+        fdName = name;
     }
 
     public String getPrice() {
-        return Price;
+        return fdPrice;
     }
 
     public void setPrice(String price) {
-        Price = price;
+        fdPrice = price;
     }
 
     public String getProductTypeID() {

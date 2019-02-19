@@ -52,7 +52,7 @@ public class MenuListActivity extends AppCompatActivity {
         if(getIntent() !=null){
             product_TypeId = getIntent().getStringExtra("Product_TypeId");
         }
-        if(!product_TypeId.isEmpty() && product_TypeId!=null){
+        if(product_TypeId!=null&&!product_TypeId.isEmpty()  ){
 
             options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(menu.orderByChild("productTypeId").equalTo(product_TypeId), Menu.class).build();
             adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(options){
@@ -75,10 +75,10 @@ public class MenuListActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v, int pos, boolean isLongClicked) {
 
-                            Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(MenuListActivity.this, MenuListActivity.class);
-//                        intent.putExtra("product_TypeId", adapter.getRef(pos).getKey());
-//                        startActivity(intent);
+                      //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
+                        intent.putExtra("MenuId ", adapter.getRef(pos).getKey());
+                        startActivity(intent);
                         }
                     });
                     holder.fdName.setText(model.getName());
