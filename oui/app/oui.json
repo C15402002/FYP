@@ -1,0 +1,48 @@
+{
+  "Product_Type": {
+    "1": {
+      "name": "Chicken",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/chicken.jpg?alt=media&token=6c83d429-8bb3-4d1b-a830-7fb37b252d28"
+    },
+    "2": {
+      "name": "Beef",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/beef.jpg?alt=media&token=379ee594-33d6-45d2-b622-6393ce4632ba"
+    },
+    "3": {
+      "name": "Lamb",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/lamb.jpg?alt=media&token=1657aa9a-aee5-4ffc-af9d-c5daa4454a3a"
+    },
+    "4": {
+      "name": "Pork",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/pork.jpg?alt=media&token=fb4ea337-f618-442f-83e1-dbfbc1e40885"
+    },
+    "5": {
+      "name": "Seafood",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/seafood.jpg?alt=media&token=ae7d2a92-a2da-4af5-ab3d-0448bccc035c"
+    },
+    "6": {
+      "name": "Vegan",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/vegan.jpg?alt=media&token=8fe442e0-c6b0-4160-9123-494244ec4b70"
+    },
+    "7": {
+      "name": "Gluten Free",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/gluten.jpg?alt=media&token=37cb5b9b-2645-4a7d-9b66-468c4cc359f8"
+    },
+    "8": {
+      "name": "Dessert",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/dessert.jpg?alt=media&token=36f846c9-65bc-461e-82a5-67721cc14c77"
+    },
+    "9": {
+      "name": "Drinks",
+      "image": "https://firebasestorage.googleapis.com/v0/b/ouioui-5be7f.appspot.com/o/drink.jpg?alt=media&token=514571cc-23b0-4153-bd64-6c762f5af186"
+    }
+  },
+
+  "Users" : {
+    "rQHuyJANgeQ26w0RstF6mmCIUJR2": {
+      "name": "test",
+      "Email": "test@test.com"
+    }
+  }
+}
+   
