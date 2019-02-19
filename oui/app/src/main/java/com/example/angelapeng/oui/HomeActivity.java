@@ -1,5 +1,6 @@
 package com.example.angelapeng.oui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -21,8 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.angelapeng.oui.control.Control;
-import com.example.angelapeng.oui.holder.MenuHolder;
+import com.example.angelapeng.oui.holder.ProductHolder;
 import com.example.angelapeng.oui.model.Product_Type;
 import com.example.angelapeng.oui.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -37,11 +37,11 @@ public class HomeActivity extends AppCompatActivity
 
 
     FirebaseDatabase db;
-    DatabaseReference product;
-    TextView fullname;
+    DatabaseReference product, users;
+    TextView email, fname;
     RecyclerView recyclerView;
     FirebaseRecyclerOptions<Product_Type> options;
-    FirebaseRecyclerAdapter<Product_Type, MenuHolder> adapter;
+    FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
 
 
 
@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity
 //        //firebase category
         db = FirebaseDatabase.getInstance();
         product = db.getReference().child("Product_Type");
+//        users = db.getReference().child("Users");
 
 
 
@@ -80,10 +81,14 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//        //Display user name
+//  TODO:      //Display user email
+//
 //        View header = navigationView.getHeaderView(0);
-//        fullname = findViewById(R.id.fullname);
-//        fullname.setText(Control.currentUser.getDisplayfname());
+//        fname = header.findViewById(R.id.fullname);
+//        fname.setText(Control.currentUser.getfName());
+//        email = header.findViewById(R.id.viewEmail);
+//        email.setText(Control.currentUser.getEmail());
+//
 
         //get menu
         recyclerView = findViewById(R.id.recycleView);
@@ -91,10 +96,10 @@ public class HomeActivity extends AppCompatActivity
 
 
         options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product,Product_Type.class).build();
-        adapter = new FirebaseRecyclerAdapter<Product_Type, MenuHolder>(options){
+        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
             @NonNull
             @Override
-            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Product_Type model) {
+            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
 
                 Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
                     @Override
@@ -112,15 +117,19 @@ public class HomeActivity extends AppCompatActivity
                 holder.setItemClickListener(new ProductClickedListener() {
                     @Override
                     public void onClick(View v, int pos, boolean isLongClicked) {
-                        Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+
+//                        Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
+                        startActivity(intent);
                     }
                 });
             holder.itemName.setText(model.getName());
             }
             @Override
-            public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items,viewGroup,false);
-                return new MenuHolder(v);
+                return new ProductHolder(v);
             }
 
 

@@ -9,28 +9,28 @@ import android.widget.TextView;
 import com.example.angelapeng.oui.R;
 import com.example.angelapeng.oui.view.ProductClickedListener;
 
-
 public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    public TextView itemName;
-    public ImageView itemImage;
+    public TextView fdName;
+    public ImageView fdImage;
 
-    private ProductClickedListener productClickListener;
-    public MenuHolder(@NonNull View itemView) {
+    private ProductClickedListener menuClickListener;
+    public MenuHolder(@NonNull View itemView){
         super(itemView);
-        itemName = (TextView)itemView.findViewById(R.id.mname);
-        itemImage = (ImageView)itemView.findViewById(R.id.mimage);
+        fdName=(TextView)itemView.findViewById(R.id.foodname);
+        fdImage=(ImageView)itemView.findViewById(R.id.foodimage);
         itemView.setOnClickListener(this);
 
-    }
+        }
 
-    public void setItemClickListener(ProductClickedListener productClickListener){
-        this.productClickListener = productClickListener;
-    }
+    public void setItemClickListener(ProductClickedListener menuClickListener){
+        this.menuClickListener= menuClickListener;
+        }
 
     @Override
-    public void onClick(View view) {
-        productClickListener.onClick(view, getAdapterPosition(), false);
+    public void onClick(View view){
+        menuClickListener.onClick(view,getAdapterPosition(),false);
 
-    }
+        }
+
 }
