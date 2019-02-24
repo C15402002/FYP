@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "430386861546",
-    "firebase_url": "https://ouioui-5be7f.firebaseio.com",
-    "project_id": "ouioui-5be7f",
-    "storage_bucket": "ouioui-5be7f.appspot.com"
+    "project_number": "79608994757",
+    "firebase_url": "https://test-fyp-4bcc3.firebaseio.com",
+    "project_id": "test-fyp-4bcc3",
+    "storage_bucket": "test-fyp-4bcc3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:430386861546:android:69514b253eaf9410",
+        "mobilesdk_app_id": "1:79608994757:android:de2e10b1c964ba27",
         "android_client_info": {
-          "package_name": "com.example.angelapeng.oui"
+          "package_name": "com.example.angelapeng.loginsetup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "430386861546-1pf454oun1ii5i79dd8nr895tme0htoh.apps.googleusercontent.com",
+          "client_id": "79608994757-1a80fgmnu5b6q61ksoevg1o119168ks5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.angelapeng.oui",
+            "package_name": "com.example.angelapeng.loginsetup",
             "certificate_hash": "47f95fb499cc089795d4d33728e774ab025a542c"
           }
         },
         {
-          "client_id": "430386861546-rbt3g20h5osf1mp75jdv1ii99ii8t852.apps.googleusercontent.com",
+          "client_id": "79608994757-9gp33uhktnp016fcu3le97mfls3083fo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzaOhZd68-oPSvUC5ecOUfwLhgXoqJ25Y"
+          "current_key": "AIzaSyC8Q5Eyd43j0d7UymwjWJOEmVYEzc-ucCA"
         }
       ],
       "services": {
@@ -40,10 +40,41 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "430386861546-rbt3g20h5osf1mp75jdv1ii99ii8t852.apps.googleusercontent.com",
+              "client_id": "79608994757-9gp33uhktnp016fcu3le97mfls3083fo.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79608994757:android:69514b253eaf9410",
+        "android_client_info": {
+          "package_name": "com.example.angelapeng.oui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79608994757-9gp33uhktnp016fcu3le97mfls3083fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Q5Eyd43j0d7UymwjWJOEmVYEzc-ucCA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

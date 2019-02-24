@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#0E79B2</color>
+    <color name="colorAccentDark">#00487C</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
+    <color name="beige">#EEE</color>
+    <color name="greyOverlay">#4D000000</color>
+    <color name="grey">#808080</color>
+    <color name="charcoal">#344055</color>
+    <color name="colorNavIcon">#dae9f6</color>
+    <color name="colorNavText">#01294b</color>
+</resources>
