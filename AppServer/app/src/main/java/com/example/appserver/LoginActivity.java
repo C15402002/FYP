@@ -11,26 +11,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.appserver.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ResourceBundle;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email, password;
+    EditText phone_input, password_input;
     Button loginbtn;
 
-    FirebaseAuth mAuth;
-    String email_input, password_input;
-    public static final String TAG="LOGIN";
-    public static final String userEmail="";
-
-
     FirebaseDatabase mDatabaseRef;
-
+    DatabaseReference staff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,47 +35,53 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn = findViewById(R.id.buttonLogin);
 
         mDatabaseRef = FirebaseDatabase.getInstance();
-        final DatabaseReference userTable = mDatabaseRef.getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
-        password =  findViewById(R.id.editPassword);
+        staff = mDatabaseRef.getReference("Users");
 
+        phone_input =  findViewById(R.id.editPhone);
+        password_input =  findViewById(R.id.editPassword);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                email_input = email.getText().toString().trim();
-                password_input = password.getText().toString().trim();
-
-                if (email_input.isEmpty()) {
-
-                    Toast.makeText(LoginActivity.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
-                    return;
-
-                }
-                if (password_input.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                mAuth.signInWithEmailAndPassword(email_input, password_input).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //if login successful go to another activity
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra(userEmail,email_input);
-                            startActivity(intent);
-
-                        }else{
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            Log.d(TAG,"AuthStateChanged:Logout");
-                        }
-                    }
-                });
+                SignIn(phone_input.getText().toString(), password_input.getText().toString());
             }
         });
     }
 
+    private void SignIn(final String phone, final String password) {
+        final String thisphone = phone;
+        final String thispassword = password;
+        staff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(thisphone).exists()) {
+
+                    User user = dataSnapshot.child(phone).getValue(User.class);
+                    user.setPhone(phone);
+                    if (Boolean.parseBoolean(user.getIsStaff())) {
+                        if (user.getPassword().equals(thispassword)) {
+
+                            Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                        Control.currentUser = user;
+//                        startActivity(intent);
+//                        finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login with staff number", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Staff does not exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

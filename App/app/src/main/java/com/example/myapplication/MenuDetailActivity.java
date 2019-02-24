@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.model.Order;
@@ -88,12 +89,11 @@ public class MenuDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //TODO: VIEW
                 currentMenu = dataSnapshot.getValue(Menu.class);
-
-                Picasso.get().load(currentMenu.getImage()).into(fdimage);
-                collapsingToolbarLayout.setTitle(currentMenu.getName());
-                price.setText(currentMenu.getPrice());
-                fdname.setText(currentMenu.getName());
-                description.setText(currentMenu.getDescription());
+                Picasso.get().load(Control.currentMenu.getImage()).into(fdimage);
+                collapsingToolbarLayout.setTitle(Control.currentMenu.getName());
+                price.setText(Control.currentMenu.getPrice());
+                fdname.setText(Control.currentMenu.getName());
+                description.setText(Control.currentMenu.getDescription());
 
             }
 

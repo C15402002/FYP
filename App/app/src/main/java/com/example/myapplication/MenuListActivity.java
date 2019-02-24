@@ -33,8 +33,6 @@ public class MenuListActivity extends AppCompatActivity {
     public static int restNumber;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
