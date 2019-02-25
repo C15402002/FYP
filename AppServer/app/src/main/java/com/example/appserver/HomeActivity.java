@@ -21,7 +21,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appserver.Holder.MenuHolder;
 import com.example.appserver.control.Control;
+import com.example.appserver.model.Category;
+import com.example.appserver.view.ItemClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +40,8 @@ public class HomeActivity extends AppCompatActivity
     TextView email, name;
 
     RecyclerView recyclerView;
-    FirebaseRecyclerOptions<Product_Type> options;
-    FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
+    FirebaseRecyclerOptions<Category> options;
+    FirebaseRecyclerAdapter<Category, MenuHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class HomeActivity extends AppCompatActivity
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Product_Type");
+        product = db.getReference("Category");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -82,13 +85,13 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
 
 
-        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product,Product_Type.class).build();
-        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
+        options = new FirebaseRecyclerOptions.Builder<Category>().setQuery(product,Category.class).build();
+        adapter = new FirebaseRecyclerAdapter<Category, MenuHolder>(options){
 
             @Override
-            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
+            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Category model) {
 
-                Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
+                Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -100,24 +103,24 @@ public class HomeActivity extends AppCompatActivity
 
                     }
                 });
-                final Product_Type clicked = model;
-                holder.setItemClickListener(new ProductClickedListener() {
+                final Category clicked = model;
+                holder.setItemClickListener(new ItemClickedListener() {
                     @Override
                     public void onClick(View v, int pos, boolean isLongClicked) {
 
-                        Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
-                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
-                        startActivity(intent);
+//                        Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+//                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
+//                        startActivity(intent);
                     }
                 });
-                holder.itemName.setText(model.getName());
+                holder.fdName.setText(model.getName());
             }
             @NonNull
             @Override
-            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items,viewGroup,false);
-                return new ProductHolder(v);
+            public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_item,viewGroup,false);
+                return new MenuHolder(v);
             }
 
 
