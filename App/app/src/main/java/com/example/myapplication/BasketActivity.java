@@ -60,9 +60,9 @@ public class BasketActivity extends AppCompatActivity {
         Locale locale = new Locale("en","IE");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
 
-        int total = 0;
+        float total = 0;
         for(Order order:orderItems){
-            total += (Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
+            total += (Float.parseFloat(order.getPrice()))*(Float.parseFloat(order.getQuantity()));
         }
 
         totalPrice.setText(numberFormat.format(total));

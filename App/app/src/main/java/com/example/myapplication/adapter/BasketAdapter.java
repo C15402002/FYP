@@ -71,7 +71,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
 
         Locale locale = new Locale("en","IE");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-        int price = (Integer.parseInt(listAddedItems.get(i).getPrice()))*(Integer.parseInt(listAddedItems.get(i).getQuantity()));
+        float price = (Float.parseFloat(listAddedItems.get(i).getPrice()))*(Float.parseFloat(listAddedItems.get(i).getQuantity()));
         basketHolder.basketPrice.setText(numberFormat.format(price));
         basketHolder.basketName.setText(listAddedItems.get(i).getProdName());
 
