@@ -1,17 +1,18 @@
 package com.example.myapplication.model;
 
 public class User {
-    private String Name, Email, Phone, Password;
+    private String Name, Email, Phone, Password, IsStaff;
 
 
 //    String phone,
     public User (){};
 
-    public User(String name, String email,  String password){
+    public User(String name, String email, String password){
        Name=name;
        Email=email;
 //       Phone = phone;
        Password = password;
+       IsStaff = "false";
 
     }
 
@@ -43,5 +44,13 @@ public class User {
 
     public void setPhone(String phone) {
         Phone = phone;
+    }
+
+    public String getIsStaff() {
+        return IsStaff;
+    }
+
+    public void setIsStaff(String isStaff) {
+        IsStaff = isStaff;
     }
 }

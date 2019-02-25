@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appserver.control.Control;
 import com.example.appserver.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,10 +63,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (user.getPassword().equals(thispassword)) {
 
                             Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                        Control.currentUser = user;
-//                        startActivity(intent);
-//                        finish();
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        Control.currentUser = user;
+                        startActivity(intent);
+                        finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
                         }
