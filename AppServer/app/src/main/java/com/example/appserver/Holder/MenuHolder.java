@@ -17,8 +17,8 @@ public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private ItemClickedListener menuClickListener;
     public MenuHolder(@NonNull View itemView){
         super(itemView);
-        fdName=(TextView)itemView.findViewById(R.id.foodname);
-        fdImage=(ImageView)itemView.findViewById(R.id.foodimage);
+        fdName=(TextView)itemView.findViewById(R.id.mname);
+        fdImage=(ImageView)itemView.findViewById(R.id.mimage);
         itemView.setOnClickListener(this);
 
     }

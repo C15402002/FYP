@@ -1,13 +1,13 @@
 package com.example.appserver.model;
 
-public class Category {
+public class Product_Type {
     private String pName, pImage;
 
-    public Category(){
+    public Product_Type(){
 
     }
 
-    public Category(String name, String image){
+    public Product_Type(String name, String image){
         pName = name;
         pImage = image;
     }

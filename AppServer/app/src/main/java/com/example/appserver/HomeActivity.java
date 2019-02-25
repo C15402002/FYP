@@ -1,10 +1,14 @@
 package com.example.appserver;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,30 +22,44 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appserver.Holder.MenuHolder;
 import com.example.appserver.control.Control;
-import com.example.appserver.model.Category;
+import com.example.appserver.model.Product_Type;
 import com.example.appserver.view.ItemClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FirebaseDatabase db;
-    DatabaseReference product;
-    TextView email, name;
+
+    TextView name;
 
     RecyclerView recyclerView;
-    FirebaseRecyclerOptions<Category> options;
-    FirebaseRecyclerAdapter<Category, MenuHolder> adapter;
+    FirebaseRecyclerOptions<Product_Type> options;
+    FirebaseRecyclerAdapter<Product_Type, MenuHolder> adapter;
+    FirebaseDatabase db;
+    DatabaseReference product;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +72,9 @@ public class HomeActivity extends AppCompatActivity
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Category");
+        product = db.getReference("Product_Type");
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -62,8 +82,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(HomeActivity.this, "Add new items", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(HomeActivity.this, AddNewProducts.class);
-//                startActivity(intent);
+                showDialog();
             }
         });
 
@@ -85,11 +104,11 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
 
 
-        options = new FirebaseRecyclerOptions.Builder<Category>().setQuery(product,Category.class).build();
-        adapter = new FirebaseRecyclerAdapter<Category, MenuHolder>(options){
+        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
+        adapter = new FirebaseRecyclerAdapter<Product_Type, MenuHolder>(options){
 
             @Override
-            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Category model) {
+            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Product_Type model) {
 
                 Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback() {
                     @Override
@@ -103,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
 
                     }
                 });
-                final Category clicked = model;
+                final Product_Type clicked = model;
                 holder.setItemClickListener(new ItemClickedListener() {
                     @Override
                     public void onClick(View v, int pos, boolean isLongClicked) {
@@ -131,6 +150,119 @@ public class HomeActivity extends AppCompatActivity
         adapter.startListening();
         recyclerView.setAdapter(adapter);
 
+
+    }
+
+
+    EditText title;
+    Button buttonupload, buttonselect;
+    Product_Type newProduct;
+    Uri saveURL;
+    private final int PICK_IMAGE_REQUEST = 71;
+
+
+    private void showDialog() {
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.add_item_layout, null);
+
+        title = view.findViewById(R.id.name);
+        buttonupload = view.findViewById(R.id.buttonUpload);
+        buttonupload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+
+            }
+        });
+
+        buttonselect = view.findViewById(R.id.buttonSelect);
+        buttonselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
+        });
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        alertDialog.setTitle("Add new product");
+        alertDialog.setMessage("Enter information");
+        alertDialog.setView(view);
+        alertDialog.setIcon(R.drawable.ic_add_black_24dp);
+        alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(newProduct != null){
+                    product.push().setValue(newProduct);
+                    Toast.makeText(HomeActivity.this, "New product" + newProduct.getName() + "created", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select photo"), PICK_IMAGE_REQUEST);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null
+        && data.getData()!= null){
+            saveURL = data.getData();
+            buttonselect.setText("Selected");
+
+        }
+    }
+
+    private void uploadImage() {
+        if(saveURL != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("loading...");
+            progressDialog.show();
+            String imageName = UUID.randomUUID().toString();
+            final StorageReference folder = storageReference.child("images/" +imageName);
+            folder.putFile(saveURL).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    Toast.makeText(HomeActivity.this, "Upload completely", Toast.LENGTH_SHORT).show();
+                    folder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            newProduct = new Product_Type(title.getText().toString(), uri.toString());
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Toast.makeText(HomeActivity.this, "Upload failed", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded" + progress + "%");
+
+                }
+            });
+
+
+
+        }
 
     }
 

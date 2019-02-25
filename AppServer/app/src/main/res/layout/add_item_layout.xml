@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="220dp"
-    app:cardElevation="4dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -16,12 +16,10 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="hello"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:gravity="center"
             android:hint="@string/menu"
-            android:inputType="phone"
+            android:inputType="text"
             android:textColorHint="@color/grey"
             android:textSize="35sp" />
 
@@ -33,7 +31,19 @@
         android:weightSum="2"
         android:orientation="horizontal">
 
-
+        <Button
+            android:id="@+id/buttonUpload"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="130dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@color/colorAccent"
+            android:text="UPLOAD"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
         <Button
             android:id="@+id/buttonSelect"
             android:layout_width="0dp"
@@ -47,6 +57,7 @@
             android:text="SELECT"
             android:textSize="20sp"
             android:textColor="@color/white" />
+
 
 
     </LinearLayout>
