@@ -1,18 +1,17 @@
 package com.example.myapplication.model;
 
 public class Menu {
-    private String fdName, fdDescription, fdImage, fdPrice, ProductTypeID;
+    private String fdName, fdDescription, fdImage, fdPrice;
 
     public Menu(){
 
     }
 
-    public Menu(String name, String description, String image, String price, String productTypeId) {
+    public Menu(String name, String description, String image, String price) {
         fdName = name;
         fdDescription = description;
         fdImage = image;
         fdPrice = price;
-        ProductTypeID = productTypeId;
     }
 
     public String getDescription() {
@@ -47,11 +46,4 @@ public class Menu {
         fdPrice = price;
     }
 
-    public String getProductTypeID() {
-        return ProductTypeID;
-    }
-
-    public void setProductTypeID(String productTypeId) {
-        ProductTypeID = productTypeId;
-    }
 }

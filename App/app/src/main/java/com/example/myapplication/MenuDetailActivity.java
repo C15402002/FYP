@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
-import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.model.Order;
@@ -60,7 +59,6 @@ public class MenuDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new Database(getBaseContext()).addToBasket(new Order(
-                        //TODO: GET MENU FROM MENUDETAILACTIVITY
                         menuId, currentMenu.getName(),
                         quantity.getNumber(),
                         currentMenu.getPrice()
@@ -87,13 +85,12 @@ public class MenuDetailActivity extends AppCompatActivity {
         mRef.child(menuId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//TODO: VIEW
                 currentMenu = dataSnapshot.getValue(Menu.class);
-                Picasso.get().load(Control.currentMenu.getImage()).into(fdimage);
-                collapsingToolbarLayout.setTitle(Control.currentMenu.getName());
-                price.setText(Control.currentMenu.getPrice());
-                fdname.setText(Control.currentMenu.getName());
-                description.setText(Control.currentMenu.getDescription());
+                Picasso.get().load(currentMenu.getImage()).into(fdimage);
+                collapsingToolbarLayout.setTitle(currentMenu.getName());
+                price.setText(currentMenu.getPrice());
+                fdname.setText(currentMenu.getName());
+                description.setText(currentMenu.getDescription());
 
             }
 

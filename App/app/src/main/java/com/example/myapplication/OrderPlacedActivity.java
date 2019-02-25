@@ -1,28 +1,19 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.myapplication.control.Control;
 import com.example.myapplication.holder.OrderHolder;
-import com.example.myapplication.holder.ProductHolder;
 import com.example.myapplication.model.MakeOrder;
-import com.example.myapplication.model.Product_Type;
-import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class OrderPlacedActivity extends AppCompatActivity {
 

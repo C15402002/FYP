@@ -4,27 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.adapter.BasketAdapter;
 import com.example.myapplication.control.Control;
-import com.example.myapplication.holder.ProductHolder;
-import com.example.myapplication.model.Product_Type;
+import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -37,12 +34,12 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase db;
-    DatabaseReference product;
+    DatabaseReference menu;
     TextView email, name;
 
     RecyclerView recyclerView;
-    FirebaseRecyclerOptions<Product_Type> options;
-    FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
+    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> options;
+    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,7 @@ public class HomeActivity extends AppCompatActivity
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Product_Type");
+        menu = db.getReference("Menu");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -87,13 +84,13 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
 
 
-        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product,Product_Type.class).build();
-        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
+        options = new FirebaseRecyclerOptions.Builder<com.example.myapplication.model.Menu>().setQuery(menu, com.example.myapplication.model.Menu.class).build();
+        adapter = new FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder>(options){
 
             @Override
-            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
+            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull com.example.myapplication.model.Menu model) {
 
-                Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
+                Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -105,24 +102,24 @@ public class HomeActivity extends AppCompatActivity
 
                     }
                 });
-                final Product_Type clicked = model;
+                //final Menu clicked = model;
                 holder.setItemClickListener(new ProductClickedListener() {
                     @Override
                     public void onClick(View v, int pos, boolean isLongClicked) {
 
-                        Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
-                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
+                       // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity.this, MenuDetailActivity.class);
+                        intent.putExtra("MenuId", adapter.getRef(pos).getKey());
                         startActivity(intent);
                     }
                 });
-                holder.itemName.setText(model.getName());
+                holder.fdName.setText(model.getName());
             }
             @NonNull
             @Override
-            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items,viewGroup,false);
-                return new ProductHolder(v);
+            public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_items,viewGroup,false);
+                return new MenuHolder(v);
             }
 
 
