@@ -66,7 +66,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BasketHolder basketHolder, int i) {
-        TextDrawable textDrawable = TextDrawable.builder().buildRound("" + listAddedItems.get(i).getQuantity(), Color.RED);
+        TextDrawable textDrawable = TextDrawable.builder().buildRound("" + listAddedItems.get(i).getQuantity(), Color.GREEN);
         basketHolder.basketCount.setImageDrawable(textDrawable);
 
         Locale locale = new Locale("en","IE");

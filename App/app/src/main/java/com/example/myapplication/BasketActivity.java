@@ -43,7 +43,7 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Users");
+        databaseReference = firebaseDatabase.getReference("OrderPlaced");
 
         recyclerView = findViewById(R.id.listOrder);
         recyclerView.setHasFixedSize(true);
