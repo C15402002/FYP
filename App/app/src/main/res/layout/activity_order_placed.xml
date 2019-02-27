@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/food"
+
     tools:context=".OrderPlacedActivity">
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/orderHistory"
-        android:background="@color/beige"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/greyOverlay"
+        />
 
 
 </RelativeLayout>

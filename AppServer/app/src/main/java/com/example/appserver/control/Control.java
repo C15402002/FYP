@@ -9,4 +9,6 @@ public class Control {
     public static final String update = "Update";
     public static final String delete = "Delete";
 
+    public static final int PICK_IMAGE_REQUEST = 71;
+
 }

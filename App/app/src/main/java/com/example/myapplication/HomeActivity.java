@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,34 +14,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.control.Control;
-import com.example.myapplication.holder.MenuHolder;
+import com.example.myapplication.holder.ProductHolder;
+import com.example.myapplication.model.Product_Type;
 import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase db;
-    DatabaseReference menu;
+    DatabaseReference product;
     TextView email, name;
 
     RecyclerView recyclerView;
-    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> options;
-    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> adapter;
+    FirebaseRecyclerOptions<Product_Type> options;
+    FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +63,7 @@ public class HomeActivity extends AppCompatActivity
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        menu = db.getReference("Menu");
+        product = db.getReference("Product_Type");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -79,18 +90,19 @@ public class HomeActivity extends AppCompatActivity
         email = header.findViewById(R.id.viewEmail);
         email.setText(Control.currentUser.getEmail());
 
-        //get menu
+        //get product
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
 
 
-        options = new FirebaseRecyclerOptions.Builder<com.example.myapplication.model.Menu>().setQuery(menu, com.example.myapplication.model.Menu.class).build();
-        adapter = new FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder>(options){
+
+        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
+        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
 
             @Override
-            protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull com.example.myapplication.model.Menu model) {
+            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
 
-                Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback() {
+                Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
                     @Override
                     public void onSuccess() {
 
@@ -108,18 +120,18 @@ public class HomeActivity extends AppCompatActivity
                     public void onClick(View v, int pos, boolean isLongClicked) {
 
                        // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomeActivity.this, MenuDetailActivity.class);
-                        intent.putExtra("MenuId", adapter.getRef(pos).getKey());
+                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
                         startActivity(intent);
                     }
                 });
-                holder.fdName.setText(model.getName());
+                holder.itemName.setText(model.getName());
             }
             @NonNull
             @Override
-            public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_items,viewGroup,false);
-                return new MenuHolder(v);
+            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items,viewGroup,false);
+                return new ProductHolder(v);
             }
 
 
@@ -129,6 +141,8 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+
+
 
 
     }
@@ -145,8 +159,9 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        // Inflate the product; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home,menu);
+
         return true;
     }
 
@@ -158,14 +173,16 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
 
-        } else if (id == R.id.nav_history) {
-            Intent intent = new Intent(HomeActivity.this, OrderPlacedActivity.class);
-            startActivity(intent);
-
         } else if (id == R.id.nav_menu) {
             Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
             startActivity(intent);
+
+        }else if (id == R.id.nav_history) {
+            Intent intent = new Intent(HomeActivity.this, OrderPlacedActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_setting) {
+
+        }else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_signout) {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);

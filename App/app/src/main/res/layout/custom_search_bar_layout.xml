@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <TableRow>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_ios"
+            android:layout_gravity="center_vertical|start"
+            android:background="@android:color/transparent"
+            android:id="@+id/action_bar_back"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <EditText
+                android:id="@+id/search_field"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:hint="Search here"
+                android:inputType="text"
+                android:textColorHint="@color/grey"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/search_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity = "center_vertical|end"
+                android:layout_marginStart="30dp"
+                android:layout_toEndOf="@+id/search_btn"
+                android:background="@color/zxing_transparent"
+                android:src="@drawable/ic_search_black_24dp" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </TableRow>
+
+</TableLayout>

@@ -12,7 +12,7 @@ import com.example.myapplication.view.ProductClickedListener;
 
 public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    public TextView fdName;
+    public TextView fdName,fdDescript, fdPrice;
     public ImageView fdImage;
 
     private ProductClickedListener menuClickListener;
@@ -20,6 +20,8 @@ public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickL
         super(itemView);
         fdName=(TextView)itemView.findViewById(R.id.foodname);
         fdImage=(ImageView)itemView.findViewById(R.id.foodimage);
+        fdDescript = itemView.findViewById(R.id.foodDescript);
+        fdPrice = itemView.findViewById(R.id.foodprice);
         itemView.setOnClickListener(this);
 
         }

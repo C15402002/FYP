@@ -11,6 +11,8 @@
 
 
 
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:scrollbars="vertical"
@@ -18,5 +20,6 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+
 
 </android.support.constraint.ConstraintLayout>

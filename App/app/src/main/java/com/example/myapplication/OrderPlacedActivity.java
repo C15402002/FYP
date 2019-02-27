@@ -1,13 +1,19 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.myapplication.control.Control;
+import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.holder.OrderHolder;
 import com.example.myapplication.model.MakeOrder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,6 +32,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,23 @@ public class OrderPlacedActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
+
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent intent = new Intent(OrderPlacedActivity.this, HomeActivity.class);
+               startActivity(intent);
+               finish();
+            }
+        });
+
+
         load(Control.currentUser.getPhone());
 
 
@@ -50,14 +74,16 @@ public class OrderPlacedActivity extends AppCompatActivity {
             @NonNull
             @Override
             public OrderHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                return null;
+                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_history,viewGroup,false);
+                return new OrderHolder(v);
             }
 
             @Override
             protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull MakeOrder model) {
                 holder.orderId.setText(adapter.getRef(position).getKey());
-                holder.orderPhone.setText(model.getPhone());
+                holder.orderPrice.setText(model.getTotal());
                 holder.orderStatus.setText(model.getStatus());
+                holder.orderTable.setText(model.getTable());
 
             }
 

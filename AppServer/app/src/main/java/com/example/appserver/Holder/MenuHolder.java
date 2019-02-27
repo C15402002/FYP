@@ -13,15 +13,20 @@ import com.example.appserver.view.ItemClickedListener;
 
 public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
-    public TextView fdName;
+    public TextView fdName,fdDescript, fdPrice;
     public ImageView fdImage;
 
     private ItemClickedListener menuClickListener;
     public MenuHolder(@NonNull View itemView){
         super(itemView);
-        fdName=(TextView)itemView.findViewById(R.id.mname);
-        fdImage=(ImageView)itemView.findViewById(R.id.mimage);
+        fdName=(TextView)itemView.findViewById(R.id.foodname);
+        fdImage=(ImageView)itemView.findViewById(R.id.foodimage);
+        fdDescript = itemView.findViewById(R.id.foodDescript);
+        fdPrice = itemView.findViewById(R.id.foodPrice);
+
+        itemView.setOnCreateContextMenuListener(this);
         itemView.setOnClickListener(this);
+
 
     }
 
@@ -39,7 +44,7 @@ public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
         contextMenu.setHeaderTitle("Choose Action");
         contextMenu.add(0,0,getAdapterPosition(), Control.update);
-        contextMenu.add(0,0,getAdapterPosition(), Control.delete);
+        contextMenu.add(0,1,getAdapterPosition(), Control.delete);
 
     }
 }

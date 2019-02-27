@@ -1,11 +1,14 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +58,7 @@ public class MenuDetailActivity extends AppCompatActivity {
         quantity = findViewById(R.id.counter);
         add = findViewById(R.id.fab);
 
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,8 +68,26 @@ public class MenuDetailActivity extends AppCompatActivity {
                         currentMenu.getPrice()
                 ));
                 Toast.makeText(MenuDetailActivity.this, "Added to order", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MenuDetailActivity.this, MenuListActivity.class);
+                startActivity(intent);
             }
         });
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
+
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuDetailActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
         collapsingToolbarLayout = findViewById(R.id.collapsetoolbar);

@@ -3,33 +3,99 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:layout_marginBottom="8dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:id="@+id/foodimage"
-            android:scaleType="centerCrop"
-            android:src="@drawable/food" />
+            android:scaleType="centerCrop" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/foodname"
-            android:text="food"
-            android:gravity="center"
-            android:textSize="25sp"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/charcoal"
-            android:background="@color/white"
-            android:layout_alignParentBottom="true"/>
+            android:textStyle="bold"
+            android:text="Food"
+            android:textSize="25sp"
+            android:textColor="@color/colorAccentDark"/>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/price">
+
+            <ImageView
+                android:src="@drawable/ic_euro_symbol_black_24dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/foodprice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_weight="9"
+                android:text="1,000"
+                android:inputType="numberDecimal"
+                android:textStyle="bold"
+                android:textColor="@color/charcoal"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/foodDescript"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_weight="9"
+                android:inputType="textMultiLine"
+                android:text="aldjfnajdfn"
+                android:textStyle="normal"
+                android:textColor="@color/charcoal"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_btn"
+            android:layout_width="70dp"
+            android:text="ADD"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|end"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:background="@color/green" />
+
+
+    </LinearLayout>
+    </LinearLayout>
+
 
 </android.support.v7.widget.CardView>
