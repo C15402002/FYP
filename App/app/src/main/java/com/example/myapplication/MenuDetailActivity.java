@@ -16,8 +16,11 @@ import android.widget.Toast;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import com.example.myapplication.database.Database;
+import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.model.Order;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,8 +38,11 @@ public class MenuDetailActivity extends AppCompatActivity {
 
     String menuId = "";
 
-    FirebaseDatabase menudb;
-    DatabaseReference mRef;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference menu;
+
+    FirebaseRecyclerOptions<Menu> options;
+    FirebaseRecyclerAdapter<Menu, MenuHolder> adapter;
 
     Menu currentMenu;
 
@@ -46,8 +52,8 @@ public class MenuDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_detail);
 
-        menudb = FirebaseDatabase.getInstance();
-        mRef = menudb.getReference("Menu");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        menu = firebaseDatabase.getReference("Menu");
 
 
         fdname = findViewById(R.id.foodname);
@@ -72,6 +78,7 @@ public class MenuDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
@@ -104,7 +111,7 @@ public class MenuDetailActivity extends AppCompatActivity {
     }
 
     private void getMenu(String menuId){
-        mRef.child(menuId).addValueEventListener(new ValueEventListener() {
+        menu.child(menuId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currentMenu = dataSnapshot.getValue(Menu.class);
