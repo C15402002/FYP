@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,36 +11,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
+import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.model.Order;
+import com.example.myapplication.model.Review;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.stepstone.apprating.AppRatingDialog;
+import com.stepstone.apprating.listener.RatingDialogListener;
 
-public class MenuDetailActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+public class MenuDetailActivity extends AppCompatActivity implements RatingDialogListener {
 
     TextView fdname, description, price;
     ImageView fdimage;
-    FloatingActionButton add;
+    FloatingActionButton add, btnrate;
     ElegantNumberButton quantity;
     CollapsingToolbarLayout collapsingToolbarLayout;
+    RatingBar ratingBar;
 
     String menuId = "";
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference menu;
+    DatabaseReference reviews;
 
     Menu currentMenu;
 
@@ -51,6 +65,7 @@ public class MenuDetailActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         menu = firebaseDatabase.getReference("Menu");
+        reviews = firebaseDatabase.getReference("Reviews");
 
 
         fdname = findViewById(R.id.foodname);
@@ -73,6 +88,14 @@ public class MenuDetailActivity extends AppCompatActivity {
                 Toast.makeText(MenuDetailActivity.this, "Added to order", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MenuDetailActivity.this, HomeActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnrate = findViewById(R.id.rate_btn);
+        btnrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showReview();
             }
         });
 
@@ -103,7 +126,12 @@ public class MenuDetailActivity extends AppCompatActivity {
             menuId = getIntent().getStringExtra("MenuId");
         }
         if (menuId!=null && !menuId.isEmpty()) {
-            getMenu(menuId);
+            if(Control.checkConnectivity(getBaseContext())) {
+                getMenu(menuId);
+                getReview(menuId);
+            }else{
+                Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -129,6 +157,76 @@ public class MenuDetailActivity extends AppCompatActivity {
 
     }
 
+    private void getReview(String menuId) {
+        com.google.firebase.database.Query dishReview = reviews.orderByChild("menuId").equalTo(menuId);
+        dishReview.addValueEventListener(new ValueEventListener() {
+            int count =0, sum=0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot postSnapShot:dataSnapshot.getChildren()){
+                    Review dish = postSnapShot.getValue(Review.class);
+                    sum+=Integer.parseInt(dish.getRate());
+                    count++;
+                }
+                if(count !=0) {
+                    float average = sum/count;
+                    ratingBar.setRating(average);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void showReview() {
+        new AppRatingDialog.Builder().setPositiveButtonText("Submit").setNegativeButtonText("Cancel")
+            .setNoteDescriptions(Arrays.asList("Poor","Not Great","Meh","Great", "Amazing"))
+            .setDefaultRating(1).setTitle("Write a review").setDescription("Please give this a rate and comment")
+            .setTitleTextColor(R.color.colorAccent).setDescriptionTextColor(R.color.colorAccent).setHint("Comments here")
+            .setHintTextColor(R.color.grey).setCommentTextColor(android.R.color.black)
+            .setCommentBackgroundColor(R.color.white).setWindowAnimation(R.style.RatingAnim)
+            .create(MenuDetailActivity.this).show();
+
+    }
+
+
+    @Override
+    public void onNegativeButtonClicked() {
+
+    }
+
+    @Override
+    public void onNeutralButtonClicked() {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int i, @NotNull String s) {
+        final Review review = new Review(Control.currentUser.getPhone(),menuId,String.valueOf(i),s);
+
+        reviews.child(Control.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(Control.currentUser.getPhone()).exists()){
+                    reviews.child(Control.currentUser.getPhone()).removeValue();
+                    reviews.child(Control.currentUser.getPhone()).setValue(review);
+                } else {
+                    reviews.child(Control.currentUser.getPhone()).setValue(review);
+                }
+                Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
 
 

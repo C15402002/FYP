@@ -3,10 +3,12 @@ package com.example.appserver.control;
 
 import com.example.appserver.config.RemoteAPIService;
 import com.example.appserver.config.RetroClient;
+import com.example.appserver.model.MakeOrder;
 import com.example.appserver.model.User;
 
 public class Control {
     public static User currentUser;
+    public static MakeOrder currentOrder;
 
     public static final String update = "Update";
     public static final String delete = "Delete";

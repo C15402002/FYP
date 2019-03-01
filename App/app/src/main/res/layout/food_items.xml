@@ -28,8 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/foodname"
-            android:padding="12dp"
-            android:layout_marginTop="8dp"
+            android:padding="5dp"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             android:text="Food"
@@ -49,6 +48,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:layout_weight="9"
                 android:text="1,000"
+                android:layout_marginStart="10dp"
                 android:inputType="numberDecimal"
                 android:textStyle="bold"
                 android:textColor="@color/charcoal"
@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_weight="9"
+                android:layout_marginStart="10dp"
                 android:inputType="textMultiLine"
                 android:text="aldjfnajdfn"
                 android:textStyle="normal"
@@ -76,16 +77,6 @@
 
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/add_btn"
-            android:layout_width="70dp"
-            android:text="ADD"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|end"
-            android:layout_marginRight="10dp"
-            android:textColor="@color/white"
-            android:background="@color/green" />
 
 
     </LinearLayout>

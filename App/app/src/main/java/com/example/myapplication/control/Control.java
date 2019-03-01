@@ -1,6 +1,11 @@
 package com.example.myapplication.control;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+
 import com.example.myapplication.config.RemoteAPIService;
 import com.example.myapplication.config.RetroClient;
 import com.example.myapplication.model.Menu;
@@ -26,5 +31,29 @@ public class Control {
 
     public static RemoteAPIService getCloudMessage(){
         return RetroClient.getClient(BASE_URL).create(RemoteAPIService.class);
+    }
+
+    public static final String edit = "Edit";
+    public static final String delete = "Delete";
+
+    public static boolean checkConnectivity(Context context){
+        ConnectivityManager connectivityManager =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager != null){
+
+            NetworkInfo[] infos = connectivityManager.getAllNetworkInfo();
+
+            if(infos != null){
+                for(int i =0; i < infos.length;i++){
+                    if(infos[i].getState() == NetworkInfo.State.CONNECTED);
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+
+        return false;
+
     }
 }

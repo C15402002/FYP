@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +62,24 @@ public class BasketActivity extends AppCompatActivity {
     RemoteAPIService remoteAPIService;
 
     @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle().equals(Control.delete)){
+            deleteBasket(item.getOrder());
+        }
+        return true;
+
+    }
+
+    private void deleteBasket(int order) {
+        listOfOrderPlaced.remove(order);
+        new Database(this).deleteFromBasket();
+        for(Order item:listOfOrderPlaced){
+            new Database(this).addToBasket(item);
+        }
+        loadBasket();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
@@ -77,13 +97,24 @@ public class BasketActivity extends AppCompatActivity {
         placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog();
+                if(listOfOrderPlaced.size() > 0) {
+                    showAlertDialog();
+                }else {
+                    Toast.makeText(BasketActivity.this, "Basket is empty, add products", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
 
+
+        loadBasket();
+
+    }
+
+    private void loadBasket(){
         listOfOrderPlaced = new Database(this).getOrderBasket();
         adapter = new BasketAdapter(listOfOrderPlaced, this);
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
         remoteAPIService = Control.getCloudMessage();
@@ -104,22 +135,32 @@ public class BasketActivity extends AppCompatActivity {
     private void showAlertDialog(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
         alertDialog.setMessage("Please Enter Table Number: ");
-        final EditText editText = new EditText(BasketActivity.this);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText.setRawInputType(Configuration.KEYBOARD_12KEY);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        editText.setLayoutParams(layoutParams);
-        alertDialog.setView(editText);
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.table_comment_layout,null);
+
+        final EditText tableEdit = view.findViewById(R.id.edtTable);
+        final EditText commentEdit = view.findViewById(R.id.editComment);
+
+//        final EditText editText = new EditText(BasketActivity.this);
+//        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+//        editText.setRawInputType(Configuration.KEYBOARD_12KEY);
+
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+//        editText.setLayoutParams(layoutParams);
+        alertDialog.setView(view);
         alertDialog.setIcon(R.drawable.ic_shopping_basket_black_24dp);
 
+
+        //TODO
         alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
-                        Control.currentUser.getName(),
                         Control.currentUser.getEmail(),
-                        editText.getText().toString(),
+                        tableEdit.getText().toString(),
+                        Control.currentUser.getName(),
                         totalPrice.getText().toString(),
+                        commentEdit.getText().toString(),
                         listOfOrderPlaced);
 
                 String order_num = String.valueOf(System.currentTimeMillis());

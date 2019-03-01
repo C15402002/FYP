@@ -32,5 +32,21 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">normal</item>
     </style>
+    
+    <style name="ReviewStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/black</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/RatingDialog</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/RatingDialog</item>
+    </style>
+
+    <style name="RatingDialog" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:background">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    
+    <style name="RatingAnim">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 </resources>

@@ -13,7 +13,8 @@ import com.example.appserver.control.Control;
 import com.example.appserver.view.ItemClickedListener;
 
 
-public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,
+        View.OnCreateContextMenuListener {
 
     public TextView orderId, orderStatus, orderPrice, orderTable;
 
@@ -28,6 +29,7 @@ public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClick
 
         itemView.setOnCreateContextMenuListener(this);
         itemView.setOnClickListener(this);
+        itemView.setOnLongClickListener(this);
     }
 
 
@@ -47,5 +49,11 @@ public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClick
         contextMenu.add(0,0,getAdapterPosition(), Control.update);
         contextMenu.add(0,1,getAdapterPosition(), Control.delete);
 
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        itemClickedListener.onClick(view, getAdapterPosition(),true);
+        return true;
     }
 }

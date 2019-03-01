@@ -3,24 +3,21 @@ package com.example.myapplication.model;
 import java.util.List;
 
 public class MakeOrder {
-    private String phone, email, table, name, total, status;
+    private String phone, email, table, name, total, status, notes;
     private List<Order> listOfOrderPlaced;
 
     public MakeOrder() {
-
     }
 
-
-
-    public MakeOrder(String phone, String name, String email, String table, String total, List<Order> listOfOrderPlaced) {
+    public MakeOrder(String phone, String email, String table, String name, String total, String notes, List<Order> listOfOrderPlaced) {
         this.phone = phone;
-        this.name = name;
         this.email = email;
         this.table = table;
+        this.name = name;
         this.total = total;
         this.status = "0";
+        this.notes = notes;
         this.listOfOrderPlaced = listOfOrderPlaced;
-        //0 for order placed, 1 for order cooking, 2 for order sent
     }
 
     public String getPhone() {
@@ -39,6 +36,14 @@ public class MakeOrder {
         this.email = email;
     }
 
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+
     public String getName() {
         return name;
     }
@@ -55,14 +60,6 @@ public class MakeOrder {
         this.total = total;
     }
 
-    public List<Order> getListOfOrderPlaced() {
-        return listOfOrderPlaced;
-    }
-
-    public void setListOfOrderPlaced(List<Order> listOfOrderPlaced) {
-        this.listOfOrderPlaced = listOfOrderPlaced;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -71,11 +68,19 @@ public class MakeOrder {
         this.status = status;
     }
 
-    public String getTable() {
-        return table;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public List<Order> getListOfOrderPlaced() {
+        return listOfOrderPlaced;
+    }
+
+    public void setListOfOrderPlaced(List<Order> listOfOrderPlaced) {
+        this.listOfOrderPlaced = listOfOrderPlaced;
     }
 }

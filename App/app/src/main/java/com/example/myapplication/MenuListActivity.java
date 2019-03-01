@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.holder.MenuHolder;
@@ -80,52 +81,58 @@ public class MenuListActivity extends AppCompatActivity {
             product_typeId = getIntent().getStringExtra("Product_TypeId");
         }
         if(product_typeId!=null && !product_typeId.isEmpty()  ){
-            //select * from menu where foodid = producttypeid
-            Query query = productList.orderByChild("foodId").equalTo(product_typeId);
+            if(Control.checkConnectivity(getBaseContext())) {
 
-            options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query,Menu.class).build();
-            adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(options){
-                @Override
-                protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Menu model) {
+                //select * from menu where foodid = producttypeid
+                Query query = productList.orderByChild("foodId").equalTo(product_typeId);
 
-                    Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback(){
-                        @Override
-                        public void onSuccess() {
+                options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query, Menu.class).build();
+                adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull MenuHolder holder, int position, @NonNull Menu model) {
 
-                        }
+                        Picasso.get().load(model.getImage()).into(holder.fdImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
 
-                        @Override
-                        public void onError(Exception e) {
-                            Toast.makeText(getApplicationContext(),"Could not get message", Toast.LENGTH_LONG).show();
+                            }
 
-                        }
-                    });
-                    holder.fdName.setText(model.getName());
-                    holder.fdDescript.setText(model.getDescription());
-                    holder.fdPrice.setText(String.format("€ %s", model.getPrice().toString()));
+                            @Override
+                            public void onError(Exception e) {
+                                // Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
 
-                    //final Menu clicked = model;
-                    holder.setItemClickListener(new ProductClickedListener() {
-                        @Override
-                        public void onClick(View v, int pos, boolean isLongClicked) {
+                            }
+                        });
+                        holder.fdName.setText(model.getName());
+                        holder.fdDescript.setText(model.getDescription());
+                        holder.fdPrice.setText(String.format("€ %s", model.getPrice().toString()));
 
-                            //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
-                            intent.putExtra("MenuId", adapter.getRef(pos).getKey());
-                            startActivity(intent);
-                        }
-                    });
-                }
-                @NonNull
-                @Override
-                public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                    View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_items,viewGroup,false);
-                    return new MenuHolder(v);
-                }
+                        //final Menu clicked = model;
+                        holder.setItemClickListener(new ProductClickedListener() {
+                            @Override
+                            public void onClick(View v, int pos, boolean isLongClicked) {
 
-            };
-            adapter.startListening();
-            recyclerView.setAdapter(adapter);
+                                //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
+                                intent.putExtra("MenuId", adapter.getRef(pos).getKey());
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
+                    @NonNull
+                    @Override
+                    public MenuHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                        View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_items, viewGroup, false);
+                        return new MenuHolder(v);
+                    }
+
+                };
+                adapter.startListening();
+                recyclerView.setAdapter(adapter);
+            }else{
+                Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -1,11 +1,8 @@
 package com.example.appserver;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,21 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.appserver.Holder.MenuHolder;
 import com.example.appserver.Holder.OrderHolder;
 import com.example.appserver.config.RemoteAPIService;
 import com.example.appserver.control.Control;
-import com.example.appserver.model.MakeOrder;
-import com.example.appserver.model.Menu;
 import com.example.appserver.model.MakeOrder;
 import com.example.appserver.model.Notification;
 import com.example.appserver.model.Response;
@@ -41,18 +33,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 public class OrdersPlacedActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-     MaterialSpinner spinner;
 
     FirebaseDatabase db;
     DatabaseReference orderPlaced;
@@ -61,6 +48,9 @@ public class OrdersPlacedActivity extends AppCompatActivity {
 
     FirebaseRecyclerOptions<MakeOrder> options;
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
+
+     RadioGroup statusGroup;
+     RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +79,17 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                 holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderPrice.setText(model.getTotal());
                 holder.orderTable.setText(model.getTable());
-//                holder.setItemClickListener(new ItemClickedListener() {
-//                    @Override
-//                    public void onClick(View v, int pos, boolean isLongClicked) {
-//
-//                    }
-//                });
+                holder.setItemClickListener(new ItemClickedListener() {
+                    @Override
+                    public void onClick(View v, int pos, boolean isLongClicked) {
+                        if(isLongClicked){
+                            Intent intent = new Intent(OrdersPlacedActivity.this, OrderDetailActivity.class);
+                            intent.putExtra("OrderId", adapter.getRef(pos).getKey());
+                            startActivity(intent);
+                        }
+
+                    }
+                });
 
 
             }
@@ -139,18 +134,22 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = this.getLayoutInflater();
         final View view = layoutInflater.inflate(R.layout.update_status_layout, null);
 
-        spinner = view.findViewById(R.id.spinner);
-        //todo
-        //spinner.setItems("Sent to Kitchen","Cooking", "Served");
+        statusGroup = (RadioGroup) findViewById(R.id.status);
         alertDialog.setView(view);
 
         final String key_STAT = key;
+
+//TODO
+
+//         find the radiobutton by returned id
+
+
 
         alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                item.setStatus(String.valueOf(spinner.getSelectedItem()));
+                item.setStatus(String.valueOf(statusGroup.getCheckedRadioButtonId()));
                 orderPlaced.child(key_STAT).setValue(item);
                 sendStatus(key_STAT,item);
 

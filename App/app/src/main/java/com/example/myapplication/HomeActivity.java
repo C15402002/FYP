@@ -90,54 +90,59 @@ public class HomeActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
 
 
+        if(Control.checkConnectivity(this)) {
 
-        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
-        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
+            options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
+            adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options) {
 
-            @Override
-            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
+                @Override
+                protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
 
-                Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
-                    @Override
-                    public void onSuccess() {
+                    Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Toast.makeText(getApplicationContext(),"Could not get message", Toast.LENGTH_LONG).show();
+                        @Override
+                        public void onError(Exception e) {
+                          //  Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
 
-                    }
-                });
-                //final Menu clicked = model;
-                holder.setItemClickListener(new ProductClickedListener() {
-                    @Override
-                    public void onClick(View v, int pos, boolean isLongClicked) {
+                        }
+                    });
+                    //final Menu clicked = model;
+                    holder.setItemClickListener(new ProductClickedListener() {
+                        @Override
+                        public void onClick(View v, int pos, boolean isLongClicked) {
 
-                       // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
-                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
-                        startActivity(intent);
-                    }
-                });
-                holder.itemName.setText(model.getName());
-            }
-            @NonNull
-            @Override
-            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items,viewGroup,false);
-                return new ProductHolder(v);
-            }
+                            // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+                            intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
+                            startActivity(intent);
+                        }
+                    });
+                    holder.itemName.setText(model.getName());
+                }
 
-
-        };
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
+                @NonNull
+                @Override
+                public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                    View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items, viewGroup, false);
+                    return new ProductHolder(v);
+                }
 
 
+            };
+
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            adapter.startListening();
+            recyclerView.setAdapter(adapter);
+
+
+        }else{
+            Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -178,8 +183,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_menu) {
-            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
-            startActivity(intent);
+           onBackPressed();
 
         }else if (id == R.id.nav_history) {
             Intent intent = new Intent(HomeActivity.this, OrderPlacedActivity.class);

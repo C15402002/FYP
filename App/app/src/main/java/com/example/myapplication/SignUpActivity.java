@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.control.Control;
 import com.example.myapplication.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -61,28 +62,33 @@ public class SignUpActivity extends AppCompatActivity {
         Registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userTable.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(Control.checkConnectivity(getBaseContext())) {
+                    userTable.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.child(phone.getText().toString()).exists()) {
-                            Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                            if (dataSnapshot.child(phone.getText().toString()).exists()) {
+                                Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
-                            userTable.child(phone.getText().toString()).setValue(user);
-                            Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                            finish();
+                            } else {
+                                User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
+                                userTable.child(phone.getText().toString()).setValue(user);
+                                Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                finish();
+
+                            }
 
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
+                }else{
+                    Toast.makeText(SignUpActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
 
             }

@@ -52,42 +52,47 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                userTable.addValueEventListener(new ValueEventListener() {
+                if(Control.checkConnectivity(getBaseContext())) {
+                    userTable.addValueEventListener(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.child(phone_input.getText().toString()).exists()) {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            User user = dataSnapshot.child(phone_input.getText().toString()).getValue(User.class);
-                            user.setPhone(phone_input.getText().toString());
-                            if (user.getPassword().equals(password_input.getText().toString())) {
+                            if (dataSnapshot.child(phone_input.getText().toString()).exists()) {
 
-                                Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                Control.currentUser = user;
-                                startActivity(intent);
-                                finish();
+                                User user = dataSnapshot.child(phone_input.getText().toString()).getValue(User.class);
+                                user.setPhone(phone_input.getText().toString());
+                                if (user.getPassword().equals(password_input.getText().toString())) {
 
+                                    Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    Control.currentUser = user;
+                                    startActivity(intent);
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
+
+                                }
                             } else {
-                                Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText(LoginActivity.this, "user does not exist", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else{
-                            Toast.makeText(LoginActivity.this, "user does not exist", Toast.LENGTH_SHORT).show();
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                        }
+                    });
+                }else {
+                    Toast.makeText(LoginActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
     }

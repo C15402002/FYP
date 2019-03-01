@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.myapplication.R;
+import com.example.myapplication.control.Control;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.view.ProductClickedListener;
 
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView basketName, basketPrice;
     public ImageView basketCount;
@@ -38,10 +40,19 @@ class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListen
         basketName = itemView.findViewById(R.id.itemName);
         basketPrice = itemView.findViewById(R.id.itemPrice);
         basketCount = itemView.findViewById(R.id.basketCount);
+        itemView.setOnCreateContextMenuListener(this);
     }
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        contextMenu.setHeaderTitle("Choose Action");
+        contextMenu.add(0,0,getAdapterPosition(), Control.edit);
+        contextMenu.add(0,1,getAdapterPosition(), Control.delete);
 
     }
 }
