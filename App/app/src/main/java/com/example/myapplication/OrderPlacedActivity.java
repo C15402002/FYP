@@ -63,8 +63,12 @@ public class OrderPlacedActivity extends AppCompatActivity {
         });
 
 
-        load(Control.currentUser.getPhone());
+        if(getIntent().getExtras() == null) {
+            load(Control.currentUser.getPhone());
 
+        }else{
+            load(getIntent().getStringExtra("userPhone"));
+        }
 
     }
     private void load(String phone){
@@ -82,7 +86,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull MakeOrder model) {
                 holder.orderId.setText(adapter.getRef(position).getKey());
                 holder.orderPrice.setText(model.getTotal());
-                holder.orderStatus.setText(model.getStatus());
+                holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderTable.setText(model.getTable());
 
             }
@@ -94,17 +98,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private String convertStatue(String status){
-        if(status.equals("0")){
-            return "Order Made";
-        }else if(status.equals("1"))
-        {
-            return "Sent to kitchen";
-        }else
-        {
-            return "Bought to table";
-        }
-    }
 
     @Override
     protected void onStart() {

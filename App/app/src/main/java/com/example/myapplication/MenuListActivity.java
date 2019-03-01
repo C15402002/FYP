@@ -80,6 +80,7 @@ public class MenuListActivity extends AppCompatActivity {
             product_typeId = getIntent().getStringExtra("Product_TypeId");
         }
         if(product_typeId!=null && !product_typeId.isEmpty()  ){
+            //select * from menu where foodid = producttypeid
             Query query = productList.orderByChild("foodId").equalTo(product_typeId);
 
             options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query,Menu.class).build();

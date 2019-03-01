@@ -41,9 +41,6 @@ public class MenuDetailActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference menu;
 
-    FirebaseRecyclerOptions<Menu> options;
-    FirebaseRecyclerAdapter<Menu, MenuHolder> adapter;
-
     Menu currentMenu;
 
 
@@ -74,7 +71,7 @@ public class MenuDetailActivity extends AppCompatActivity {
                         currentMenu.getPrice()
                 ));
                 Toast.makeText(MenuDetailActivity.this, "Added to order", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MenuDetailActivity.this, MenuListActivity.class);
+                Intent intent = new Intent(MenuDetailActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

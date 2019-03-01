@@ -3,12 +3,15 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,17 +20,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.adapter.BasketAdapter;
+import com.example.myapplication.config.RemoteAPIService;
 import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.model.MakeOrder;
+import com.example.myapplication.model.Notification;
 import com.example.myapplication.model.Order;
+import com.example.myapplication.model.Response;
+import com.example.myapplication.model.Sender;
+import com.example.myapplication.model.Token;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class BasketActivity extends AppCompatActivity {
 
@@ -41,6 +56,8 @@ public class BasketActivity extends AppCompatActivity {
 
     List<Order> listOfOrderPlaced = new ArrayList<>();
     BasketAdapter adapter;
+
+    RemoteAPIService remoteAPIService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +85,8 @@ public class BasketActivity extends AppCompatActivity {
         listOfOrderPlaced = new Database(this).getOrderBasket();
         adapter = new BasketAdapter(listOfOrderPlaced, this);
         recyclerView.setAdapter(adapter);
+
+        remoteAPIService = Control.getCloudMessage();
 
         Locale locale = new Locale("en","IE");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
@@ -103,12 +122,15 @@ public class BasketActivity extends AppCompatActivity {
                         totalPrice.getText().toString(),
                         listOfOrderPlaced);
 
+                String order_num = String.valueOf(System.currentTimeMillis());
 
 
-                databaseReference.child(String.valueOf(System.currentTimeMillis())).setValue(makeOrder);
+                databaseReference.child(order_num).setValue(makeOrder);
                 new Database(getBaseContext()).deleteFromBasket();
-                Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
-                finish();
+                notifyServer(order_num);
+//                Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
+//                finish();
+
 
             }
         });
@@ -120,6 +142,47 @@ public class BasketActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    private void notifyServer(final String order_num) {
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
+        Query query = databaseReference.orderByChild("isServerToken").equalTo(true);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapShot:dataSnapshot.getChildren()){
+                    Token token = postSnapShot.getValue(Token.class);
+                    Notification notification = new Notification("OUI","New Order "+order_num);
+                    Sender sender = new Sender(token.getToken(), notification);
+                    remoteAPIService.sendNotice(sender).enqueue(new Callback<Response>() {
+                        @Override
+                        public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                            if(response.body().success == 1){
+                                Toast.makeText(BasketActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else{
+                                Toast.makeText(BasketActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response> call, Throwable t) {
+                            Toast.makeText(BasketActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
+                            Log.e("Error", t.getMessage());
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
 }

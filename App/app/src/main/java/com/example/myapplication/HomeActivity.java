@@ -1,9 +1,7 @@
 package com.example.myapplication;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,32 +12,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.control.Control;
 import com.example.myapplication.holder.ProductHolder;
 import com.example.myapplication.model.Product_Type;
+import com.example.myapplication.model.Token;
 import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,6 +48,9 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
@@ -147,6 +142,15 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    private void updateToken(String token) {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
+
+        Token data = new Token(false, token );
+        databaseReference.child(Control.currentUser.getPhone()).setValue(data);
+
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -195,4 +199,30 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(adapter!=null){
+            adapter.startListening();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(adapter!=null){
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adapter!=null){
+            adapter.startListening();
+        }
+    }
+
 }
+

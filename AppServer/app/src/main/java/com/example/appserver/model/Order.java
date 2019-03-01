@@ -1,0 +1,47 @@
+package com.example.appserver.model;
+
+public class Order {
+    private String ProductId, ProductName, Quantity, Price;
+
+    public Order() {
+    }
+
+    public Order(String productId, String productName, String quantity, String price) {
+        ProductId = productId;
+        ProductName = productName;
+        Quantity = quantity;
+        Price = price;
+    }
+
+    public String getProductId() {
+        return ProductId;
+    }
+
+    public void setProductId(String productId) {
+        ProductId = productId;
+    }
+
+    public String getProdName() {
+        return ProductName;
+    }
+
+    public void setProdName(String productName) {
+        ProductName = productName;
+    }
+
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        Quantity = quantity;
+    }
+
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
+}
