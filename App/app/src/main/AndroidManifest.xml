@@ -25,7 +25,8 @@
         <activity
             android:name=".OrderPlacedActivity"
             android:theme="@style/CustomTheme" />
-        <activity android:name=".BasketActivity" />
+        <activity android:name=".BasketActivity"
+            android:theme="@style/CustomTheme"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +29,7 @@ import android.widget.Toast;
 import com.example.myapplication.adapter.BasketAdapter;
 import com.example.myapplication.config.RemoteAPIService;
 import com.example.myapplication.control.Control;
+import com.example.myapplication.control.Paypal;
 import com.example.myapplication.database.Database;
 import com.example.myapplication.model.MakeOrder;
 import com.example.myapplication.model.Notification;
@@ -37,7 +43,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +63,7 @@ import retrofit2.Callback;
 
 public class BasketActivity extends AppCompatActivity {
 
+    private static final int PAYPAL_REQUEST = 9999;
     RecyclerView recyclerView;
 
     FirebaseDatabase firebaseDatabase;
@@ -60,6 +76,12 @@ public class BasketActivity extends AppCompatActivity {
     BasketAdapter adapter;
 
     RemoteAPIService remoteAPIService;
+
+    static PayPalConfiguration palConfiguration = new PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+                                                        .clientId(Paypal.paypal_ID);
+    String tablenum, notes;
+
+
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -92,6 +114,10 @@ public class BasketActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        Intent intent = new Intent(this, Paypal.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
+        startService(intent);
+
         totalPrice = findViewById(R.id.total);
         placeOrder = findViewById(R.id.placeOrder);
         placeOrder.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +131,23 @@ public class BasketActivity extends AppCompatActivity {
             }
 
         });
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
+
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BasketActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
         loadBasket();
@@ -140,7 +183,7 @@ public class BasketActivity extends AppCompatActivity {
 
         final EditText tableEdit = view.findViewById(R.id.edtTable);
         final EditText commentEdit = view.findViewById(R.id.editComment);
-
+//TODO REMOVE
 //        final EditText editText = new EditText(BasketActivity.this);
 //        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 //        editText.setRawInputType(Configuration.KEYBOARD_12KEY);
@@ -151,26 +194,40 @@ public class BasketActivity extends AppCompatActivity {
         alertDialog.setIcon(R.drawable.ic_shopping_basket_black_24dp);
 
 
-        //TODO
+        //TODO CHECK BUG AGAIN
         alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
-                        Control.currentUser.getEmail(),
-                        tableEdit.getText().toString(),
-                        Control.currentUser.getName(),
-                        totalPrice.getText().toString(),
-                        commentEdit.getText().toString(),
-                        listOfOrderPlaced);
 
-                String order_num = String.valueOf(System.currentTimeMillis());
+                tablenum = tableEdit.getText().toString();
+                notes = commentEdit.getText().toString();
 
+                String formatTotal = totalPrice.getText().toString().replace("€","").replace(",","");
+                float sumTotal = Float.parseFloat(formatTotal);
 
-                databaseReference.child(order_num).setValue(makeOrder);
-                new Database(getBaseContext()).deleteFromBasket();
-                notifyServer(order_num);
-//                Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
-//                finish();
+                PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatTotal), "EUR", "OUI Order", PayPalPayment.PAYMENT_INTENT_SALE);
+                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
+                intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+                startActivityForResult(intent, PAYPAL_REQUEST);
+
+//TODO REMOVE
+//                MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
+//                        Control.currentUser.getEmail(),
+//                        tableEdit.getText().toString(),
+//                        Control.currentUser.getName(),
+//                        totalPrice.getText().toString(),
+//                        commentEdit.getText().toString(),
+//                        listOfOrderPlaced);
+//
+//                String order_num = String.valueOf(System.currentTimeMillis());
+//
+//
+//                databaseReference.child(order_num).setValue(makeOrder);
+//                new Database(getBaseContext()).deleteFromBasket();
+//                notifyServer(order_num);
+////                Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
+////                finish();
 
 
             }
@@ -183,6 +240,51 @@ public class BasketActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    //TODO NO MONEY IN ACCCOUNT SANDBOX MAKE NEW
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PAYPAL_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                PaymentConfirmation paymentConfirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+
+                if (paymentConfirmation != null) {
+                    try {
+                        String payPalDetail = paymentConfirmation.toJSONObject().toString();
+                        JSONObject jsonObject = new JSONObject(payPalDetail);
+                        MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
+                                Control.currentUser.getEmail(),
+                                tablenum,
+                                Control.currentUser.getName(),
+                                totalPrice.getText().toString(),
+                                notes,
+                                jsonObject.getJSONObject("Response").getString("stage"),
+                                listOfOrderPlaced);
+
+                        String order_num = String.valueOf(System.currentTimeMillis());
+
+
+                        databaseReference.child(order_num).setValue(makeOrder);
+                        new Database(getBaseContext()).deleteFromBasket();
+                        notifyServer(order_num);
+                        Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Toast.makeText(this, "Payment Invalid", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void notifyServer(final String order_num) {
