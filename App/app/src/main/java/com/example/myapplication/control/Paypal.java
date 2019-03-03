@@ -1,6 +1,6 @@
 package com.example.myapplication.control;
 
 public class Paypal {
-    public static final String paypal_ID = "AVSdun-v4ij4Teh4wmx0Xc58sE-hgI8h3N8L4Ctcl8yAE21e4yZ8d0uWEbQPYhYLfDo4kNML0hb9T-wF";
+    public static final String paypal_ID = "AcWbZVQ6Cvl0SwaVRxsi5Bs7UK-y_9dbIgwBd_wWXOELQF-HvS-dTkFxZh2hbsGj40svWxa0PXJJGOe0";
 
 }
