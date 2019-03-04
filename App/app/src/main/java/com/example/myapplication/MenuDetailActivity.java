@@ -1,13 +1,13 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,17 +19,13 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
-import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.Review;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.stepstone.apprating.AppRatingDialog;
@@ -37,7 +33,6 @@ import com.stepstone.apprating.listener.RatingDialogListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class MenuDetailActivity extends AppCompatActivity implements RatingDialogListener {
@@ -58,6 +53,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     Menu currentMenu;
 
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

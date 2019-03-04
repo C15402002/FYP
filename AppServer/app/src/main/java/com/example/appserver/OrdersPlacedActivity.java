@@ -79,6 +79,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                 holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderPrice.setText(model.getTotal());
                 holder.orderTable.setText(model.getTable());
+                holder.orderDate.setText(Control.orderDate(Long.parseLong(adapter.getRef(position).getKey())));
                 holder.setItemClickListener(new ItemClickedListener() {
                     @Override
                     public void onClick(View v, int pos, boolean isLongClicked) {

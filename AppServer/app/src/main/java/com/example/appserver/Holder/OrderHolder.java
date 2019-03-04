@@ -16,7 +16,7 @@ import com.example.appserver.view.ItemClickedListener;
 public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,
         View.OnCreateContextMenuListener {
 
-    public TextView orderId, orderStatus, orderPrice, orderTable;
+    public TextView orderId, orderStatus, orderPrice, orderTable, orderDate;
 
     private ItemClickedListener itemClickedListener;
     public OrderHolder(@NonNull View itemView) {
@@ -25,6 +25,7 @@ public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClick
         orderStatus = itemView.findViewById(R.id.status);
         orderPrice = itemView.findViewById(R.id.price);
         orderTable = itemView.findViewById(R.id.table);
+        orderDate = itemView.findViewById(R.id.OrderDate);
 
 
         itemView.setOnCreateContextMenuListener(this);

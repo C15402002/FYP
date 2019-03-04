@@ -56,4 +56,18 @@ public class Database extends SQLiteAssetHelper{
         sqLiteDatabase.execSQL(query);
 
     }
+
+    public int getAmount() {
+        int count = 0;
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String query = String.format("SELECT COUNT(*) FROM OrderDetail");
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                count = cursor.getInt(0);
+
+            }while (cursor.moveToNext());
+        }
+        return count;
+    }
 }

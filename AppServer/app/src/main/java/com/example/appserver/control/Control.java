@@ -6,6 +6,10 @@ import com.example.appserver.config.RetroClient;
 import com.example.appserver.model.MakeOrder;
 import com.example.appserver.model.User;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class Control {
     public static User currentUser;
     public static MakeOrder currentOrder;
@@ -30,6 +34,13 @@ public class Control {
             return "ready to serve";
         }
 
+    }
+
+    public static String orderDate(long time){
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        calendar.setTimeInMillis(time);
+        StringBuilder date = new StringBuilder(android.text.format.DateFormat.format("DD-MM-YYYY HH:MM",calendar).toString());
+        return date.toString();
     }
 
 }

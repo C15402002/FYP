@@ -94,6 +94,27 @@
             android:text="EURO"
             android:textAllCaps="true"
             android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:layout_below="@+id/totalprice"
+                android:text="DATE :"
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/OrderDate"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/totalprice"
+                android:layout_toEndOf="@+id/date"
+                android:text="DATE"
+                android:textAllCaps="true"
+                android:textStyle="italic"/>
         </RelativeLayout>
 
 

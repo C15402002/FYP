@@ -2,18 +2,17 @@ package com.example.myapplication;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.myapplication.control.Control;
-import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.holder.OrderHolder;
 import com.example.myapplication.model.MakeOrder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
