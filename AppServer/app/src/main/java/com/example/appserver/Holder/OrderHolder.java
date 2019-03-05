@@ -1,9 +1,11 @@
 package com.example.appserver.Holder;
 
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,12 +15,11 @@ import com.example.appserver.control.Control;
 import com.example.appserver.view.ItemClickedListener;
 
 
-public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener,
-        View.OnCreateContextMenuListener {
+public class OrderHolder extends RecyclerView.ViewHolder{
 
     public TextView orderId, orderStatus, orderPrice, orderTable, orderDate;
+    public Button statusBtn, detailBtn, deleteBtn;
 
-    private ItemClickedListener itemClickedListener;
     public OrderHolder(@NonNull View itemView) {
         super(itemView);
         orderId = itemView.findViewById(R.id.orderNum);
@@ -26,35 +27,11 @@ public class OrderHolder extends RecyclerView.ViewHolder implements View.OnClick
         orderPrice = itemView.findViewById(R.id.price);
         orderTable = itemView.findViewById(R.id.table);
         orderDate = itemView.findViewById(R.id.OrderDate);
-
-
-        itemView.setOnCreateContextMenuListener(this);
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        itemClickedListener.onClick(view, getAdapterPosition(), false);
+        statusBtn = itemView.findViewById(R.id.statusBtn);
+        detailBtn = itemView.findViewById(R.id.detailbtn);
+        deleteBtn = itemView.findViewById(R.id.deleteBtn);
 
 
     }
 
-    public void setItemClickListener(ItemClickedListener itemClickedListener){
-        this.itemClickedListener = itemClickedListener;
-    }
-
-    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-        contextMenu.setHeaderTitle("Choose Action");
-        contextMenu.add(0,0,getAdapterPosition(), Control.update);
-        contextMenu.add(0,1,getAdapterPosition(), Control.delete);
-
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-        itemClickedListener.onClick(view, getAdapterPosition(),true);
-        return true;
-    }
 }

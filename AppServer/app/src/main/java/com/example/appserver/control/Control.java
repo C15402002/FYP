@@ -39,7 +39,7 @@ public class Control {
     public static String orderDate(long time){
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
-        StringBuilder date = new StringBuilder(android.text.format.DateFormat.format("DD-MM-YYYY HH:MM",calendar).toString());
+        StringBuilder date = new StringBuilder(android.text.format.DateFormat.format("dd-MM-yyyy HH:MM",calendar).toString());
         return date.toString();
     }
 

@@ -312,8 +312,7 @@ public class HomeActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_menu) {
-            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
-            startActivity(intent);
+            onBackPressed();
         }else if (id == R.id.nav_about) {
 //            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
 //            startActivity(intent);

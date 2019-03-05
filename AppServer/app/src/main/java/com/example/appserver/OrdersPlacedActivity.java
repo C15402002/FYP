@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,8 +50,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<MakeOrder> options;
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
 
-     RadioGroup statusGroup;
-     RadioButton radioButton;
+    MaterialSpinner materialSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,35 +72,47 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         options = new FirebaseRecyclerOptions.Builder<MakeOrder>().setQuery(orderPlaced, MakeOrder.class).build();
         adapter = new FirebaseRecyclerAdapter<MakeOrder, OrderHolder>(options){
 
+            @NonNull
             @Override
-            protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull MakeOrder model) {
-                final MakeOrder clicked = model;
+            public OrderHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_history,viewGroup,false);
+                return new OrderHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull OrderHolder holder, final int position, @NonNull final MakeOrder model) {
                 holder.orderId.setText(adapter.getRef(position).getKey());
                 holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderPrice.setText(model.getTotal());
                 holder.orderTable.setText(model.getTable());
                 holder.orderDate.setText(Control.orderDate(Long.parseLong(adapter.getRef(position).getKey())));
-                holder.setItemClickListener(new ItemClickedListener() {
-                    @Override
-                    public void onClick(View v, int pos, boolean isLongClicked) {
-                        if(isLongClicked){
-                            Intent intent = new Intent(OrdersPlacedActivity.this, OrderDetailActivity.class);
-                            intent.putExtra("OrderId", adapter.getRef(pos).getKey());
-                            startActivity(intent);
-                        }
 
+                holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showDeleteDialog(adapter.getRef(position).getKey());
+                    }
+                });
+                holder.statusBtn.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View view) {
+                        showUpdateDialog(adapter.getRef(position).getKey(), adapter.getItem(position));
+
+                    }
+                });
+                holder.detailBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(OrdersPlacedActivity.this, OrderDetailActivity.class);
+                        intent.putExtra("OrderId", adapter.getRef(position).getKey());
+                        Control.currentOrder = model;
+                        startActivity(intent);
                     }
                 });
 
 
             }
-            @NonNull
-            @Override
-            public OrderHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_history,viewGroup,false);
-                return new OrderHolder(v);
-            }
-
 
         };
 
@@ -111,18 +123,10 @@ public class OrdersPlacedActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Control.update)){
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        } else if(item.getTitle().equals(Control.delete)){
-            showDeleteDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        }
-        return super.onContextItemSelected(item);
-    }
 
-    private void showDeleteDialog(String key, MakeOrder item) {
+    private void showDeleteDialog(String key) {
         orderPlaced.child(key).removeValue();
+        adapter.notifyDataSetChanged();
         Toast.makeText(this, "Item removed!", Toast.LENGTH_SHORT).show();
     }
 
@@ -135,23 +139,19 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = this.getLayoutInflater();
         final View view = layoutInflater.inflate(R.layout.update_status_layout, null);
 
-        statusGroup = (RadioGroup) findViewById(R.id.status);
         alertDialog.setView(view);
 
         final String key_STAT = key;
-
-//TODO
-
-//         find the radiobutton by returned id
-
-
+        materialSpinner = view.findViewById(R.id.spinner);
+        materialSpinner.setItems("Kitchen", "Cooking", "Served");
 
         alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                item.setStatus(String.valueOf(statusGroup.getCheckedRadioButtonId()));
+                item.setStatus(String.valueOf(materialSpinner.getSelectedIndex()));
                 orderPlaced.child(key_STAT).setValue(item);
+                adapter.notifyDataSetChanged();
                 sendStatus(key_STAT,item);
 
             }
@@ -178,12 +178,14 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                     remoteAPIService.sendNotice(sender).enqueue(new Callback<Response>() {
                         @Override
                         public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                            if(response.body().success == 1){
-                                Toast.makeText(OrdersPlacedActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else{
-                                Toast.makeText(OrdersPlacedActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
+                            if (response.body() != null) {
+                                if(response.body().success == 1){
+                                    Toast.makeText(OrdersPlacedActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else{
+                                    Toast.makeText(OrdersPlacedActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
 
+                                }
                             }
                         }
 
@@ -203,5 +205,27 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(adapter!=null){
+            adapter.startListening();
+        }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(adapter!=null){
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adapter!=null){
+            adapter.startListening();
+        }
+    }
 }

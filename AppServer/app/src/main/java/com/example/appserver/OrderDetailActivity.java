@@ -12,7 +12,7 @@ import com.example.appserver.control.Control;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    TextView orderId, status, orderTable, orderComment;
+    TextView orderId, status, orderPrice, orderTable, orderComment;
 
     String order_Id = "";
 
@@ -27,6 +27,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderId = findViewById(R.id.orderNum);
         status = findViewById(R.id.status);
         orderTable = findViewById(R.id.tablenum);
+        orderPrice = findViewById(R.id.price);
         orderComment = findViewById(R.id.note);
 
         recyclerView = findViewById(R.id.listdetails);
@@ -42,6 +43,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderId.setText(order_Id);
         status.setText(Control.currentOrder.getStatus());
         orderTable.setText(Control.currentOrder.getTable());
+        orderPrice.setText(Control.currentOrder.getTotal());
         orderComment.setText(Control.currentOrder.getNote());
 
         ExtraDetailAdapter adapter = new ExtraDetailAdapter(Control.currentOrder.getListOfOrderPlaced());

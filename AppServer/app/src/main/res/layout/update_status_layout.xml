@@ -7,31 +7,8 @@
     android:layout_marginTop="8dp"
     app:cardElevation="4dp">
 
-    <RadioGroup
-        android:id="@+id/status"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <RadioButton
-            android:id="@+id/kitchen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sent to kitchen"
-            android:checked="true" />
-
-        <RadioButton
-            android:id="@+id/cooking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cooking" />
-
-        <RadioButton
-            android:id="@+id/served"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Served" />
-
-    </RadioGroup>
-
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"/>
 </android.support.v7.widget.CardView>

@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|start"
-                    android:text="FOOD ITEM"
+                    android:text="Order Num"
                     android:textAllCaps="true"
                     android:textStyle="bold"/>
 
@@ -61,7 +61,7 @@
                     android:textStyle="italic"/>
 
                 <TextView
-                    android:id="@+id/tablenum"
+                    android:id="@+id/table"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,12 +72,12 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/table"
+                    android:id="@+id/tablenum"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/status"
-                    android:layout_toEndOf="@+id/tablenum"
+                    android:layout_toEndOf="@+id/table"
                     android:text="table number"
                     android:textAllCaps="true"
                     android:textStyle="italic"/>

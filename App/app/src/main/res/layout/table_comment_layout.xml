@@ -17,7 +17,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/edtTable"
-              android:hint="Edit table number"
+              android:hint="Enter table number"
               android:inputType="number"
               android:textSize="25sp"
               android:textColorHint="@color/grey"
@@ -28,7 +28,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/editComment"
-              android:hint="Edit comment number"
+              android:hint="Comments"
               android:inputType="textMultiLine"
               android:textColorHint="@color/grey"
               android:textColor="@color/black"/>
