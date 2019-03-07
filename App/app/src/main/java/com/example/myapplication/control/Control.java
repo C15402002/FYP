@@ -35,7 +35,7 @@ public class Control {
         return RetroClient.getClient(BASE_URL).create(RemoteAPIService.class);
     }
 
-    public static final String edit = "Edit";
+   // public static final String edit = "Edit";
     public static final String delete = "Delete";
 
     public static boolean checkConnectivity(Context context){

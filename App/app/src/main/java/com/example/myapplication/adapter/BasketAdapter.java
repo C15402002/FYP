@@ -57,8 +57,7 @@ class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListen
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
         contextMenu.setHeaderTitle("Choose Action");
-        contextMenu.add(0,0,getAdapterPosition(), Control.edit);
-        contextMenu.add(0,1,getAdapterPosition(), Control.delete);
+        contextMenu.add(0,0,getAdapterPosition(), Control.delete);
 
     }
 }
@@ -92,19 +91,19 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 //TODO
-                Order order = listAddedItems.get(newValue);
+                Order order = listAddedItems.get(i);
                 order.setQuantity(String.valueOf(newValue));
                 new Database(basketActivity).editBasket(order);
 
                // basketActivity.totalPrice
-                Locale locale = new Locale("en","IE");
-                NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
 
                 float total = 0;
                 List<Order> listOfOrderPlaced = new Database(basketActivity).getOrderBasket(Control.currentUser.getPhone());
                 for(Order item:listOfOrderPlaced){
-                    total += (Float.parseFloat(order.getPrice()))*(Float.parseFloat(order.getQuantity()));
+                    total += (Float.parseFloat(order.getPrice()))*(Float.parseFloat(item.getQuantity()));
                 }
+                Locale locale = new Locale("en","IE");
+                NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
 
                 basketActivity.totalPrice.setText(numberFormat.format(total));
             }

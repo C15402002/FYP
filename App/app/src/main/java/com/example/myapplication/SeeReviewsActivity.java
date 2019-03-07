@@ -36,7 +36,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
 
     FirebaseRecyclerAdapter<Review, ReviewHolder> adapter;
     FirebaseRecyclerOptions<Review> options;
-    
+
 
 
     @Override
