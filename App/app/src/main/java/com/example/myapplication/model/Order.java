@@ -1,16 +1,25 @@
 package com.example.myapplication.model;
 
 public class Order {
-    private String ProductId, ProductName, Quantity, Price;
+    private String UserPhone,ProductId, ProductName, Quantity, Price;
 
     public Order() {
     }
 
-    public Order(String productId, String productName, String quantity, String price) {
+    public Order(String userPhone, String productId, String productName, String quantity, String price) {
+        UserPhone = userPhone;
         ProductId = productId;
         ProductName = productName;
         Quantity = quantity;
         Price = price;
+    }
+
+    public String getUserPhone() {
+        return UserPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        UserPhone = userPhone;
     }
 
     public String getProductId() {
@@ -21,11 +30,11 @@ public class Order {
         ProductId = productId;
     }
 
-    public String getProdName() {
+    public String getProductName() {
         return ProductName;
     }
 
-    public void setProdName(String productName) {
+    public void setProductName(String productName) {
         ProductName = productName;
     }
 

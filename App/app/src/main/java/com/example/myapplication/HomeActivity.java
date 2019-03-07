@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.holder.MenuHolder;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.zxing.client.android.Intents;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -39,13 +44,17 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase db;
-    DatabaseReference product;
+    DatabaseReference product, menusearch;
     TextView email, name;
 
     RecyclerView recyclerView;
     FirebaseRecyclerOptions<Product_Type> options;
     FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
     CounterFab fab;
+
+//    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> search_options;
+//    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> search_adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,7 @@ public class HomeActivity extends AppCompatActivity
                startActivity(intent);
             }
         });
+        fab.setCount(new Database(this).getAmount(Control.currentUser.getPhone()));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -150,6 +160,41 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+//    private void firebaseSearch(String search){
+//        menusearch = db.getReference("Menu");
+//        Query searchQuery = menusearch.orderByChild("MenuId").startAt(search).endAt(search + "\uf8ff");
+//        search_options = new FirebaseRecyclerOptions.Builder<com.example.myapplication.model.Menu>().setQuery(searchQuery, com.example.myapplication.model.Menu.class).build();
+//
+//        search_adapter = new FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder>(search_options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull MenuHolder menuHolder, int i, @NonNull com.example.myapplication.model.Menu menu) {
+//
+//                menuHolder.fdName.setText(menu.getName());
+////                menuHolder.fdDescript.setText(menu.getDescription());
+////                menuHolder.fdPrice.setText(String.format("€ %s", menu.getPrice().toString()));
+//
+//                //final Menu clicked = model;
+//                menuHolder.setItemClickListener(new ProductClickedListener() {
+//                    @Override
+//                    public void onClick(View v, int pos, boolean isLongClicked) {
+//                        //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+//                        intent.putExtra("MenuId", adapter.getRef(pos).getKey());
+//                        startActivity(intent);
+//                    }
+//                });
+//            }
+//
+//            @NonNull
+//            @Override
+//            public MenuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.food_items, parent, false);
+//                return new MenuHolder(v);
+//            }
+//        };
+//        recyclerView.setAdapter(search_adapter);
+//    }
+
     private void updateToken(String token) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
@@ -173,8 +218,22 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the product; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home,menu);
-
-        return true;
+//        MenuItem item = menu.findItem(R.id.action_search);
+//        MaterialSearchView materialSearchView = (MaterialSearchView) MenuItemCompat.getActionView(item);
+//        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                firebaseSearch(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                firebaseSearch(newText);
+//                return false;
+//            }
+//        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -208,6 +267,19 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_search) {
+            //firebaseSearch(search);
+        } else if(id == R.id.action_scan){
+//            Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
+//            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if(adapter!=null){
@@ -226,7 +298,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        fab.setCount(new Database(this).getAmount());
+        fab.setCount(new Database(this).getAmount(Control.currentUser.getPhone()));
 
         if(adapter!=null){
             adapter.startListening();

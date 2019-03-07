@@ -2,13 +2,16 @@ package com.example.myapplication.holder;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.control.Control;
 import com.example.myapplication.view.ProductClickedListener;
 
-public class   OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class   OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView orderId, orderStatus, orderPrice, orderTable;
 
@@ -34,6 +37,14 @@ public class   OrderHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     public void setItemClickListener(ProductClickedListener productClickListener){
         this.productClickListener = productClickListener;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        contextMenu.setHeaderTitle("Choose Action");
+        contextMenu.add(0,0,getAdapterPosition(), Control.edit);
+        contextMenu.add(0,1,getAdapterPosition(), Control.delete);
+
     }
 
 }

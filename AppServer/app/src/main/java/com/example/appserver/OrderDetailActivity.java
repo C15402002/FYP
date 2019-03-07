@@ -39,12 +39,11 @@ public class OrderDetailActivity extends AppCompatActivity {
             order_Id = getIntent().getStringExtra("OrderId");
 
         }
-        //TODO FIX BUG HERE
         orderId.setText(order_Id);
         status.setText(Control.currentOrder.getStatus());
         orderTable.setText(Control.currentOrder.getTable());
         orderPrice.setText(Control.currentOrder.getTotal());
-        orderComment.setText(Control.currentOrder.getNote());
+        orderComment.setText(Control.currentOrder.getNotes());
 
         ExtraDetailAdapter adapter = new ExtraDetailAdapter(Control.currentOrder.getListOfOrderPlaced());
         adapter.notifyDataSetChanged();

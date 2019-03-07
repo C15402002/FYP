@@ -4,22 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuListActivity">
+    tools:context=".SearchFoodsActivity">
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <com.miguelcatalan.materialsearchview.MaterialSearchView
+        android:id="@+id/searchBar"
         android:layout_alignParentTop="true"
-        app:mt_speechMode="true"
-        app:mt_hint="Search Dishes "/>
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search"
+        android:layout_below="@+id/searchBar"
         android:id="@+id/recycleViewFood">
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -15,7 +15,9 @@ import retrofit2.Retrofit;
 
 public class Control {
     public static User currentUser;
+    public static final String Review_DishesID = "MenuId";
 
+    public static String PHONE_ID = "\"userPhone\"";
     public static String convertStatus(String statusStage){
         if(statusStage.equals("0")){
             return "sent to kitchen";

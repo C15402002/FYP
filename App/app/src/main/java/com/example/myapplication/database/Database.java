@@ -19,21 +19,21 @@ public class Database extends SQLiteAssetHelper{
         super(con, DB_NAME,null, DB_VER);
     }
 
-    public List<Order> getOrderBasket(){
+    public List<Order> getOrderBasket(String userPhone){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
 
-        String[] select = {"ProductName", "ProductId","Quantity", "Price"};
+        String[] select = {"UserPhone", "ProductId","ProductName","Quantity", "Price"};
         String sqlTable = "OrderDetail";
 
         final List<Order> result = new ArrayList<>();
         sqLiteQueryBuilder.setTables(sqlTable);
-        Cursor cursor = sqLiteQueryBuilder.query(sqLiteDatabase, select, null, null, null, null, null);
+        Cursor cursor = sqLiteQueryBuilder.query(sqLiteDatabase, select, "UserPhone = ?", new String[]{userPhone}, null, null, null);
 
 //        Cursor cursor = sqLiteDatabase.rawQuery("SELECT ProductId, ProdName, Quantity, Price FROM OrderDetail", null);
         if(cursor.moveToFirst()){
             do{
-                result.add(new Order(cursor.getString(cursor.getColumnIndex("ProductId")), cursor.getString(cursor.getColumnIndex("ProductName")),
+                result.add(new Order(cursor.getString(cursor.getColumnIndex("UserPhone")),cursor.getString(cursor.getColumnIndex("ProductId")), cursor.getString(cursor.getColumnIndex("ProductName")),
                        cursor.getString(cursor.getColumnIndex("Quantity")), cursor.getString(cursor.getColumnIndex("Price"))));
             } while (cursor.moveToNext());
         }
@@ -44,23 +44,23 @@ public class Database extends SQLiteAssetHelper{
 
     public void addToBasket(Order order){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        String query = String.format("INSERT INTO OrderDetail(ProductId, ProductName, Quantity, Price) VALUES('%s', '%s','%s','%s');",
-                order.getProductId(), order.getProdName(), order.getQuantity(), order.getPrice());
+        String query = String.format("INSERT OR REPLACE INTO OrderDetail(UserPhone, ProductId, ProductName, Quantity, Price) VALUES('%s', '%s', '%s','%s','%s');",
+                order.getUserPhone(), order.getProductId(), order.getProductName(), order.getQuantity(), order.getPrice());
         sqLiteDatabase.execSQL(query);
 
     }
 
-    public void deleteFromBasket(){
+    public void deleteFromBasket(String userPhone){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        String query = String.format("DELETE FROM OrderDetail");
+        String query = String.format("DELETE FROM OrderDetail WHERE UserPhone='%s'", userPhone);
         sqLiteDatabase.execSQL(query);
 
     }
 
-    public int getAmount() {
+    public int getAmount(String userPhone) {
         int count = 0;
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        String query = String.format("SELECT COUNT(*) FROM OrderDetail");
+        String query = String.format("SELECT COUNT(*) FROM OrderDetail WHERE UserPhone = '%s'", userPhone);
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
         if(cursor.moveToFirst()){
             do{
@@ -70,4 +70,11 @@ public class Database extends SQLiteAssetHelper{
         }
         return count;
     }
+
+    public void editBasket(Order order){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        String sqlQuery = String.format("UPDATE OrderDetail SET Quantity = '%s' WHERE UserPhone = '%s' AND ProductId = '%s'", order.getQuantity(), order.getUserPhone(), order.getProductId());
+        sqLiteDatabase.execSQL(sqlQuery);
+    }
+
 }

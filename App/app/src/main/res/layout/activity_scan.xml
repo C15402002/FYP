@@ -28,24 +28,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome "
-            android:textSize="90sp"
+            android:text="Scan QRcode to see menu "
+            android:textSize="50sp"
             android:textAllCaps="false"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:fontFamily="@font/lucidacalligraphy"
+            android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="50dp"
             />
 
         <Button
+            android:id="@+id/scanBtn"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="SCAN"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@color/colorAccent"
-            android:onClick="scanCode"/>
+            android:background="@color/colorAccent" />
 
     </LinearLayout>
 

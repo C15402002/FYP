@@ -3,7 +3,7 @@ package com.example.appserver.model;
 import java.util.List;
 
 public class MakeOrder {
-    private String phone, email, table, name, total, status, note, paymentProcess;
+    private String phone, email, table, name, total, status, notes, paymentProcess;
     private List<Order> listOfOrderPlaced;
 
     public MakeOrder() {
@@ -12,13 +12,13 @@ public class MakeOrder {
 
 
 
-    public MakeOrder(String phone, String name, String email, String table, String total, String note, String paymentProcess, List<Order> listOfOrderPlaced) {
+    public MakeOrder(String phone, String name, String email, String table, String total, String notes, String paymentProcess, List<Order> listOfOrderPlaced) {
         this.phone = phone;
         this.name = name;
         this.email = email;
         this.table = table;
         this.total = total;
-        this.note = note;
+        this.notes = notes;
         this.status = "0";
         this.paymentProcess = paymentProcess;
         this.listOfOrderPlaced = listOfOrderPlaced;
@@ -81,11 +81,11 @@ public class MakeOrder {
         this.table = table;
     }
 
-    public String getNote() {
-        return note;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

@@ -123,6 +123,7 @@
                     android:layout_below="@+id/price"
                     android:layout_toEndOf="@+id/comment"
                     android:text="commmment"
+                    android:inputType="textMultiLine"
                     android:textAllCaps="false"
                     android:textStyle="italic"/>
             </RelativeLayout>

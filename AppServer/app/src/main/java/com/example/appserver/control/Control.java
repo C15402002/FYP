@@ -20,6 +20,7 @@ public class Control {
     public static final int PICK_IMAGE_REQUEST = 71;
 
     public static final String BASE_URL = "http://fcm.googleapis.com/";
+    public static String PHONE_ID = "userPhone";
 
     public static RemoteAPIService getCloudMessage(){
         return RetroClient.getClient(BASE_URL).create(RemoteAPIService.class);

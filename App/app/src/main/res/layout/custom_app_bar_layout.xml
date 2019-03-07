@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorAccent"
     android:layout_height="50dp"
     android:orientation="horizontal"
     >
@@ -9,15 +8,15 @@
     <TableRow>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_back_ios"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
             android:id="@+id/action_bar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back_ios" />
 
 
     </TableRow>

@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.myapplication.BasketActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
+import com.example.myapplication.database.Database;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.view.ProductClickedListener;
 
@@ -27,7 +30,9 @@ import java.util.Locale;
 class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView basketName, basketPrice;
-    public ImageView basketCount;
+    //public ImageView basketCount;
+    public ElegantNumberButton counter;
+
 
     private ProductClickedListener productClickedListener;
 
@@ -39,7 +44,8 @@ class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListen
         super(itemView);
         basketName = itemView.findViewById(R.id.itemName);
         basketPrice = itemView.findViewById(R.id.itemPrice);
-        basketCount = itemView.findViewById(R.id.basketCount);
+       //basketCount = itemView.findViewById(R.id.basketCount);
+        counter = itemView.findViewById(R.id.counter);
         itemView.setOnCreateContextMenuListener(this);
     }
 
@@ -60,31 +66,55 @@ class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListen
 public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
 
     private List<Order> listAddedItems = new ArrayList<>();
-    private Context con;
+    //private Context con;
+    private BasketActivity basketActivity;
 
-    public BasketAdapter(List<Order> listAddedItems, Context con) {
+    public BasketAdapter(List<Order> listAddedItems, BasketActivity basketActivity) {
         this.listAddedItems = listAddedItems;
-        this.con = con;
+        this.basketActivity = basketActivity;
     }
 
     @NonNull
     @Override
     public BasketHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(con);
+        LayoutInflater inflater = LayoutInflater.from(basketActivity);
         View view = inflater.inflate(R.layout.basket_layout, viewGroup,false);
         return new BasketHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BasketHolder basketHolder, int i) {
-        TextDrawable textDrawable = TextDrawable.builder().buildRound("" + listAddedItems.get(i).getQuantity(), Color.GREEN);
-        basketHolder.basketCount.setImageDrawable(textDrawable);
+    public void onBindViewHolder(@NonNull BasketHolder basketHolder, final int i) {
+//        TextDrawable textDrawable = TextDrawable.builder().buildRound("" + listAddedItems.get(i).getQuantity(), Color.GREEN);
+//        basketHolder.basketCount.setImageDrawable(textDrawable);
+
+        basketHolder.counter.setNumber(listAddedItems.get(i).getQuantity());
+        basketHolder.counter.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+//TODO
+                Order order = listAddedItems.get(newValue);
+                order.setQuantity(String.valueOf(newValue));
+                new Database(basketActivity).editBasket(order);
+
+               // basketActivity.totalPrice
+                Locale locale = new Locale("en","IE");
+                NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+
+                float total = 0;
+                List<Order> listOfOrderPlaced = new Database(basketActivity).getOrderBasket(Control.currentUser.getPhone());
+                for(Order item:listOfOrderPlaced){
+                    total += (Float.parseFloat(order.getPrice()))*(Float.parseFloat(order.getQuantity()));
+                }
+
+                basketActivity.totalPrice.setText(numberFormat.format(total));
+            }
+        });
 
         Locale locale = new Locale("en","IE");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         float price = (Float.parseFloat(listAddedItems.get(i).getPrice()))*(Float.parseFloat(listAddedItems.get(i).getQuantity()));
         basketHolder.basketPrice.setText(numberFormat.format(price));
-        basketHolder.basketName.setText(listAddedItems.get(i).getProdName());
+        basketHolder.basketName.setText(listAddedItems.get(i).getProductName());
 
 
     }

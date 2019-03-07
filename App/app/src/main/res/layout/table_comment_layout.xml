@@ -29,9 +29,30 @@
               android:layout_height="wrap_content"
               android:id="@+id/editComment"
               android:hint="Comments"
+              android:textSize="20sp"
               android:inputType="textMultiLine"
               android:textColorHint="@color/grey"
               android:textColor="@color/black"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:textSize="15sp"
+              android:text="Payment Method: "/>
+          <RadioGroup
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              <RadioButton
+                  android:id="@+id/Paypal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Paypal"/>
+              <RadioButton
+                  android:id="@+id/CallCash"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Call waiter for cash"/>
+          </RadioGroup>
 
       </LinearLayout>
 

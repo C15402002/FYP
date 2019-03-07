@@ -5,10 +5,14 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -39,7 +43,8 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
     TextView fdname, description, price;
     ImageView fdimage;
-    FloatingActionButton add, btnrate;
+    FloatingActionButton btnrate;
+    Button add, seeReviews;
     ElegantNumberButton quantity;
     CollapsingToolbarLayout collapsingToolbarLayout;
     RatingBar ratingBar;
@@ -70,13 +75,24 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         fdimage = findViewById(R.id.foodimage);
 
         quantity = findViewById(R.id.counter);
-        add = findViewById(R.id.fab);
+        //TODO
+//        seeReviews = findViewById(R.id.seeReviews);
+//        seeReviews.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MenuDetailActivity.this, SeeReviewsActivity.class);
+//                intent.putExtra(Control.Review_DishesID, menuId);
+//                startActivity(intent);
+//
+//            }
+//        });
+        add = findViewById(R.id.addBtn);
 
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Database(getBaseContext()).addToBasket(new Order(
+                new Database(getBaseContext()).addToBasket(new Order(Control.currentUser.getPhone(),
                         menuId, currentMenu.getName(),
                         quantity.getNumber(),
                         currentMenu.getPrice()
@@ -86,7 +102,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
                 startActivity(intent);
             }
         });
-
+        //add.
         btnrate = findViewById(R.id.rate_btn);
         btnrate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,23 +221,33 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     public void onPositiveButtonClicked(int i, @NotNull String s) {
         final Review review = new Review(Control.currentUser.getPhone(),menuId,String.valueOf(i),s);
 
-        reviews.child(Control.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+        reviews.push().setValue(review).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(Control.currentUser.getPhone()).exists()){
-                    reviews.child(Control.currentUser.getPhone()).removeValue();
-                    reviews.child(Control.currentUser.getPhone()).setValue(review);
-                } else {
-                    reviews.child(Control.currentUser.getPhone()).setValue(review);
-                }
-                Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onComplete(@NonNull Task<Void> task) {
+              Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
 
             }
         });
+
+
+
+//        reviews.child(Control.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.child(Control.currentUser.getPhone()).exists()){
+//                    reviews.child(Control.currentUser.getPhone()).removeValue();
+//                    reviews.child(Control.currentUser.getPhone()).setValue(review);
+//                } else {
+//                    reviews.child(Control.currentUser.getPhone()).setValue(review);
+//                }
+//                Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }
 

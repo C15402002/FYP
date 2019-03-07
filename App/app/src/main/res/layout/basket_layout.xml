@@ -41,12 +41,23 @@
                 android:textStyle="italic"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/basketCount"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity = "center_vertical|end"
-            android:layout_marginRight="16dp"/>
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/counter"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="end"
+            app:backGroundColor="@color/colorAccent"
+            app:initialNumber="0"
+            app:finalNumber="20"
+            app:textSize="10sp"
+            />
+        <!--<ImageView-->
+            <!--android:id="@+id/basketCount"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_gravity = "center_vertical|end"-->
+            <!--android:layout_marginRight="16dp"/>-->
 
     </LinearLayout>
 

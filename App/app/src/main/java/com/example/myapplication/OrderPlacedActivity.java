@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import androidx.annotation.NonNull;
@@ -31,7 +32,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
 
 
-
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
