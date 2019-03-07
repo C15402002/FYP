@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
@@ -33,8 +36,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
 
     FirebaseRecyclerAdapter<Review, ReviewHolder> adapter;
     FirebaseRecyclerOptions<Review> options;
-
-
+    
 
 
     @Override
@@ -43,7 +45,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_see_reviews);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        review = firebaseDatabase.getReference("Review");
+        review = firebaseDatabase.getReference("Reviews");
         recyclerView = findViewById(R.id.seeReviews);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -59,9 +61,8 @@ public class SeeReviewsActivity extends AppCompatActivity {
                 @Override
                 protected void onBindViewHolder(@NonNull ReviewHolder reviewHolder, int i, @NonNull Review review) {
                     reviewHolder.stars.setRating(Float.parseFloat(review.getRate()));
-                    reviewHolder.identifyUser.setText(review.getUserPhone());
                     reviewHolder.review.setText(review.getComment());
-
+                    reviewHolder.identifyUser.setText(review.getUserPhone());
 
                 }
 

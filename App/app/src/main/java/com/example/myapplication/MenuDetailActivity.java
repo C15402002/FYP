@@ -73,19 +73,20 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         description = findViewById(R.id.description);
         price = findViewById(R.id.foodprice);
         fdimage = findViewById(R.id.foodimage);
+        ratingBar = findViewById(R.id.ratingStar);
 
         quantity = findViewById(R.id.counter);
         //TODO
-//        seeReviews = findViewById(R.id.seeReviews);
-//        seeReviews.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MenuDetailActivity.this, SeeReviewsActivity.class);
-//                intent.putExtra(Control.Review_DishesID, menuId);
-//                startActivity(intent);
-//
-//            }
-//        });
+        seeReviews = findViewById(R.id.reviewBtn);
+        seeReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuDetailActivity.this, SeeReviewsActivity.class);
+                intent.putExtra(Control.Review_DishesID, menuId);
+                startActivity(intent);
+
+            }
+        });
         add = findViewById(R.id.addBtn);
 
 
@@ -103,6 +104,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             }
         });
         //add.
+
         btnrate = findViewById(R.id.rate_btn);
         btnrate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,14 +180,14 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
                 for(DataSnapshot postSnapShot:dataSnapshot.getChildren()){
                     Review dish = postSnapShot.getValue(Review.class);
-                    sum+=Integer.parseInt(dish.getRate());
+                    sum += Integer.parseInt(dish.getRate());
                     count++;
+
                 }
-                if(count !=0) {
-                    float average = sum/count;
+                if(count != 0 ) {
+                    float average = sum / count;
                     ratingBar.setRating(average);
                 }
-
             }
 
             @Override

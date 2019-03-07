@@ -78,23 +78,23 @@ public class MenuListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+//
+//
+//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        getSupportActionBar().setDisplayShowCustomEnabled(true);
+//        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+//        View view =getSupportActionBar().getCustomView();
 
-
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
-        View view =getSupportActionBar().getCustomView();
-
-        ImageButton imageButton= (ImageButton) findViewById(R.id.action_bar_back);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuListActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        ImageButton imageButton= (ImageButton) findViewById(R.id.action_bar_back);
+//
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MenuListActivity.this, HomeActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
 
         materialSearchBar = (MaterialSearchBar)findViewById(R.id.search);

@@ -112,7 +112,6 @@
                         android:layout_width="100dp"
                         android:layout_height="35dp"
                         android:layout_gravity="end"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="3dp"
                         android:layout_marginBottom="5dp"
                         app:backGroundColor="@color/colorAccent"
@@ -124,8 +123,10 @@
                         android:id="@+id/addBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_gravity="bottom|end"
-                        android:layout_margin="@dimen/fab_margin"
+                        android:layout_marginEnd="8dp"
                         android:background="@color/green"
                         android:text="Add"
                         android:textColor="@color/white" />
@@ -135,7 +136,7 @@
                 <RatingBar
                     android:id="@+id/ratingStar"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_gravity="bottom|start"
                     android:isIndicator="true"
                     android:max="5"

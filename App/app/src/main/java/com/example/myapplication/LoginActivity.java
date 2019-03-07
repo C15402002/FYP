@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 if(Control.checkConnectivity(getBaseContext())) {
                     userTable.addValueEventListener(new ValueEventListener() {
 

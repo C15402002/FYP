@@ -16,8 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SeeReviewsActivity"></activity>
         <activity
-            android:name=".MenuListActivity"
-            android:theme="@style/CustomTheme" />
+            android:name=".MenuListActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"

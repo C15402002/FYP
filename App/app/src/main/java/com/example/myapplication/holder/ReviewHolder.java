@@ -16,7 +16,7 @@ public class ReviewHolder extends RecyclerView.ViewHolder {
     public ReviewHolder(@NonNull View itemView) {
         super(itemView);
         identifyUser = itemView.findViewById(R.id.userID);
-        review = itemView.findViewById(R.id.seeReviews);
+        review = itemView.findViewById(R.id.review);
         stars = itemView.findViewById(R.id.ratingStar);
     }
 }
