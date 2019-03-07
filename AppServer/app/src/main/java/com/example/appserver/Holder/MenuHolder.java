@@ -25,14 +25,14 @@ public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickL
         fdPrice = itemView.findViewById(R.id.foodPrice);
 
         itemView.setOnCreateContextMenuListener(this);
-        itemView.setOnClickListener(this);
+       // itemView.setOnClickListener(this);
 
 
     }
 
-    public void setItemClickListener(ItemClickedListener menuClickListener){
-        this.menuClickListener= menuClickListener;
-    }
+//    public void setItemClickListener(ItemClickedListener menuClickListener){
+//        this.menuClickListener= menuClickListener;
+//    }
 
     @Override
     public void onClick(View view){

@@ -218,6 +218,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the product; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home,menu);
+
 //        MenuItem item = menu.findItem(R.id.action_search);
 //        MaterialSearchView materialSearchView = (MaterialSearchView) MenuItemCompat.getActionView(item);
 //        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
@@ -272,6 +273,7 @@ public class HomeActivity extends AppCompatActivity
 
         if(id == R.id.action_search) {
             //firebaseSearch(search);
+            startActivity(new Intent(HomeActivity.this, SearchFoodsActivity.class));
         } else if(id == R.id.action_scan){
 //            Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
 //            startActivity(intent);

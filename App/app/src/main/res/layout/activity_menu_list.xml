@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:mt_speechMode="true"
-        app:mt_hint="Search Dishes "/>
+        app:mt_hint="custom "/>
 
 
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search"
-        android:id="@+id/recycleViewFood">
+        android:id="@+id/recycleSearch">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -52,16 +52,16 @@ public class MenuListActivity extends AppCompatActivity {
     DatabaseReference productList;
     FirebaseRecyclerOptions<Menu> options;
     FirebaseRecyclerAdapter<Menu, MenuHolder> adapter;
-    ElegantNumberButton quantity;
+
 
     String product_typeId = "";
 
-    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> search_options;
-    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> search_adapter;
-    List<String> recents = new ArrayList<>();
-
-    MaterialSearchBar materialSearchBar;
-
+//    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> search_options;
+//    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> search_adapter;
+//    List<String> recents = new ArrayList<>();
+//
+//    MaterialSearchBar materialSearchBar;
+//
 
 
     @SuppressLint("WrongConstant")
@@ -73,7 +73,7 @@ public class MenuListActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         productList = db.getReference("Menu");
 
-        recyclerView = findViewById(R.id.recycleViewFood);
+        recyclerView = findViewById(R.id.recycleSearch);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -97,53 +97,6 @@ public class MenuListActivity extends AppCompatActivity {
 //        });
 
 
-        materialSearchBar = (MaterialSearchBar)findViewById(R.id.search);
-        materialSearchBar.setHint("Search dishes");
-        materialSearchBar.setSpeechMode(true);
-
-        getRecents();
-        materialSearchBar.setLastSuggestions(recents);
-        materialSearchBar.setCardViewElevation(10);
-        materialSearchBar.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                List<String> suggestion = new ArrayList<String>();
-                for(String search:recents){
-                    if(search.toLowerCase().contains(materialSearchBar.getText().toLowerCase())){
-                        suggestion.add(search);
-                    }
-                }
-                materialSearchBar.setLastSuggestions(suggestion);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
-            @Override
-            public void onSearchStateChanged(boolean enabled) {
-                if(!enabled){
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onSearchConfirmed(CharSequence text) {
-                startSearch(text);
-            }
-
-            @Override
-            public void onButtonClicked(int buttonCode) {
-
-            }
-        });
         if(getIntent() !=null){
             product_typeId = getIntent().getStringExtra("Product_TypeId");
         }
@@ -201,69 +154,119 @@ public class MenuListActivity extends AppCompatActivity {
                 Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
+
+//
+//        materialSearchBar = (MaterialSearchBar)findViewById(R.id.search);
+//        materialSearchBar.setHint("Search dishes");
+//        materialSearchBar.setSpeechMode(true);
+//
+//        getRecents();
+//        materialSearchBar.setCardViewElevation(10);
+//        materialSearchBar.addTextChangeListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                List<String> suggestion = new ArrayList<String>();
+//                for(String search:recents){
+//                    if(search.toLowerCase().contains(materialSearchBar.getText().toLowerCase())){
+//                        suggestion.add(search);
+//                    }
+//                }
+//                materialSearchBar.setLastSuggestions(suggestion);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+//        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
+//            @Override
+//            public void onSearchStateChanged(boolean enabled) {
+//                if(!enabled){
+//                    recyclerView.setAdapter(adapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onSearchConfirmed(CharSequence text) {
+//                startSearch(text);
+//            }
+//
+//            @Override
+//            public void onButtonClicked(int buttonCode) {
+//
+//            }
+//        });
+
     }
 
-    private void startSearch(CharSequence text) {
-        Query query = productList.orderByChild("name").equalTo(text.toString());
+//    private void startSearch(CharSequence text) {
+//        Query query = productList.orderByChild("name").equalTo(text.toString());
+//
+//        search_options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query, Menu.class).build();
+//        search_adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(search_options) {
+//            @Override
+//            protected void onBindViewHolder(@NonNull MenuHolder menuHolder, int i, @NonNull Menu menu) {
+//
+//                Picasso.get().load(menu.getImage()).into(menuHolder.fdImage, new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        // Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
+//
+//                    }
+//                });
+//                menuHolder.fdName.setText(menu.getName());
+//                menuHolder.fdDescript.setText(menu.getDescription());
+//                menuHolder.fdPrice.setText(String.format("€ %s", menu.getPrice().toString()));
+//                menuHolder.setItemClickListener(new ProductClickedListener() {
+//                    @Override
+//                    public void onClick(View v, int pos, boolean isLongClicked) {
+//
+//                        //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
+//                        intent.putExtra("MenuId", search_adapter.getRef(pos).getKey());
+//                        startActivity(intent);
+//                    }
+//                });
+//            }
+//
+//            @NonNull
+//            @Override
+//            public MenuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//                View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.food_items, parent, false);
+//                return new MenuHolder(v);
+//            }
+//        };
+//        recyclerView.setAdapter(search_adapter);
+//    }
 
-        search_options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query, Menu.class).build();
-        search_adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(search_options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MenuHolder menuHolder, int i, @NonNull Menu menu) {
-
-                Picasso.get().load(menu.getImage()).into(menuHolder.fdImage, new Callback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        // Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
-
-                    }
-                });
-                menuHolder.fdName.setText(menu.getName());
-                menuHolder.fdDescript.setText(menu.getDescription());
-                menuHolder.fdPrice.setText(String.format("€ %s", menu.getPrice().toString()));
-                menuHolder.setItemClickListener(new ProductClickedListener() {
-                    @Override
-                    public void onClick(View v, int pos, boolean isLongClicked) {
-
-                        //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
-                        intent.putExtra("MenuId", search_adapter.getRef(pos).getKey());
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @NonNull
-            @Override
-            public MenuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.food_items, parent, false);
-                return new MenuHolder(v);
-            }
-        };
-        recyclerView.setAdapter(search_adapter);
-    }
-
-    private void getRecents() {
-        productList.orderByChild("Product_TypeId").equalTo(product_typeId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot post:dataSnapshot.getChildren()){
-                    Product_Type product = post.getValue(Product_Type.class);
-                    recents.add(product.getName());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void getRecents() {
+//        productList.orderByChild("foodId").equalTo(product_typeId).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot post:dataSnapshot.getChildren()){
+//                    Menu product = post.getValue(Menu.class);
+//                    recents.add(product.getName());
+//                }
+//                materialSearchBar.setLastSuggestions(recents);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 
     @Override
