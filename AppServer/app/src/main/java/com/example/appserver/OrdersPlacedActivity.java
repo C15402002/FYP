@@ -180,7 +180,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                         public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                             if (response.body() != null) {
                                 if(response.body().success == 1){
-                                    Toast.makeText(OrdersPlacedActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OrdersPlacedActivity.this, "Order updated!", Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else{
                                     Toast.makeText(OrdersPlacedActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();

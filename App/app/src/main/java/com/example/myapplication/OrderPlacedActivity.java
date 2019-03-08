@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.myapplication.control.Control;
 import com.example.myapplication.holder.OrderHolder;
 import com.example.myapplication.model.MakeOrder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -83,11 +86,21 @@ public class OrderPlacedActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull MakeOrder model) {
+            protected void onBindViewHolder(@NonNull OrderHolder holder, final int position, @NonNull MakeOrder model) {
                 holder.orderId.setText(adapter.getRef(position).getKey());
                 holder.orderPrice.setText(model.getTotal());
                 holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderTable.setText(model.getTable());
+                holder.deleteOrder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(adapter.getItem(position).getStatus().equals("0")){
+                            cancelOrder(adapter.getRef(position).getKey());
+                        }else{
+                            Toast.makeText(OrderPlacedActivity.this, "Order can not be cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
             }
 
@@ -96,6 +109,20 @@ public class OrderPlacedActivity extends AppCompatActivity {
         };
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+    private void cancelOrder(final String key) {
+        databaseReference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(OrderPlacedActivity.this,new StringBuffer("Order ").append(key).append("is cancelled") ,Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(OrderPlacedActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

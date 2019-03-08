@@ -41,6 +41,14 @@ public class MakeOrder {
         this.email = email;
     }
 
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+
     public String getName() {
         return name;
     }
@@ -57,14 +65,6 @@ public class MakeOrder {
         this.total = total;
     }
 
-    public List<Order> getListOfOrderPlaced() {
-        return listOfOrderPlaced;
-    }
-
-    public void setListOfOrderPlaced(List<Order> listOfOrderPlaced) {
-        this.listOfOrderPlaced = listOfOrderPlaced;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -73,19 +73,27 @@ public class MakeOrder {
         this.status = status;
     }
 
-    public String getTable() {
-        return table;
-    }
-
-    public void setTable(String table) {
-        this.table = table;
-    }
-
     public String getNotes() {
         return notes;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getPaymentProcess() {
+        return paymentProcess;
+    }
+
+    public void setPaymentProcess(String paymentProcess) {
+        this.paymentProcess = paymentProcess;
+    }
+
+    public List<Order> getListOfOrderPlaced() {
+        return listOfOrderPlaced;
+    }
+
+    public void setListOfOrderPlaced(List<Order> listOfOrderPlaced) {
+        this.listOfOrderPlaced = listOfOrderPlaced;
     }
 }

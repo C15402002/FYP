@@ -21,8 +21,7 @@ public class FirebaseService extends FirebaseInstanceIdService {
     private void updateToken(String refreshToken) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
-
-        Token token = new Token(false, refreshToken);
+        Token token = new Token( false,refreshToken);
         databaseReference.child(Control.currentUser.getPhone()).setValue(token);
 
     }

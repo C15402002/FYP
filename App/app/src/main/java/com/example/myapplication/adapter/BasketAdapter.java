@@ -90,7 +90,6 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
         basketHolder.counter.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-//TODO
                 Order order = listAddedItems.get(i);
                 order.setQuantity(String.valueOf(newValue));
                 new Database(basketActivity).editBasket(order);

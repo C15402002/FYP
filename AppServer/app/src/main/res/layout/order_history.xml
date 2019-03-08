@@ -11,7 +11,8 @@
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -21,7 +22,7 @@
 
             <TextView
                 android:id="@+id/orderNum"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -31,7 +32,7 @@
 
             <TextView
                 android:id="@+id/text1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -42,7 +43,7 @@
 
             <TextView
                 android:id="@+id/status"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/orderNum"
@@ -53,7 +54,7 @@
 
             <TextView
                 android:id="@+id/tablenum"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -64,7 +65,7 @@
 
             <TextView
                 android:id="@+id/table"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/status"
@@ -75,7 +76,7 @@
 
             <TextView
                 android:id="@+id/totalprice"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -86,7 +87,7 @@
 
             <TextView
             android:id="@+id/price"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/table"
@@ -96,7 +97,7 @@
             android:textStyle="italic"/>
             <TextView
                 android:id="@+id/date"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -107,12 +108,32 @@
 
             <TextView
                 android:id="@+id/OrderDate"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/totalprice"
                 android:layout_toEndOf="@+id/date"
                 android:text="DATE"
+                android:textAllCaps="true"
+                android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/paymentMethod"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date"
+                android:text="Payment method: "
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/payment"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date"
+                android:layout_toEndOf="@+id/paymentMethod"
+                android:text="cash"
                 android:textAllCaps="true"
                 android:textStyle="italic"/>
         </RelativeLayout>
