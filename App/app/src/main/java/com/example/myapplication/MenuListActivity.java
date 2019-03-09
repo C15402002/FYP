@@ -71,7 +71,7 @@ public class MenuListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_list);
 
         db = FirebaseDatabase.getInstance();
-        productList = db.getReference("Menu");
+        productList = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
 
         recyclerView = findViewById(R.id.recycleSearch);
         recyclerView.setHasFixedSize(true);

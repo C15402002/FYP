@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Product_Type");
+        product = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Product_Type");;
 
 
         fab =  findViewById(R.id.fab);

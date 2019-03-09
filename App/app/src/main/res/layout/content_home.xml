@@ -10,9 +10,6 @@
     tools:showIn="@layout/app_bar_home">
 
 
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:scrollbars="vertical"

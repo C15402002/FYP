@@ -65,7 +65,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         setContentView(R.layout.activity_menu_detail);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        menu = firebaseDatabase.getReference("Menu");
+        menu =firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
         reviews = firebaseDatabase.getReference("Reviews");
 
 

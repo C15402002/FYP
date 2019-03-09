@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.myapplication.control.Control;
 import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.view.ProductClickedListener;
@@ -55,7 +56,7 @@ public class SearchFoodsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_foods);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        dishes = firebaseDatabase.getReference("Menu");
+        dishes = firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
 
         recyclerView = findViewById(R.id.recycleSearchAll);
         recyclerView.setHasFixedSize(true);
