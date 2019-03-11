@@ -1,7 +1,7 @@
 package com.example.appserver.model;
 
 public class User {
-    private String Name, Email, Phone, Password, IsStaff;
+    private String Name, Email, Phone, Password, IsStaff, restId;
 
 
     //    String phone,
@@ -50,5 +50,13 @@ public class User {
 
     public void setIsStaff(String isStaff) {
         IsStaff = isStaff;
+    }
+
+    public String getRestId() {
+        return restId;
+    }
+
+    public void setRestId(String restId) {
+        this.restId = restId;
     }
 }

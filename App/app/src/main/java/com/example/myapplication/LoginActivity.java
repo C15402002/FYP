@@ -67,17 +67,21 @@ public class LoginActivity extends AppCompatActivity {
 
                                 User user = dataSnapshot.child(phone_input.getText().toString()).getValue(User.class);
                                 user.setPhone(phone_input.getText().toString());
-                                if (user.getPassword().equals(password_input.getText().toString())) {
+                                if (!Boolean.parseBoolean(user.getIsStaff())) {
+                                    if (user.getPassword().equals(password_input.getText().toString())) {
 
-                                    Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this, ScanActivity.class);
-                                    Control.currentUser = user;
-                                    startActivity(intent);
-                                    finish();
+                                        Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, MultiRestActivity.class);
+                                        Control.currentUser = user;
+                                        startActivity(intent);
+                                        finish();
 
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
+
+                                    }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(LoginActivity.this, "Cannot Login ", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 Toast.makeText(LoginActivity.this, "user does not exist", Toast.LENGTH_SHORT).show();

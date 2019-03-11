@@ -231,25 +231,6 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             }
         });
 
-
-
-//        reviews.child(Control.currentUser.getPhone()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.child(Control.currentUser.getPhone()).exists()){
-//                    reviews.child(Control.currentUser.getPhone()).removeValue();
-//                    reviews.child(Control.currentUser.getPhone()).setValue(review);
-//                } else {
-//                    reviews.child(Control.currentUser.getPhone()).setValue(review);
-//                }
-//                Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 }
 

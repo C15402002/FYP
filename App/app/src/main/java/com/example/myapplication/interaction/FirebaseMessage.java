@@ -32,6 +32,9 @@ public class FirebaseMessage extends FirebaseMessagingService {
         sendNotice(remoteMessage);
     }
 
+
+
+
     private void sendNotice26AboveApi(RemoteMessage remoteMessage) {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         String title = notification.getTitle();

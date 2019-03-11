@@ -3,13 +3,13 @@ package com.example.myapplication.model;
 import java.util.List;
 
 public class MakeOrder {
-    private String phone, email, table, name, total, status, notes, paymentProcess, paymentMethods;
+    private String phone, email, table, name, total, status, notes, paymentProcess, paymentMethods, restaurantId;
     private List<Order> listOfOrderPlaced;
 
     public MakeOrder() {
     }
 
-    public MakeOrder(String phone, String email, String table, String name, String total, String status, String notes, String paymentProcess, String paymentMethods, List<Order> listOfOrderPlaced) {
+    public MakeOrder(String phone, String email, String table, String name, String total, String status, String notes, String paymentProcess, String paymentMethods, String restaurantId, List<Order> listOfOrderPlaced) {
         this.phone = phone;
         this.email = email;
         this.table = table;
@@ -19,6 +19,7 @@ public class MakeOrder {
         this.notes = notes;
         this.paymentProcess = paymentProcess;
         this.paymentMethods = paymentMethods;
+        this.restaurantId = restaurantId;
         this.listOfOrderPlaced = listOfOrderPlaced;
     }
 
@@ -92,6 +93,14 @@ public class MakeOrder {
 
     public void setPaymentMethods(String paymentMethods) {
         this.paymentMethods = paymentMethods;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public List<Order> getListOfOrderPlaced() {

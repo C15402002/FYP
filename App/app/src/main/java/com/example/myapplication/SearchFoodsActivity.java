@@ -229,7 +229,12 @@ public class SearchFoodsActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SearchFoodsActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onStart() {

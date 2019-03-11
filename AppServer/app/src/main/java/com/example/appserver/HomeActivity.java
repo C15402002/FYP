@@ -37,8 +37,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -72,14 +76,14 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu");
+        toolbar.setTitle("Management");
         setSupportActionBar(toolbar);
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Product_Type");
+        product = db.getReference("Restaurant").child(Control.currentUser.getRestId()).child("details").child("Product_Type");
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
@@ -340,6 +344,22 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showDeleteDialog(String key, Product_Type item) {
+        DatabaseReference products = db.getReference("Restaurant").child("details").child("Menu");
+        Query query = products.orderByChild("foodId").equalTo(key);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    dataSnapshot1.getRef().removeValue();
+                    
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         product.child(key).removeValue();
         Toast.makeText(this, "Item removed!", Toast.LENGTH_SHORT).show();
     }

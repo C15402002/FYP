@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -10,13 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,7 +120,7 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("OrderPlaced");
+        databaseReference = firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("OrderPlaced");
 
         recyclerView = findViewById(R.id.listOrder);
         recyclerView.setHasFixedSize(true);
@@ -175,6 +188,7 @@ public class BasketActivity extends AppCompatActivity {
 
 
     }
+
     private void showAlertDialog(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
         alertDialog.setMessage("Please Enter Table Number: ");
@@ -194,9 +208,9 @@ public class BasketActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 tablenum = tableEdit.getText().toString();
                 notes = commentEdit.getText().toString();
+
 
                 if(!cash.isChecked() && !payPal.isChecked()){
                     Toast.makeText(BasketActivity.this, "Please select payment method!", Toast.LENGTH_SHORT).show();
@@ -213,6 +227,7 @@ public class BasketActivity extends AppCompatActivity {
                             notes,
                             "Unpaid",
                             "Cash",
+                            Control.Restaurant_Scanned,
                             listOfOrderPlaced);
 
                     String order_num = String.valueOf(System.currentTimeMillis());
@@ -271,6 +286,7 @@ public class BasketActivity extends AppCompatActivity {
                                 notes,
                                 jsonObject.getJSONObject("response").getString("state"),
                                 "Paypal",
+                                Control.Restaurant_Scanned,
                                 listOfOrderPlaced);
 
                         String order_num = String.valueOf(System.currentTimeMillis());
@@ -295,7 +311,6 @@ public class BasketActivity extends AppCompatActivity {
             }
         }
     }
-
     private void notifyServer(final String order_num) {
         DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
         Query query = databaseReference.orderByChild("isServerToken").equalTo(true);

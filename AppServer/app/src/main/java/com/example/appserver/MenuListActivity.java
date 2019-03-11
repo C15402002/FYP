@@ -62,7 +62,7 @@ public class MenuListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_list);
 
         db = FirebaseDatabase.getInstance();
-        menuRef = db.getReference("Menu");
+        menuRef = db.getReference("Restaurant").child(Control.currentUser.getRestId()).child("details").child("Menu");
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 

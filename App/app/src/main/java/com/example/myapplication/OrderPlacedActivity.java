@@ -42,7 +42,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_placed);
 
         db = FirebaseDatabase.getInstance();
-        databaseReference = db.getReference("OrderPlaced");
+        databaseReference = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("OrderPlaced");
 
         recyclerView = findViewById(R.id.orderHistory);
         recyclerView.setHasFixedSize(true);

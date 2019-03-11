@@ -65,12 +65,28 @@ public class SignUpActivity extends AppCompatActivity {
         Registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (name.getText().toString().isEmpty()) {
+                Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (email.getText().toString().isEmpty()) {
+                Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (password.getText().toString().isEmpty()) {
+                Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (phone.length() < 10) {
+                    Toast.makeText(SignUpActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if (password.length() < 6) {
+                Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
+                return;
+            }
                 if(Control.checkConnectivity(getBaseContext())) {
                     userTable.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            if (dataSnapshot.child(phone.getText().toString()).exists()) {
+                            if (dataSnapshot.child(email.getText().toString()).exists()) {
                                 Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
 
                             } else {
@@ -99,7 +115,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         });
     }
-
 
     //sending email verification
     private void sendEmailVerification() {

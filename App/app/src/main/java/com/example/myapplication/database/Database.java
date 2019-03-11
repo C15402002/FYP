@@ -77,4 +77,5 @@ public class Database extends SQLiteAssetHelper{
         sqLiteDatabase.execSQL(sqlQuery);
     }
 
+
 }

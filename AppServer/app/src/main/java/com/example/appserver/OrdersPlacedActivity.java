@@ -64,7 +64,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         db = FirebaseDatabase.getInstance();
-        orderPlaced = db.getReference("OrderPlaced");
+        orderPlaced = db.getReference("Restaurant").child(Control.currentUser.getRestId()).child("OrderPlaced");
 
         remoteAPIService = Control.getCloudMessage();
 
@@ -172,7 +172,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapShot:dataSnapshot.getChildren()){
                     Token token = postSnapShot.getValue(Token.class);
-                    Notification notification = new Notification("OUI", "Your order " + key + "was updated");
+                    Notification notification = new Notification("OUI", "Your order " + key + " was updated");
                     Sender sender = new Sender(token.getToken(), notification);
 
                     remoteAPIService.sendNotice(sender).enqueue(new Callback<Response>() {

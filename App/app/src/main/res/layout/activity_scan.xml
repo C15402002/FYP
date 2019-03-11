@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Scan QRcode to see menu "
+            android:text="Scan QRcode to see more about us"
             android:textSize="50sp"
             android:textAllCaps="false"
             android:textAlignment="center"
@@ -46,7 +46,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@color/colorAccent" />
-
     </LinearLayout>
 
 
