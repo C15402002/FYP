@@ -22,5 +22,6 @@ Administrator helps the restaurant manager to set up their two applications. The
   
   
 
- ### Oui Restaurant QR Code
+ ## Demo
+ #### OUI QR Code
  
