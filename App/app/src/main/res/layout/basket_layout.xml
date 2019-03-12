@@ -48,7 +48,7 @@
             android:layout_margin="10dp"
             android:layout_gravity="end"
             app:backGroundColor="@color/colorAccent"
-            app:initialNumber="0"
+            app:initialNumber="1"
             app:finalNumber="20"
             app:textSize="10sp"
             />

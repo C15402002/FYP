@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -39,17 +40,30 @@ public class SeeReviewsActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_reviews);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        review = firebaseDatabase.getReference("Reviews");
+        review = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Reviews");
         recyclerView = findViewById(R.id.seeReviews);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
 
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         if(getIntent() != null){
             menuId = getIntent().getStringExtra(Control.Review_DishesID);
 
@@ -63,6 +77,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
                     reviewHolder.stars.setRating(Float.parseFloat(review.getRate()));
                     reviewHolder.review.setText(review.getComment());
                     reviewHolder.identifyUser.setText(review.getUserPhone());
+
 
                 }
 

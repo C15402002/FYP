@@ -56,7 +56,7 @@ public class SearchFoodsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_foods);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        dishes = firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
+        dishes = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Menu");
 
         recyclerView = findViewById(R.id.recycleSearchAll);
         recyclerView.setHasFixedSize(true);

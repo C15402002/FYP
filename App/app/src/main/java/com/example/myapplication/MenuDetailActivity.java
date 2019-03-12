@@ -65,9 +65,21 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         setContentView(R.layout.activity_menu_detail);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        menu =firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
-        reviews = firebaseDatabase.getReference("Reviews");
+        menu =firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Menu");
+        reviews = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Reviews");
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
 
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 onBackPressed();
+            }
+        });
 
         fdname = findViewById(R.id.foodname);
         description = findViewById(R.id.description);
@@ -113,21 +125,6 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             }
         });
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
-        View view =getSupportActionBar().getCustomView();
-
-        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuDetailActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
 
 
@@ -221,7 +218,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
     @Override
     public void onPositiveButtonClicked(int i, @NotNull String s) {
-        final Review review = new Review(Control.currentUser.getPhone(),menuId,String.valueOf(i),s);
+        final Review review = new Review(Control.currentUser.getPhone(),menuId,String.valueOf(i),s,Control.restID);
 
         reviews.push().setValue(review).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

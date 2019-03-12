@@ -181,6 +181,17 @@ public class HomeActivity extends AppCompatActivity
     Product_Type newProduct;
     Uri saveURL;
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle().equals(Control.update)){
+            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        } else if(item.getTitle().equals(Control.delete)){
+            showDeleteDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
 
     private void showDialog() {
         LayoutInflater layoutInflater = this.getLayoutInflater();
@@ -284,6 +295,8 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+        }else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -318,8 +331,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_menu) {
             onBackPressed();
         }else if (id == R.id.nav_about) {
-//            Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_signout) {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
@@ -333,15 +346,6 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Control.update)){
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        } else if(item.getTitle().equals(Control.delete)){
-            showDeleteDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        }
-        return super.onContextItemSelected(item);
-    }
 
     private void showDeleteDialog(String key, Product_Type item) {
         DatabaseReference products = db.getReference("Restaurant").child("details").child("Menu");
@@ -370,7 +374,13 @@ public class HomeActivity extends AppCompatActivity
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
         alertDialog.setTitle("Edit product");
         alertDialog.setMessage("Enter information");
+        alertDialog.setView(view);
+        title = view.findViewById(R.id.name);
+        buttonupload = view.findViewById(R.id.buttonUpload);
+        buttonselect = view.findViewById(R.id.buttonSelect);
+
         title.setText(item.getName());
+
 
         buttonupload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -443,6 +453,8 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+        } else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }

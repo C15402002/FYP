@@ -12,7 +12,7 @@ import com.example.appserver.control.Control;
 import com.example.appserver.view.ItemClickedListener;
 
 
-public class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class ProductHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
 
     public TextView itemName;
     public ImageView itemImage;
@@ -24,6 +24,7 @@ public class ProductHolder extends RecyclerView.ViewHolder implements View.OnCli
         itemName = (TextView)itemView.findViewById(R.id.mname);
         itemImage = (ImageView)itemView.findViewById(R.id.mimage);
         itemView.setOnClickListener(this);
+        itemView.setOnCreateContextMenuListener(this);
 
     }
 

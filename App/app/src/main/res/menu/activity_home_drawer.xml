@@ -5,18 +5,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_nearby"
-            android:icon="@drawable/ic_near_me_black_24dp"
-            android:title="Near Me" />
+            android:id="@+id/nav_scan"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Scan QR" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="Profile" />
 
-        <item
-            android:id="@+id/nav_menu"
-            android:icon="@drawable/ic_restaurant_menu_black_24dp"
-            android:title="Restaurants Available" />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"

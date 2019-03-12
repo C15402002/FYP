@@ -116,7 +116,7 @@
                         android:layout_marginBottom="5dp"
                         app:backGroundColor="@color/colorAccent"
                         app:finalNumber="20"
-                        app:initialNumber="0"
+                        app:initialNumber="1"
                         app:textSize="10sp" />
 
                     <Button

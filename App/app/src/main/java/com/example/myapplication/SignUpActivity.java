@@ -14,6 +14,7 @@ import com.example.myapplication.control.Control;
 import com.example.myapplication.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    //wrapper
     EditText name, phone, email, password;
     Button Registerbtn;
     TextView Loginbtn;
@@ -41,10 +41,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         name = findViewById(R.id.editName);
         phone = findViewById(R.id.editPhone);
-        email =  findViewById(R.id.editEmail);
+        email = findViewById(R.id.editEmail);
         password = findViewById(R.id.editPassword);
-        Registerbtn =  findViewById(R.id.buttonRegister);
-        Loginbtn =  findViewById(R.id.login);
+        Registerbtn = findViewById(R.id.buttonRegister);
+        Loginbtn = findViewById(R.id.login);
 
         mDatabaseRef = FirebaseDatabase.getInstance();
         final DatabaseReference userTable = mDatabaseRef.getReference("Users");
@@ -66,33 +66,32 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (name.getText().toString().isEmpty()) {
-                Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (email.getText().toString().isEmpty()) {
-                Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (password.getText().toString().isEmpty()) {
-                Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (phone.length() < 10) {
+                    Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (email.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (password.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (phone.length() < 10) {
                     Toast.makeText(SignUpActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
                     return;
-                }else if (password.length() < 6) {
-                Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
-                return;
-            }
-                if(Control.checkConnectivity(getBaseContext())) {
+                } else if (password.length() < 6) {
+                    Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (Control.checkConnectivity(getBaseContext())) {
                     userTable.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            if (dataSnapshot.child(email.getText().toString()).exists()) {
+                            if (dataSnapshot.child(phone.getText().toString()).exists()) {
                                 Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
                                 userTable.child(phone.getText().toString()).setValue(user);
-                                sendEmailVerification();
                                 Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                 finish();
 
@@ -105,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                         }
                     });
-                }else{
+                } else {
                     Toast.makeText(SignUpActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -114,24 +113,5 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         });
-    }
-
-    //sending email verification
-    private void sendEmailVerification() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //if user is registered send verification
-        if (user != null) {
-            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        //if successful return message
-                        Toast.makeText(SignUpActivity.this, "Check your email for verification", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(SignUpActivity.this, LoginActivity.class);
-                        startActivity(i);
-                    }
-                }
-            });
-        }
     }
 }

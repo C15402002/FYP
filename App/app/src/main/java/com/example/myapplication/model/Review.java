@@ -1,17 +1,18 @@
 package com.example.myapplication.model;
 
 public class Review {
-    private String userPhone, menuId, rate, comment;
+    private String userPhone, menuId, rate, comment, restaurantId;
 
     public Review() {
 
     }
 
-    public Review(String userPhone, String menuId, String rate, String comment) {
+    public Review(String userPhone, String menuId, String rate, String comment, String restaurantId) {
         this.userPhone = userPhone;
         this.menuId = menuId;
         this.rate = rate;
         this.comment = comment;
+        this.restaurantId = restaurantId;
     }
 
     public String getUserPhone() {
@@ -44,5 +45,13 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 }

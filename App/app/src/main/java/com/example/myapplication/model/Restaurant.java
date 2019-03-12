@@ -1,14 +1,23 @@
 package com.example.myapplication.model;
 
 public class Restaurant {
-    private String image, name;
+    private String restaurantId, image, name;
 
     public Restaurant() {
     }
 
-    public Restaurant(String image, String name) {
+    public Restaurant(String restaurantId, String image, String name) {
+        this.restaurantId = restaurantId;
         this.image = image;
         this.name = name;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public String getImage() {

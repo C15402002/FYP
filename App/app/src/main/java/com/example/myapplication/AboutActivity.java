@@ -29,9 +29,7 @@ public class AboutActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AboutActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 

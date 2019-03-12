@@ -120,7 +120,7 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Restaurant").child(Control.Restaurant_Scanned).child("OrderPlaced");
+        databaseReference = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("OrderPlaced");
 
         recyclerView = findViewById(R.id.listOrder);
         recyclerView.setHasFixedSize(true);
@@ -155,9 +155,7 @@ public class BasketActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BasketActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+               onBackPressed();
             }
         });
 

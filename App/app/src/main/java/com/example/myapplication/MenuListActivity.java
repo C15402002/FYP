@@ -60,7 +60,7 @@ public class MenuListActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> search_adapter;
     List<String> recents = new ArrayList<>();
 
-    MaterialSearchBar materialSearchBar;
+   // MaterialSearchBar materialSearchBar;
 //
 
 
@@ -71,37 +71,20 @@ public class MenuListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_list);
 
         db = FirebaseDatabase.getInstance();
-        productList = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Menu");
+        productList = db.getReference("Restaurant").child(Control.restID).child("details").child("Menu");
 
         recyclerView = findViewById(R.id.recycleSearch);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-//
-//
-//        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setDisplayShowCustomEnabled(true);
-//        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
-//        View view =getSupportActionBar().getCustomView();
-//
-//        ImageButton imageButton= (ImageButton) findViewById(R.id.action_bar_back);
-//
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MenuListActivity.this, ProductListActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
 
 
-        if(getIntent() !=null){
+        if (getIntent() != null) {
             product_typeId = getIntent().getStringExtra("Product_TypeId");
         }
-        if(product_typeId!=null && !product_typeId.isEmpty()  ){
-            if(Control.checkConnectivity(getBaseContext())) {
+        if (product_typeId != null && !product_typeId.isEmpty()) {
+            if (Control.checkConnectivity(getBaseContext())) {
 
                 //select * from menu where foodid = producttypeid
                 Query query = productList.orderByChild("foodId").equalTo(product_typeId);
@@ -150,122 +133,10 @@ public class MenuListActivity extends AppCompatActivity {
                 };
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
-            }else{
+            } else {
                 Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
-
-//
-        materialSearchBar = (MaterialSearchBar)findViewById(R.id.search);
-        materialSearchBar.setHint("Search dishes");
-        materialSearchBar.setSpeechMode(true);
-
-        getRecents();
-        materialSearchBar.setCardViewElevation(10);
-        materialSearchBar.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                List<String> suggestion = new ArrayList<String>();
-                for(String search:recents){
-                    if(search.toLowerCase().contains(materialSearchBar.getText().toLowerCase())){
-                        suggestion.add(search);
-                    }
-                }
-                materialSearchBar.setLastSuggestions(suggestion);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
-            @Override
-            public void onSearchStateChanged(boolean enabled) {
-                if(!enabled){
-                    recyclerView.setAdapter(adapter);
-                }
-            }
-
-            @Override
-            public void onSearchConfirmed(CharSequence text) {
-                startSearch(text);
-            }
-
-            @Override
-            public void onButtonClicked(int buttonCode) {
-
-            }
-        });
-
-    }
-
-    private void startSearch(CharSequence text) {
-        Query query = productList.orderByChild("name").equalTo(text.toString());
-
-        search_options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(query, Menu.class).build();
-        search_adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(search_options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MenuHolder menuHolder, int i, @NonNull Menu menu) {
-
-                Picasso.get().load(menu.getImage()).into(menuHolder.fdImage, new Callback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        // Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
-
-                    }
-                });
-                menuHolder.fdName.setText(menu.getName());
-                menuHolder.fdDescript.setText(menu.getDescription());
-                menuHolder.fdPrice.setText(String.format("€ %s", menu.getPrice().toString()));
-                menuHolder.setItemClickListener(new ProductClickedListener() {
-                    @Override
-                    public void onClick(View v, int pos, boolean isLongClicked) {
-
-                        //Toast.makeText(MenuListActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MenuListActivity.this, MenuDetailActivity.class);
-                        intent.putExtra("MenuId", search_adapter.getRef(pos).getKey());
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @NonNull
-            @Override
-            public MenuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.food_items, parent, false);
-                return new MenuHolder(v);
-            }
-        };
-        recyclerView.setAdapter(search_adapter);
-    }
-
-    private void getRecents() {
-        productList.orderByChild("foodId").equalTo(product_typeId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot post:dataSnapshot.getChildren()){
-                    Menu product = post.getValue(Menu.class);
-                    recents.add(product.getName());
-                }
-                materialSearchBar.setLastSuggestions(recents);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
 

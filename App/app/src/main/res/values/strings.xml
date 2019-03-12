@@ -29,5 +29,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_scan">Scan QR</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_nearby_restaurants">Map</string>
 
 </resources>

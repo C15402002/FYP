@@ -9,6 +9,15 @@
     tools:context=".HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:text="Nothing to show, please scan again or contact restaurant manager"
+        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"

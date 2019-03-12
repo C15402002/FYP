@@ -44,9 +44,13 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,8 +63,10 @@ public class HomeActivity extends AppCompatActivity
     FirebaseRecyclerOptions<Product_Type> options;
     FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
 
-
+    //MaterialSearchBar materialSearchBar;
     CounterFab fab;
+
+    String restId = "";
 
     @SuppressLint("WrongConstant")
     @Override
@@ -69,16 +75,18 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
+//        Intent intent = getIntent();
+//        restId= getIntent().getStringExtra(Control.Restaurant_Scanned);
 
-
+        Intent intent = getIntent();
+        Control.restID = intent.getStringExtra(Control.Restaurant_Scanned);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Available Restaurants");
+        toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
 
         //firebase category
         db = FirebaseDatabase.getInstance();
-        product = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("details").child("Product_Type");
-        ;
+        product = db.getReference("Restaurant").child(Control.restID).child("details").child("Product_Type");
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,7 +123,7 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SearchFoodsActivity.class);
                 startActivity(intent);
-                finish();
+
             }
         });
 
@@ -125,14 +133,14 @@ public class HomeActivity extends AppCompatActivity
         email = header.findViewById(R.id.viewEmail);
         email.setText(Control.currentUser.getEmail());
 
+
         //get product
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
 
 
-        if (Control.checkConnectivity(this)) {
 
-
+        if (Control.restID != null && !Control.restID.isEmpty()) {
             if (Control.checkConnectivity(this)) {
 
                 options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
@@ -186,9 +194,13 @@ public class HomeActivity extends AppCompatActivity
             } else {
                 Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
+        }else{
+            Toast.makeText(this, "Restaurant does not exist", Toast.LENGTH_SHORT).show();
+            Intent intent1 = new Intent(HomeActivity.this, ScanActivity.class);
+            startActivity(intent1);
         }
-
     }
+
     private void updateToken(String token) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Tokens");
@@ -224,16 +236,13 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_menu) {
-           onBackPressed();
+        } else if (id == R.id.nav_scan) {
+            Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
+            startActivity(intent);
 
         }else if (id == R.id.nav_history) {
             Intent intent = new Intent(HomeActivity.this, OrderPlacedActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_nearby) {
-            Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
-            startActivity(intent);
-
         }else if (id == R.id.nav_about) {
             Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
             startActivity(intent);
@@ -253,43 +262,12 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-     if(id == R.id.action_scan){
-         scanQR();
-        }
+    if (id == R.id.action_search){
+         startActivity(new Intent(HomeActivity.this, SearchFoodsActivity.class));
+     }
         return super.onOptionsItemSelected(item);
     }
-    private void scanQR() {
-        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt("Scan the QR");
-        intentIntegrator.setCameraId(0);
-        intentIntegrator.setBeepEnabled(true);
-        intentIntegrator.setOrientationLocked(true);
-        intentIntegrator.setBarcodeImageEnabled(false);
-        intentIntegrator.initiateScan();
-    }
-    protected void onActivityResult(int requestCode, int grantResults, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, grantResults, data);
 
-        if(result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(this, "scan cancelled", Toast.LENGTH_LONG).show();
-
-            }
-            else {
-                //parse decoded qrcode's url to open on browser
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(result.getContents()));
-                startActivity(browserIntent);
-                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-
-            }
-
-        }else {
-            super.onActivityResult(requestCode, grantResults, data);
-
-        }
-
-    }
     @Override
     protected void onPause() {
         super.onPause();

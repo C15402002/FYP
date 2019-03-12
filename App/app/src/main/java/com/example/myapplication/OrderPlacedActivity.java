@@ -42,13 +42,13 @@ public class OrderPlacedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_placed);
 
         db = FirebaseDatabase.getInstance();
-        databaseReference = db.getReference("Restaurant").child(Control.Restaurant_Scanned).child("OrderPlaced");
+        databaseReference = db.getReference("Restaurant").child(Control.restID).child("OrderPlaced");
 
         recyclerView = findViewById(R.id.orderHistory);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
+//
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
@@ -59,9 +59,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(OrderPlacedActivity.this, HomeActivity.class);
-               startActivity(intent);
-               finish();
+              onBackPressed();
             }
         });
 

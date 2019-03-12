@@ -16,7 +16,9 @@ import retrofit2.Retrofit;
 public class Control {
     public static User currentUser;
     public static final String Review_DishesID = "MenuId";
-    public static  String Restaurant_Scanned = "";
+
+    public static  final String Restaurant_Scanned = "RestaurantId";
+    public static String restID = "";
 
     public static String PHONE_ID = "\"userPhone\"";
     public static String convertStatus(String statusStage){
@@ -32,9 +34,12 @@ public class Control {
 
     private static final String BASE_URL = "http://fcm.googleapis.com/";
 
+
     public static RemoteAPIService getCloudMessage(){
         return RetroClient.getClient(BASE_URL).create(RemoteAPIService.class);
     }
+
+
 
    // public static final String edit = "Edit";
     public static final String delete = "Delete";

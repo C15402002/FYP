@@ -54,6 +54,10 @@ public class MenuListActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<Menu, MenuHolder> adapter;
 
     String menuId = "";
+    EditText title, descript, price;
+    Button buttonupload, buttonselect;
+    Menu newMenu;
+    Uri saveURL;
 
 
     @Override
@@ -89,21 +93,15 @@ public class MenuListActivity extends AppCompatActivity {
         }
 
     }
-    EditText title, descript, price;
-    Button buttonupload, buttonselect;
-    Menu newMenu;
-    Uri saveURL;
-
-
 
     private void showDialog() {
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.add_new_menu_layout, null);
-
         title = view.findViewById(R.id.name);
         descript = view.findViewById(R.id.descript);
         price = view.findViewById(R.id.price);
         buttonupload = view.findViewById(R.id.buttonUpload);
+
         buttonupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,6 +226,8 @@ public class MenuListActivity extends AppCompatActivity {
 
 
 
+        }else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -241,6 +241,15 @@ public class MenuListActivity extends AppCompatActivity {
 
         }
     }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle().equals(Control.update)){
+            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        } else if(item.getTitle().equals(Control.delete)){
+            showDeleteDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        }
+        return super.onContextItemSelected(item);
+    }
     private void showUpdateDialog(final String key, final Menu item) {
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.add_new_menu_layout, null);
@@ -248,6 +257,13 @@ public class MenuListActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MenuListActivity.this);
         alertDialog.setTitle("Edit product");
         alertDialog.setMessage("Enter information");
+        alertDialog.setView(view);
+        title = view.findViewById(R.id.name);
+        descript = view.findViewById(R.id.descript);
+        price = view.findViewById(R.id.price);
+        buttonupload = view.findViewById(R.id.buttonUpload);
+        buttonselect = view.findViewById(R.id.buttonSelect);
+
         title.setText(item.getName());
         descript.setText(item.getDescription());
         price.setText(item.getPrice());
@@ -292,15 +308,7 @@ public class MenuListActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Control.update)){
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        } else if(item.getTitle().equals(Control.delete)){
-            showDeleteDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        }
-        return super.onContextItemSelected(item);
-    }
+
     private void showDeleteDialog(String key, Menu item) {
         menuRef.child(key).removeValue();
         Toast.makeText(this, "Item removed!", Toast.LENGTH_SHORT).show();
@@ -343,6 +351,8 @@ public class MenuListActivity extends AppCompatActivity {
 
 
 
+        }else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
 
     }
