@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(Control.checkConnectivity(getBaseContext())) {
                     userTable.addValueEventListener(new ValueEventListener() {
 
-
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -94,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                     });
+
                 }else {
                     Toast.makeText(LoginActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
-                    return;
                 }
             }
         });

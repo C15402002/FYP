@@ -56,13 +56,6 @@ public class MenuListActivity extends AppCompatActivity {
 
     String product_typeId = "";
 
-    FirebaseRecyclerOptions<com.example.myapplication.model.Menu> search_options;
-    FirebaseRecyclerAdapter<com.example.myapplication.model.Menu, MenuHolder> search_adapter;
-    List<String> recents = new ArrayList<>();
-
-   // MaterialSearchBar materialSearchBar;
-//
-
 
     @SuppressLint("WrongConstant")
     @Override
@@ -78,7 +71,19 @@ public class MenuListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
+        View view =getSupportActionBar().getCustomView();
 
+        ImageButton imageButton= (ImageButton)view.findViewById(R.id.action_bar_back);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         if (getIntent() != null) {
             product_typeId = getIntent().getStringExtra("Product_TypeId");

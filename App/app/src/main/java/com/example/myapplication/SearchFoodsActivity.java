@@ -37,7 +37,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchFoodsActivity extends AppCompatActivity {
 
-    FirebaseRecyclerOptions<Menu> search_options;
     FirebaseRecyclerAdapter<Menu, MenuHolder> search_adapter;
     List<String> recents = new ArrayList<>();
 
@@ -67,7 +66,7 @@ public class SearchFoodsActivity extends AppCompatActivity {
 
         materialSearchBar = (MaterialSearchBar)findViewById(R.id.searchAll);
         materialSearchBar.setHint("Search dishes");
-        materialSearchBar.setSpeechMode(true);
+        materialSearchBar.setSpeechMode(false);
 
         getRecents();
         materialSearchBar.setCardViewElevation(10);
@@ -232,8 +231,6 @@ public class SearchFoodsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(SearchFoodsActivity.this, HomeActivity.class);
-        startActivity(intent);
     }
 
     @Override

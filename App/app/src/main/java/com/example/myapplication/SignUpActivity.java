@@ -77,22 +77,26 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (phone.length() < 10) {
                     Toast.makeText(SignUpActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (password.length() < 6) {
+                } else if(password.length() < 6){
                     Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 if (Control.checkConnectivity(getBaseContext())) {
                     userTable.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            if (dataSnapshot.child(phone.getText().toString()).exists()) {
-                                Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                            if (dataSnapshot.child(phone.getText().toString()).exists()){
+                                Toast.makeText(SignUpActivity.this, "User exists, Please Login", Toast.LENGTH_SHORT).show();
+                                finish();
 
                             } else {
                                 User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
                                 userTable.child(phone.getText().toString()).setValue(user);
-                                Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                //Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                 finish();
 
                             }

@@ -15,7 +15,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/edtTable"
-              android:hint="Enter table number"
+              android:hint="@string/enterTable"
               android:inputType="number"
               android:textSize="25sp"
               android:textColorHint="@color/grey"
@@ -26,7 +26,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/editComment"
-              android:hint="Comments"
+              android:hint="@string/comments"
               android:textSize="20sp"
               android:inputType="textMultiLine"
               android:textColorHint="@color/grey"
@@ -37,7 +37,7 @@
               android:layout_marginTop="10dp"
               android:textSize="15sp"
               android:id="@+id/payment"
-              android:text="Payment Method: "/>
+              android:text="@string/payments"/>
           <RadioGroup
               android:layout_width="wrap_content"
               android:layout_height="wrap_content">
@@ -45,12 +45,12 @@
                   android:id="@+id/Paypal"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="Paypal"/>
+                  android:text="@string/paypal"/>
               <RadioButton
                   android:id="@+id/CallCash"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="Call waiter for cash"/>
+                  android:text="@string/cash"/>
           </RadioGroup>
 
     </LinearLayout>

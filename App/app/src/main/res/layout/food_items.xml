@@ -31,7 +31,7 @@
             android:padding="5dp"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
-            android:text="Food"
+            android:text="@string/dishName"
             android:textSize="25sp"
             android:textColor="@color/colorAccentDark"/>
 
@@ -70,7 +70,7 @@
                 android:layout_weight="9"
                 android:layout_marginStart="10dp"
                 android:inputType="textMultiLine"
-                android:text="aldjfnajdfn"
+                android:text="@string/dishDesc"
                 android:textStyle="normal"
                 android:textColor="@color/charcoal"
                 android:textSize="18sp" />

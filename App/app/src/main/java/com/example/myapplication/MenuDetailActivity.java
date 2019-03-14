@@ -111,8 +111,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
                         currentMenu.getPrice()
                 ));
                 Toast.makeText(MenuDetailActivity.this, "Added to order", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MenuDetailActivity.this, HomeActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
         //add.

@@ -13,7 +13,7 @@
         android:fontFamily="sans-serif-condensed"
         android:textSize="25sp"
         android:gravity="center"
-        android:text="Oui Restaurant is here to assist your every needs. \nWith this app you can make your order fast and efficient! \n\n\n "/>
+        android:text="@string/aboutName"/>
 
     <TextView
         android:id="@+id/aboutDesc"
@@ -21,9 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/charcoal"
+        android:gravity="center"
         android:fontFamily="sans-serif-condensed"
         android:textSize="20sp"
-        android:text=" Scan QR code to see more about us: \n"/>
+        android:text="@string/aboutDesc"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

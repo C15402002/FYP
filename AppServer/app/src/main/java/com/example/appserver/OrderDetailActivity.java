@@ -45,7 +45,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderTable.setText(Control.currentOrder.getTable());
         orderPrice.setText(Control.currentOrder.getTotal());
         orderComment.setText(Control.currentOrder.getNotes());
-        orderPayment.setText(Control.currentOrder.getPaymentProcess());
+//        orderPayment.setText(Control.currentOrder.getPaymentProcess());
 
 
         ExtraDetailAdapter adapter = new ExtraDetailAdapter(Control.currentOrder.getListOfOrderPlaced());

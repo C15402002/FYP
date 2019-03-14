@@ -37,9 +37,13 @@ import com.example.myapplication.model.Token;
 import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.FirebaseError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -133,16 +137,19 @@ public class HomeActivity extends AppCompatActivity
         email = header.findViewById(R.id.viewEmail);
         email.setText(Control.currentUser.getEmail());
 
+        //.child(db).addSingleValueEventListener(listener);
 
         //get product
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
-
-
-
+//
+//        if (product) {
+//            Toast.makeText(this, "Restaurant does not exist", Toast.LENGTH_SHORT).show();
+//            Intent intent1 = new Intent(HomeActivity.this, ScanActivity.class);
+//            startActivity(intent1);
+//        }
         if (Control.restID != null && !Control.restID.isEmpty()) {
             if (Control.checkConnectivity(this)) {
-
                 options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
                 adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options) {
 
@@ -157,7 +164,9 @@ public class HomeActivity extends AppCompatActivity
 
                             @Override
                             public void onError(Exception e) {
-                                //  Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
+
+
 
                             }
                         });
@@ -194,11 +203,9 @@ public class HomeActivity extends AppCompatActivity
             } else {
                 Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(this, "Restaurant does not exist", Toast.LENGTH_SHORT).show();
-            Intent intent1 = new Intent(HomeActivity.this, ScanActivity.class);
-            startActivity(intent1);
+
         }
+
     }
 
     private void updateToken(String token) {
@@ -294,6 +301,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        fab.setCount(new Database(this).getAmount(Control.currentUser.getPhone()));
         if(adapter!=null){
             adapter.startListening();
         }

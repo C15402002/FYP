@@ -44,7 +44,7 @@ class BasketHolder extends RecyclerView.ViewHolder implements View.OnClickListen
         super(itemView);
         basketName = itemView.findViewById(R.id.itemName);
         basketPrice = itemView.findViewById(R.id.itemPrice);
-       //basketCount = itemView.findViewById(R.id.basketCount);
+        //basketCount = itemView.findViewById(R.id.basketCount);
         counter = itemView.findViewById(R.id.counter);
         itemView.setOnCreateContextMenuListener(this);
     }

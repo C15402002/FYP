@@ -1,34 +1,67 @@
 <resources>
     <string name="app_name">Oui</string>
-    <string name="app_desc">welcome</string>
-    <string name="btnLogin">Login</string>
-    <string name="login">Already have an account? Login</string>
-    <string name="email"> Enter Email </string>
-    <string name="password">Enter Password</string>
-    <string name="phone">Enter Phone Number</string>
-    <string name="btnSignup">Sign up</string>
-    <string name="signup">Dont have an account? sign up</string>
-    <string name="fname_input">Enter First Name </string>
-    <string name="username">Enter a username</string>
-    <string name="sname_input">Surname</string>
-    <string name="btn_logout">Logout</string>
-    <string name="scanbtn">Press to scan</string>
-    <string name="menu">Menu</string>
+    <string name="app_desc" translatable="false">welcome</string>
 
-    <string name="total">TOTAL: </string>
-    <string name="placeOrder">Place Order</string>
+    <string name="search" translatable="false">Search</string>
+    <string name="btn_logout" translatable="false">Logout</string>
 
-    <string name="search">Search</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="action_scan" translatable="false">Scan QR</string>
 
-    <string name="title_activity_home">Oui</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_scan">Scan QR</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_nearby_restaurants">Map</string>
+    <!--LOGIN/SIGNUP ACTIVITY STRINGS-->
+    <string name="btnLogin" translatable="false">Login</string>
+    <string name="login" translatable="false">Already have an account? Login</string>
+    <string name="email" translatable="false"> Enter Email </string>
+    <string name="password" translatable="false">Enter Password</string>
+    <string name="phone" translatable="false">Enter Phone Number</string>
+    <string name="btnSignup" translatable="false">Sign up</string>
+    <string name="signup" translatable="false">Dont have an account? sign up</string>
+    <string name="fname_input" translatable="false">Enter First Name </string>
+    <string name="username" translatable="false">Enter a username</string>
+    <string name="sname_input" translatable="false">Surname</string>
+
+    <!--MENU DETAIL ACTIVITY STRINGS -->
+    <string name="dishName" translatable="false">dishname</string>
+    <string name="dishDesc" translatable="false">dish description</string>
+    <string name="addBTN" translatable="false">ADD</string>
+    <string name="reviewBTN" translatable="false">See Reviews</string>
+
+    <!--SCAN ACTIVITY STRINGS -->
+    <string name="scanbtn" translatable="false">Press to scan</string>
+    <string name="scanDesc" translatable="false">Scan the QR code to see restaurant menu</string>
+    <string name="menu" translatable="false">Menu</string>
+
+    <!--HOME ACTIVITY STRING -->
+    <string name="showNot" translatable="false">Nothing to show, please scan again or contact restaurant manager</string>
+    <string name="title_activity_home" translatable="false">Oui</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
+    <!--ORDER HISTORY ACTIVITY STRINGS -->
+    <string name="Status" translatable="false">Status : </string>
+    <string name="state" translatable="false">status</string>
+    <string name="TableNo" translatable="false">Table No : </string>
+    <string name="tablenum" translatable="false">tablenum </string>
+
+    <!--REVIEW ACTIVITY STRINGS -->
+    <string name="user" translatable="false">USER</string>
+    
+    <!--ABOUT ACTIVITY STRINGS-->
+    <string name="aboutName" translatable="false">Oui Restaurant is here to assist your every needs. \nWith this app you can make your order fast and efficient! \n\n\n</string>
+    <string name="aboutDesc" translatable="false"> Scan QR code to see more about us: \n</string>
+
+    <!--BASKET ACTIVITY STRINGS -->
+    <string name="total" translatable="false">TOTAL: </string>
+    <string name="placeOrder" translatable="false">Place Order</string>
+
+    <!--ORDERS ACTIVITY TABLE COMMENT LAYOUT STRINGS -->
+    <string name="enterTable" translatable="false">Enter table number</string>
+    <string name="comments" translatable="false">Comments</string>
+    <string name="payments" translatable="false">Payment methods: </string>
+    <string name="paypal" translatable="false">Paypal</string>
+    <string name="cash" translatable="false">Call waiter for cash payments</string>
 
 </resources>
