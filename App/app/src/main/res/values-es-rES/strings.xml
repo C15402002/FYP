@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oui</string>
+    <string name="btnLogin">Iniciar sesión</string>
+    <string name="app_desc">Bienvenido</string>
+    <string name="search">Buscar</string>
+    <string name="btn_logout">Cerrar sesión</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_scan">" Escanear QR"</string>
+    <string name="login">¿Ya tienes una cuenta? Iniciar sesión</string>
+    <string name="email">Ingrese correo electrónico</string>
+    <string name="phone">Ingresa número telefónico</string>
+    <string name="password">Introducir la contraseña</string>
+    <string name="btnSignup">Regístrate</string>
+    <string name="signup">¿No tienes una cuenta? Regístrate</string>
+    <string name="fname_input">Ingrese el primer nombre</string>
+    <string name="sname_input">" Ingrese el apellido"</string>
+    <string name="username">" Introduzca su nombre de usuario"</string>
+    <string name="addBTN">" AÑADIR"</string>
+    <string name="reviewBTN">" Ver comentarios"</string>
+    <string name="scanbtn">" Presione para escanear"</string>
+    <string name="scanDesc">" Escanee el código QR para ver el menú del restaurante"</string>
+    <string name="menu">" Menú"</string>
+    <string name="showNot">" Nada que mostrar, por favor escanea de nuevo"</string>
+    <string name="Status">Estado:</string>
+    <string name="TableNo">Tabla No:</string>
+    <string name="aboutName">" El restaurante Oui está aquí para satisfacer todas sus necesidades."</string>
+    <string name="aboutDesc">" Escanee el código QR para ver más sobre nosotros:"</string>
+    <string name="total">" TOTAL:"</string>
+    <string name="placeOrder">" Realizar pedido"</string>
+    <string name="enterTable">" Introduzca el número de la tabla:"</string>
+    <string name="comments">" Comentarios"</string>
+    <string name="payments">" Métodos de pago:"</string>
+    <string name="cash">" Llamar al camarero para pagos en efectivo"</string>
+    <string name="language">Cambiar idioma</string>
+</resources>

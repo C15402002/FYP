@@ -10,7 +10,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

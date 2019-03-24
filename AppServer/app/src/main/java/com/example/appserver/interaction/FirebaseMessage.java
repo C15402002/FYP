@@ -10,8 +10,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-import com.example.appserver.MainActivity;
-import com.example.appserver.OrdersPlacedActivity;
+import com.example.appserver.activites.MainActivity;
+import com.example.appserver.activites.OrdersPlacedActivity;
 import com.example.appserver.R;
 import com.example.appserver.control.Control;
 import com.example.appserver.helper.NotifyMeHelper;

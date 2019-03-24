@@ -12,20 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutActivity"></activity>
-        <activity android:name=".OrderDetailActivity" />
+        <activity android:name=".activites.AboutActivity"
+            android:theme="@style/CustomTheme"></activity>
+        <activity android:name=".activites.OrderDetailActivity"
+            android:theme="@style/CustomTheme"/>
         <activity
-            android:name=".OrdersPlacedActivity"
+            android:name=".activites.OrdersPlacedActivity"
             android:theme="@style/CustomTheme" />
         <activity
-            android:name=".MenuListActivity"
+            android:name=".activites.MenuListActivity"
             android:theme="@style/CustomTheme" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activites.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activites.LoginActivity" />
+        <activity android:name=".activites.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

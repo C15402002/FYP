@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/root"
-    tools:context=".MenuListActivity">
+    tools:context=".activites.MenuListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -21,6 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@color/colorAccent"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
 

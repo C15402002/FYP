@@ -11,10 +11,9 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.OrderPlacedActivity;
+import com.example.myapplication.activities.MainActivity;
+import com.example.myapplication.activities.OrderPlacedActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.config.RemoteAPIService;
 import com.example.myapplication.control.Control;
 import com.example.myapplication.helper.NotifyMeHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;

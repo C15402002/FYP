@@ -1,8 +1,6 @@
 package com.example.myapplication.adapter;
 
 
-import android.content.Context;
-import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +8,10 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.example.myapplication.BasketActivity;
+import com.example.myapplication.activities.BasketActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;

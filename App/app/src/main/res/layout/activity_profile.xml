@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".activities.ProfileActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -61,18 +61,5 @@
         android:id="@+id/editPhone"
         android:gravity="center"/>
 
-
-    <Button
-        android:id="@+id/EditProf"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:layout_below="@+id/editPhone"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:textSize="15sp"
-        android:text="edit profile"
-        android:textColor="@color/white"/>
 
 </RelativeLayout>

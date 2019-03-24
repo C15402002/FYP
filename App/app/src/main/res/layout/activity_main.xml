@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/food"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     >
 
     <LinearLayout
@@ -30,7 +30,7 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80sp"
+            android:layout_marginTop="150sp"
             android:text="@string/btnLogin"
             android:textSize="20sp"
             android:textAllCaps="false"
@@ -45,10 +45,23 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:layout_marginTop="20sp"
-            android:background="@color/grey"
+            android:background="@color/charcoal"
             android:textSize="20sp"
             android:layout_gravity="center"
             android:text="@string/btnSignup"
+            android:textColor="#fff"
+            />
+
+        <Button
+            android:id="@+id/btnLanguage"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginTop="110sp"
+            android:background="@color/grey"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="@string/language"
             android:textColor="#fff"
             />
 
