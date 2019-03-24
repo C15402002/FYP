@@ -122,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         Resources resources = context.getResources();
 
         loginbtn.setText(resources.getString(R.string.btnLogin));
+        registerbtn.setText(resources.getString(R.string.signup));
        // phone_input.setText(resources.getString(R.string.phone));
        // password_input.setText(resources.getString(R.string.password));
     }
