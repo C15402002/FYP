@@ -80,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (name.getText().toString().isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Enter name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getText(R.string.fname_input), Toast.LENGTH_SHORT).show();
                     return;
                 } else if (email.getText().toString().isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();

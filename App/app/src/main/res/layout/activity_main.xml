@@ -28,11 +28,11 @@
             />
 
         <Button
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="150sp"
             android:text="@string/btnLogin"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textAllCaps="false"
             android:textColor="#fff"
             android:background="@color/colorAccent"
@@ -41,28 +41,26 @@
             />
         <Button
             android:id="@+id/btnUserSignup"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:layout_marginTop="20sp"
             android:background="@color/charcoal"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_gravity="center"
             android:text="@string/btnSignup"
             android:textColor="#fff"
             />
 
-        <Button
+        <ImageButton
+            android:src="@drawable/ic_language_black_24dp"
             android:id="@+id/btnLanguage"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_marginTop="110sp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="100dp"
             android:background="@color/grey"
-            android:textSize="20sp"
             android:layout_gravity="center"
-            android:text="@string/language"
-            android:textColor="#fff"
             />
 
 
@@ -70,4 +68,3 @@
 
 
 </LinearLayout>
-

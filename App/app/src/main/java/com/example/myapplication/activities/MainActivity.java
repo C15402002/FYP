@@ -14,14 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.LocalHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnLogin, btnSignup,btnlanguage;
-
+    Button btnLogin, btnSignup;
+    ImageButton btnlanguage;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeLanguageDialog() {
-        final String[] listLang = {"English","Spanish"};
+        final String[] listLang = {"English","Espanol"};
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
         dialog.setTitle("Choose Language...");
         dialog.setSingleChoiceItems(listLang, -1, new DialogInterface.OnClickListener() {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogin.setText(resources.getString(R.string.btnLogin));
         btnSignup.setText(resources.getString(R.string.btnSignup));
-        btnlanguage.setText(resources.getString(R.string.language));
+        //btnlanguage.setText(resources.getString(R.string.language));
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.myapplication.activities;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import com.example.myapplication.config.RemoteAPIService;
 import com.example.myapplication.control.Control;
 import com.example.myapplication.control.Paypal;
 import com.example.myapplication.database.Database;
+import com.example.myapplication.helper.LocalHelper;
 import com.example.myapplication.model.MakeOrder;
 import com.example.myapplication.model.Notification;
 import com.example.myapplication.model.Order;
@@ -130,7 +133,7 @@ public class BasketActivity extends AppCompatActivity {
                 if(listOfOrderPlaced.size() > 0) {
                     showAlertDialog();
                 }else {
-                    Toast.makeText(BasketActivity.this, "Basket is empty, add products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getString(R.string.emptyBasket), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -149,7 +152,6 @@ public class BasketActivity extends AppCompatActivity {
                onBackPressed();
             }
         });
-
 
 
         loadBasket();
@@ -180,7 +182,7 @@ public class BasketActivity extends AppCompatActivity {
 
     private void showAlertDialog(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
-        alertDialog.setMessage("Please Enter Table Number: ");
+      //  alertDialog.setMessage("Please Enter Table Number: ");
 
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.table_comment_layout,null);
@@ -202,7 +204,7 @@ public class BasketActivity extends AppCompatActivity {
 
 
                 if(!cash.isChecked() && !payPal.isChecked()){
-                    Toast.makeText(BasketActivity.this, "Please select payment method!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getString(R.string.PaymentMeth), Toast.LENGTH_SHORT).show();
 
                     return;
                 }else if(cash.isChecked()){
@@ -226,7 +228,7 @@ public class BasketActivity extends AppCompatActivity {
                     new Database(getBaseContext()).deleteFromBasket(Control.currentUser.getPhone());
 
                     notifyServer(order_num);
-                    Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else if(payPal.isChecked()){
@@ -244,7 +246,7 @@ public class BasketActivity extends AppCompatActivity {
 
             }
         });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -283,7 +285,7 @@ public class BasketActivity extends AppCompatActivity {
                         databaseReference.child(order_num).setValue(makeOrder);
                         new Database(getBaseContext()).deleteFromBasket(Control.currentUser.getPhone());
                         notifyServer(order_num);
-                        Toast.makeText(BasketActivity.this, "Order sent to kitchen", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BasketActivity.this, getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
                         finish();
 
                     } catch (JSONException e) {
@@ -293,10 +295,10 @@ public class BasketActivity extends AppCompatActivity {
                 }
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Payment Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.payCan), Toast.LENGTH_SHORT).show();
 
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Toast.makeText(this, "Payment Invalid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,  getString(R.string.payInval), Toast.LENGTH_SHORT).show();
             }
         }
     }

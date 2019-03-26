@@ -33,4 +33,10 @@
     <string name="payments">"Payment methods: "</string>
     <string name="cash">Call waiter for cash payments</string>
     <string name="language">Change Language</string>
+    <string name="emptyBasket">Basket is empty, add products!</string>
+    <string name="PaymentMeth">Please select a payment method!</string>
+    <string name="orderKit">Order sent to kitchen</string>
+    <string name="cancel">Cancel</string>
+    <string name="payCan">Payment cancelled</string>
+    <string name="payInval">Payment invalid</string>
 </resources>

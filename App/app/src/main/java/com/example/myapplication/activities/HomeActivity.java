@@ -2,11 +2,14 @@ package com.example.myapplication.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
+import com.example.myapplication.helper.LocalHelper;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+import io.paperdb.Paper;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +59,10 @@ public class HomeActivity extends AppCompatActivity
     CounterFab fab;
 
     String restId = "";
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +133,13 @@ public class HomeActivity extends AppCompatActivity
         //get product
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
+
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+        updateLanguage((String)Paper.book().read("language"));
 //
 //        if (product) {
 //            Toast.makeText(this, "Restaurant does not exist", Toast.LENGTH_SHORT).show();
@@ -254,11 +269,23 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
     if (id == R.id.action_search){
          startActivity(new Intent(HomeActivity.this, SearchFoodsActivity.class));
-     }
+     }else if (id == R.id.english){
+        Paper.book().write("language", "en");
+        updateLanguage((String)Paper.book().read("language"));
+        }else if (id == R.id.spanish){
+        Paper.book().write("language", "es");
+        updateLanguage((String)Paper.book().read("language"));
+    }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    private void updateLanguage(String language) {
+        Context context = LocalHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+    }
+
+
+        @Override
     protected void onPause() {
         super.onPause();
         //mScannerView.stopCamera();
