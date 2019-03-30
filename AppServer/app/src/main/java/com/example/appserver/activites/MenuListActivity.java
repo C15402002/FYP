@@ -324,7 +324,9 @@ public class MenuListActivity extends AppCompatActivity {
 
 
     private void showDeleteDialog(String key, Menu item) {
+
         menuRef.child(key).removeValue();
+
         Toast.makeText(this, "Item removed!", Toast.LENGTH_SHORT).show();
     }
 

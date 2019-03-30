@@ -1,14 +1,15 @@
 package com.example.myapplication.model;
 
 public class Order {
-    private String UserPhone,ProductId, ProductName, Quantity, Price;
+    private String UserPhone,ProductId, RestID, ProductName, Quantity, Price;
 
     public Order() {
     }
 
-    public Order(String userPhone, String productId, String productName, String quantity, String price) {
+    public Order(String userPhone, String productId, String restID, String productName, String quantity, String price) {
         UserPhone = userPhone;
         ProductId = productId;
+        RestID = restID;
         ProductName = productName;
         Quantity = quantity;
         Price = price;
@@ -28,6 +29,14 @@ public class Order {
 
     public void setProductId(String productId) {
         ProductId = productId;
+    }
+
+    public String getRestID() {
+        return RestID;
+    }
+
+    public void setRestID(String restID) {
+        RestID = restID;
     }
 
     public String getProductName() {

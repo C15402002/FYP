@@ -107,7 +107,9 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             @Override
             public void onClick(View view) {
                 new Database(getBaseContext()).addToBasket(new Order(Control.currentUser.getPhone(),
-                        menuId, currentMenu.getName(),
+                        menuId,
+                        Control.restID,
+                        currentMenu.getName(),
                         quantity.getNumber(),
                         currentMenu.getPrice()
                 ));
@@ -195,12 +197,18 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     }
 
     private void showReview() {
-        new AppRatingDialog.Builder().setPositiveButtonText("Submit").setNegativeButtonText("Cancel")
-            .setNoteDescriptions(Arrays.asList("Poor","Not Great","Meh","Great", "Amazing"))
-            .setDefaultRating(1).setTitle("Write a review").setDescription("Please give this a rate and comment")
-            .setTitleTextColor(R.color.colorAccent).setDescriptionTextColor(R.color.colorAccent).setHint("Comments here")
-            .setHintTextColor(R.color.grey).setCommentTextColor(android.R.color.black)
-            .setCommentBackgroundColor(R.color.white).setWindowAnimation(R.style.RatingAnim)
+        new AppRatingDialog.Builder().setPositiveButtonText("Submit")
+                .setNegativeButtonText("Cancel")
+                .setNoteDescriptions(Arrays.asList("Poor","Not Great","Meh","Great", "Amazing"))
+                .setDefaultRating(1).setTitle("Write a review")
+                .setDescription("Please give this a rate and comment")
+                .setHint("Comments here")
+                .setHintTextColor(R.color.grey)
+                .setCommentTextColor(android.R.color.black)
+                .setCommentBackgroundColor(R.color.white)
+                .setWindowAnimation(R.style.RatingAnim)
+                .setTitleTextColor(R.color.colorAccent)
+                .setDescriptionTextColor(R.color.colorAccent)
             .create(MenuDetailActivity.this).show();
 
     }

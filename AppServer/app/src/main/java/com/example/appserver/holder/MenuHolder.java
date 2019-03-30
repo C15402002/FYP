@@ -30,9 +30,6 @@ public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     }
 
-//    public void setItemClickListener(ItemClickedListener menuClickListener){
-//        this.menuClickListener= menuClickListener;
-//    }
 
     @Override
     public void onClick(View view){

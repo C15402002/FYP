@@ -38,6 +38,7 @@
             android:background="@color/colorAccent"
             android:layout_gravity="center"
             android:id="@+id/btnUserLogin"
+            android:contentDescription="@string/btnLogin"
             />
         <Button
             android:id="@+id/btnUserSignup"

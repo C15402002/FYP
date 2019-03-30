@@ -4,12 +4,9 @@
     package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
 
     <application
         android:name=".application.LanguageApplication"
@@ -19,17 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.ProfileActivity"
-            android:theme="@style/CustomTheme"/>
+        <activity android:name=".activities.RestaurantActivity" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".activities.AboutActivity"
             android:theme="@style/CustomTheme" />
-
-        <activity android:name=".activities.SeeReviewsActivity"
-            android:theme="@style/CustomTheme"/>
-        <activity android:name=".activities.MenuListActivity"
-            android:theme="@style/CustomTheme"/>
+        <activity
+            android:name=".activities.SeeReviewsActivity"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".activities.MenuListActivity"
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
@@ -40,7 +39,7 @@
             tools:replace="screenOrientation" />
         <activity
             android:name=".activities.OrderPlacedActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".activities.BasketActivity"
             android:theme="@style/CustomTheme" />
@@ -56,7 +55,7 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity
             android:name=".activities.MenuDetailActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme" />
 
         <service android:name=".interaction.FirebaseService">
             <intent-filter>

@@ -42,7 +42,7 @@ public class ExtraDetailAdapter extends RecyclerView.Adapter<MyHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
         Order order = myOrder.get(i);
-        myHolder.name.setText(order.getProdName());
+        myHolder.name.setText(order.getProductName());
         myHolder.quantity.setText(order.getQuantity());
         myHolder.price.setText(order.getPrice());
     }

@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (user.getPassword().equals(password_input.getText().toString())) {
 
                                         Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(LoginActivity.this, ScanActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this, RestaurantActivity.class);
                                         Control.currentUser = user;
                                         startActivity(intent);
                                         finish();

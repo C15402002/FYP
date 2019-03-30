@@ -48,6 +48,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         recyclerView = findViewById(R.id.listdetails);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

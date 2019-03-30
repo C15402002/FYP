@@ -17,10 +17,11 @@ public class Control {
     public static User currentUser;
     public static final String Review_DishesID = "MenuId";
 
-    public static  final String Restaurant_Scanned = "RestaurantId";
+   // public static   String Restaurant_Scanned = "RestaurantId";
     public static String restID = "";
 
     public static String PHONE_ID = "\"userPhone\"";
+
     public static String convertStatus(String statusStage){
         if(statusStage.equals("0")){
             return "sent to kitchen";

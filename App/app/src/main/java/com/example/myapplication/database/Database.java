@@ -23,7 +23,7 @@ public class Database extends SQLiteAssetHelper{
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
 
-        String[] select = {"UserPhone", "ProductId","ProductName","Quantity", "Price"};
+        String[] select = {"UserPhone", "ProductId", "RestID","ProductName","Quantity", "Price"};
         String sqlTable = "OrderDetail";
 
         final List<Order> result = new ArrayList<>();
@@ -33,7 +33,8 @@ public class Database extends SQLiteAssetHelper{
 //        Cursor cursor = sqLiteDatabase.rawQuery("SELECT ProductId, ProdName, Quantity, Price FROM OrderDetail", null);
         if(cursor.moveToFirst()){
             do{
-                result.add(new Order(cursor.getString(cursor.getColumnIndex("UserPhone")),cursor.getString(cursor.getColumnIndex("ProductId")), cursor.getString(cursor.getColumnIndex("ProductName")),
+                result.add(new Order(cursor.getString(cursor.getColumnIndex("UserPhone")),cursor.getString(cursor.getColumnIndex("ProductId")),cursor.getString(cursor.getColumnIndex("RestID")),
+                        cursor.getString(cursor.getColumnIndex("ProductName")),
                        cursor.getString(cursor.getColumnIndex("Quantity")), cursor.getString(cursor.getColumnIndex("Price"))));
             } while (cursor.moveToNext());
         }
@@ -44,8 +45,8 @@ public class Database extends SQLiteAssetHelper{
 
     public void addToBasket(Order order){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        String query = String.format("INSERT OR REPLACE INTO OrderDetail(UserPhone, ProductId, ProductName, Quantity, Price) VALUES('%s', '%s', '%s','%s','%s');",
-                order.getUserPhone(), order.getProductId(), order.getProductName(), order.getQuantity(), order.getPrice());
+        String query = String.format("INSERT OR REPLACE INTO OrderDetail(UserPhone, ProductId, RestID, ProductName, Quantity, Price) VALUES('%s', '%s', '%s','%s','%s');",
+                order.getUserPhone(), order.getProductId(), order.getRestID(), order.getProductName(), order.getQuantity(), order.getPrice());
         sqLiteDatabase.execSQL(query);
 
     }

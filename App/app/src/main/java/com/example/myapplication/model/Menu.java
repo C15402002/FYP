@@ -12,7 +12,6 @@ public class Menu {
         Image = image;
         Description = description;
         Price = price;
-        //MenuId = menuId;
         FoodId = foodId;
     }
 

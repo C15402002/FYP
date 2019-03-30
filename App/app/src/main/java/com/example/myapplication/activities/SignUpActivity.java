@@ -108,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                             } else {
                                 User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
                                 userTable.child(phone.getText().toString()).setValue(user);
-                                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(SignUpActivity.this, RestaurantActivity.class);
                                 startActivity(intent);
                                 //Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                 finish();

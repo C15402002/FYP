@@ -18,8 +18,8 @@ public class RestaurantHolder extends RecyclerView.ViewHolder implements View.On
     private ProductClickedListener menuClickListener;
     public RestaurantHolder(@NonNull View itemView){
         super(itemView);
-        restName=(TextView)itemView.findViewById(R.id.mname);
-        restImage=(ImageView)itemView.findViewById(R.id.mimage);
+        restName=(TextView)itemView.findViewById(R.id.restname);
+        restImage=(ImageView)itemView.findViewById(R.id.restimage);
         itemView.setOnClickListener(this);
 
     }

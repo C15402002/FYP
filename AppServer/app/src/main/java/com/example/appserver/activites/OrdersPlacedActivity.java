@@ -154,6 +154,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         alertDialog.setView(view);
 
         final String key_STAT = key;
+
         materialSpinner = view.findViewById(R.id.spinner);
         materialSpinner.setItems("Kitchen", "Cooking", "Served");
 

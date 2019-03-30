@@ -241,7 +241,11 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_scan) {
+        }else if (id == R.id.nav_menu) {
+            onBackPressed();
+
+        }
+        else if (id == R.id.nav_scan) {
             Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
             startActivity(intent);
 
