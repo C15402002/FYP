@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date"
-                android:text="Payment method: "
+                android:text="Payment method:"
                 android:textAllCaps="true"
                 android:textStyle="bold"/>
 
@@ -134,6 +134,26 @@
                 android:layout_below="@+id/date"
                 android:layout_toEndOf="@+id/paymentMethod"
                 android:text="cash"
+                android:textAllCaps="true"
+                android:textStyle="italic"/>
+            <TextView
+                android:id="@+id/posspayment"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/paymentMethod"
+                android:text="Payment process:"
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/paymentpos"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/payment"
+                android:layout_toEndOf="@+id/paymentMethod"
+                android:text="paid"
                 android:textAllCaps="true"
                 android:textStyle="italic"/>
         </RelativeLayout>

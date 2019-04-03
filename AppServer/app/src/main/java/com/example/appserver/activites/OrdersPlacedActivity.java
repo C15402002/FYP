@@ -1,6 +1,7 @@
 package com.example.appserver.activites;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -45,6 +46,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
     DatabaseReference orderPlaced;
 
     RemoteAPIService remoteAPIService;
+
 
     FirebaseRecyclerOptions<MakeOrder> options;
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
@@ -92,12 +94,14 @@ public class OrdersPlacedActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull OrderHolder holder, final int position, @NonNull final MakeOrder model) {
+            protected void onBindViewHolder(@NonNull final OrderHolder holder, final int position, @NonNull final MakeOrder model) {
                 holder.orderId.setText(adapter.getRef(position).getKey());
                 holder.orderStatus.setText(Control.convertStatus(model.getStatus()));
                 holder.orderPrice.setText(model.getTotal());
                 holder.orderTable.setText(model.getTable());
                 holder.orderDate.setText(Control.orderDate(Long.parseLong(adapter.getRef(position).getKey())));
+                holder.orderPayMeth.setText(model.getPaymentMethods());
+                holder.orderPayProcess.setText(model.getPaymentProcess());
 
                 holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,7 +113,16 @@ public class OrdersPlacedActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        showUpdateDialog(adapter.getRef(position).getKey(), adapter.getItem(position));
+
+                        if(adapter.getItem(position).getStatus().equals("2")){
+                            Toast.makeText(OrdersPlacedActivity.this, "Order can not be cancelled", Toast.LENGTH_SHORT).show();
+                        }else{
+                            showUpdateDialog(adapter.getRef(position).getKey(), adapter.getItem(position));
+                        }
+
+                        if(adapter.getItem(position).getStatus().equals("1")){
+                            holder.orderPayProcess.setText("Paid");
+                        }
 
                     }
                 });
@@ -166,6 +179,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                 orderPlaced.child(key_STAT).setValue(item);
                 adapter.notifyDataSetChanged();
                 sendStatus(key_STAT,item);
+
 
             }
         });

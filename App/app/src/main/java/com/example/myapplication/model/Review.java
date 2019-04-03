@@ -1,26 +1,26 @@
 package com.example.myapplication.model;
 
 public class Review {
-    private String userPhone, menuId, rate, comment, restaurantId;
+    private String name, menuId, rate, comment, restaurantId;
 
     public Review() {
 
     }
 
-    public Review(String userPhone, String menuId, String rate, String comment, String restaurantId) {
-        this.userPhone = userPhone;
+    public Review(String name, String menuId, String rate, String comment, String restaurantId) {
+        this.name = name;
         this.menuId = menuId;
         this.rate = rate;
         this.comment = comment;
         this.restaurantId = restaurantId;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getName() {
+        return name;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMenuId() {

@@ -41,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(phone_input.getText().toString().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Please Enter Your ID", Toast.LENGTH_SHORT).show();
+                } else if(password_input.getText().toString().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                }
                 SignIn(phone_input.getText().toString(), password_input.getText().toString());
             }
         });

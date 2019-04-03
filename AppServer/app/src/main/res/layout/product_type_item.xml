@@ -22,7 +22,7 @@
             android:id="@+id/mname"
             android:text="menu"
             android:gravity="center"
-            android:textSize="70sp"
+            android:textSize="40sp"
             android:textColor="@color/white"
             android:background="@color/greyOverlay"
             android:layout_alignParentBottom="true"/>

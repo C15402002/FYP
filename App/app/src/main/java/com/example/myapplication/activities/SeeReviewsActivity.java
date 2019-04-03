@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
@@ -52,6 +53,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.seeReviews);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
@@ -69,28 +71,33 @@ public class SeeReviewsActivity extends AppCompatActivity {
             menuId = getIntent().getStringExtra(Control.Review_DishesID);
 
         }if(!menuId.isEmpty()){
-            Query query = review.orderByChild("menuId").equalTo(menuId);
+            if (Control.checkConnectivity(getBaseContext())) {
+                Query query = review.orderByChild("menuId").equalTo(menuId);
 
-            options = new FirebaseRecyclerOptions.Builder<Review>().setQuery(query, Review.class).build();
-            adapter = new FirebaseRecyclerAdapter<Review, ReviewHolder>(options) {
-                @Override
-                protected void onBindViewHolder(@NonNull ReviewHolder reviewHolder, int i, @NonNull Review review) {
-                    reviewHolder.stars.setRating(Float.parseFloat(review.getRate()));
-                    reviewHolder.review.setText(review.getComment());
-                    reviewHolder.identifyUser.setText(review.getUserPhone());
+                options = new FirebaseRecyclerOptions.Builder<Review>().setQuery(query, Review.class).build();
+                adapter = new FirebaseRecyclerAdapter<Review, ReviewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ReviewHolder reviewHolder, int i, @NonNull Review review) {
+                        reviewHolder.stars.setRating(Float.parseFloat(review.getRate()));
+                        reviewHolder.review.setText(review.getComment());
+                        reviewHolder.identifyUser.setText(Control.currentUser.getName());
 
 
-                }
+                    }
 
-                @NonNull
-                @Override
-                public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                    View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.show_review_layout, parent, false);
-                    return new ReviewHolder(v);
-                }
-            };
+                    @NonNull
+                    @Override
+                    public ReviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.show_review_layout, parent, false);
+                        return new ReviewHolder(v);
+                    }
+                };
 
-            loadReviews(menuId);
+                loadReviews(menuId);
+            } else {
+                Toast.makeText(SeeReviewsActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
     }
 

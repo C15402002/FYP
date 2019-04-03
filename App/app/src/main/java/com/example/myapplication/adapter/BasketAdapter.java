@@ -90,10 +90,9 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketHolder> {
                 order.setQuantity(String.valueOf(newValue));
                 new Database(basketActivity).editBasket(order);
 
-               // basketActivity.totalPrice
 
                 float total = 0;
-                List<Order> listOfOrderPlaced = new Database(basketActivity).getOrderBasket(Control.currentUser.getPhone());
+                List<Order> listOfOrderPlaced = new Database(basketActivity).getOrderBasket(Control.currentUser.getPhone(), Control.restID);
                 for(Order item:listOfOrderPlaced){
                     total += (Float.parseFloat(order.getPrice()))*(Float.parseFloat(item.getQuantity()));
                 }

@@ -3,6 +3,7 @@ package com.example.myapplication.activities;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,6 +88,8 @@ public class BasketActivity extends AppCompatActivity {
                                                         .clientId(Paypal.paypal_ID);
     String tablenum, notes;
 
+    ProgressDialog progressDialog;
+
 
 
     @Override
@@ -113,6 +116,7 @@ public class BasketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket);
 
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("OrderPlaced");
 
@@ -120,6 +124,7 @@ public class BasketActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        progressDialog = new ProgressDialog(BasketActivity.this);
 
         Intent intent = new Intent(this, Paypal.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
@@ -159,7 +164,7 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void loadBasket(){
-        listOfOrderPlaced = new Database(this).getOrderBasket(Control.currentUser.getPhone());
+        listOfOrderPlaced = new Database(this).getOrderBasket(Control.currentUser.getPhone(), Control.restID);
         adapter = new BasketAdapter(listOfOrderPlaced, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
@@ -181,8 +186,8 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
-      //  alertDialog.setMessage("Please Enter Table Number: ");
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
+        alertDialog.setTitle("Please Enter Order Information");
 
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.table_comment_layout,null);
@@ -202,12 +207,16 @@ public class BasketActivity extends AppCompatActivity {
                 tablenum = tableEdit.getText().toString();
                 notes = commentEdit.getText().toString();
 
+                if(tablenum.isEmpty()){
+                    Toast.makeText(BasketActivity.this, "Please enter table number", Toast.LENGTH_SHORT).show();
+                }
 
-                if(!cash.isChecked() && !payPal.isChecked()){
+                else if(!cash.isChecked() && !payPal.isChecked()){
                     Toast.makeText(BasketActivity.this, getString(R.string.PaymentMeth), Toast.LENGTH_SHORT).show();
 
-                    return;
                 }else if(cash.isChecked()){
+                    progressDialog.setMessage("Processing Order...");
+                    progressDialog.show();
 
                     MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
                             Control.currentUser.getEmail(),
@@ -218,7 +227,7 @@ public class BasketActivity extends AppCompatActivity {
                             notes,
                             "Unpaid",
                             "Cash",
-                            Control.Restaurant_Scanned,
+                            Control.restID,
                             listOfOrderPlaced);
 
                     String order_num = String.valueOf(System.currentTimeMillis());
@@ -229,17 +238,22 @@ public class BasketActivity extends AppCompatActivity {
 
                     notifyServer(order_num);
                     Toast.makeText(BasketActivity.this, getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     finish();
                 }
                 else if(payPal.isChecked()){
+                    progressDialog.setMessage("Retrieving PayPal...");
+                    progressDialog.show();
                     String formatTotal = totalPrice.getText().toString().replace("€","").replace(",","");
                     float sumTotal = Float.parseFloat(formatTotal);
 
                     PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal(formatTotal), "EUR", "OUI Order", PayPalPayment.PAYMENT_INTENT_SALE);
 
+
                     Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+                    progressDialog.dismiss();
                     startActivityForResult(intent, PAYPAL_REQUEST);
                 }
 
@@ -277,7 +291,7 @@ public class BasketActivity extends AppCompatActivity {
                                 notes,
                                 jsonObject.getJSONObject("response").getString("state"),
                                 "Paypal",
-                                Control.Restaurant_Scanned,
+                                Control.restID,
                                 listOfOrderPlaced);
 
                         String order_num = String.valueOf(System.currentTimeMillis());
@@ -310,7 +324,7 @@ public class BasketActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapShot:dataSnapshot.getChildren()){
                     Token token = postSnapShot.getValue(Token.class);
-                    Notification notification = new Notification("OUI","New Order "+order_num);
+                    Notification notification = new Notification("OUI","New Order "+ order_num);
                     Sender sender = new Sender(token.getToken(), notification);
                     remoteAPIService.sendNotice(sender).enqueue(new Callback<Response>() {
                         @Override
@@ -319,7 +333,7 @@ public class BasketActivity extends AppCompatActivity {
                                 Toast.makeText(BasketActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else{
-                                Toast.makeText(BasketActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BasketActivity.this, "Error something happened! Please Order again", Toast.LENGTH_SHORT).show();
 
                             }
                         }

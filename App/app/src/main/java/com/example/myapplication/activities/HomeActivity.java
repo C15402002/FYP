@@ -51,6 +51,10 @@ public class HomeActivity extends AppCompatActivity
     DatabaseReference product;
     TextView email, name;
 
+   private Toolbar toolbar;
+   private DrawerLayout drawer;
+   private NavigationView navigationView;
+
     RecyclerView recyclerView;
     FirebaseRecyclerOptions<Product_Type> options;
     FirebaseRecyclerAdapter<Product_Type, ProductHolder> adapter;
@@ -70,12 +74,11 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
-//        Intent intent = getIntent();
-//        restId= getIntent().getStringExtra(Control.Restaurant_Scanned);
 
         Intent intent = getIntent();
         Control.restID = intent.getStringExtra(Control.Restaurant_Scanned);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
 
@@ -84,13 +87,13 @@ public class HomeActivity extends AppCompatActivity
         product = db.getReference("Restaurant").child(Control.restID).child("details").child("Product_Type");
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         fab = findViewById(R.id.fab);
@@ -140,71 +143,74 @@ public class HomeActivity extends AppCompatActivity
             Paper.book().write("language", "en");
         }
         updateLanguage((String)Paper.book().read("language"));
-//
-//        if (product) {
-//            Toast.makeText(this, "Restaurant does not exist", Toast.LENGTH_SHORT).show();
-//            Intent intent1 = new Intent(HomeActivity.this, ScanActivity.class);
-//            startActivity(intent1);
-//        }
+
         if (Control.restID != null && !Control.restID.isEmpty()) {
             if (Control.checkConnectivity(this)) {
-                options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
-                adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options) {
-
-                    @Override
-                    protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
-
-                        Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-                                Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
-
-
-
-                            }
-                        });
-                        //final Menu clicked = model;
-                        holder.setItemClickListener(new ProductClickedListener() {
-                            @Override
-                            public void onClick(View v, int pos, boolean isLongClicked) {
-
-                                // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
-                                intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
-                                startActivity(intent);
-                            }
-                        });
-                        holder.itemName.setText(model.getName());
-                    }
-
-                    @NonNull
-                    @Override
-                    public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                        View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items, viewGroup, false);
-                        return new ProductHolder(v);
-                    }
-
-
-                };
-
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-                recyclerView.setLayoutManager(layoutManager);
-                adapter.startListening();
-                recyclerView.setAdapter(adapter);
-
-
-            } else {
+                loadRest();
+            }
+            else {
                 Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
         }
 
     }
+
+
+    private void loadRest() {
+
+        options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
+        adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options) {
+
+            @Override
+            protected void onBindViewHolder(@NonNull ProductHolder holder, int position, @NonNull Product_Type model) {
+
+                Picasso.get().load(model.getImage()).into(holder.itemImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
+
+
+
+                    }
+                });
+                //final Menu clicked = model;
+                holder.setItemClickListener(new ProductClickedListener() {
+                    @Override
+                    public void onClick(View v, int pos, boolean isLongClicked) {
+
+                        // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomeActivity.this, MenuListActivity.class);
+                        intent.putExtra("Product_TypeId", adapter.getRef(pos).getKey());
+                        startActivity(intent);
+                    }
+                });
+                holder.itemName.setText(model.getName());
+            }
+
+            @NonNull
+            @Override
+            public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.menu_items, viewGroup, false);
+                return new ProductHolder(v);
+            }
+
+
+        };
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
 
     private void updateToken(String token) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -241,6 +247,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
+
         }else if (id == R.id.nav_menu) {
             onBackPressed();
 

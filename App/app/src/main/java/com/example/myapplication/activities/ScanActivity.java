@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
@@ -18,45 +19,59 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.zxing.Result;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import io.paperdb.Paper;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-    //opens camera
+public class ScanActivity extends AppCompatActivity  {
+    //opens camera implements ZXingScannerView.ResultHandler
     private ZXingScannerView mScannerView;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference rest;
-
+    TextView scanDesc;
+    Button buttonscan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
+        buttonscan = findViewById(R.id.scanBtn);
+        buttonscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanQR();
+            }
+        });
 
-        scanQR();
+        scanDesc = findViewById(R.id.scanDesc);
 
 
         // restaurantId = getIntent().getStringExtra("RestaurantId");
         firebaseDatabase = FirebaseDatabase.getInstance();
         rest = firebaseDatabase.getReference("Restaurant");
 
-//        Paper.init(this);
-//        String lang = Paper.book().read("language");
-//        if(lang == null){
-//            Paper.book().write("language", "en");
-//        }
-//        updateLanguage((String)Paper.book().read("language"));
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+        updateLanguage((String)Paper.book().read("language"));
     }
 
     public void scanQR() {
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera(0);
+
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setCameraId(0);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setOrientationLocked(false);
+        intentIntegrator.setBarcodeImageEnabled(false);
+        intentIntegrator.initiateScan();
 
     }
 
@@ -66,37 +81,25 @@ public class ScanActivity extends AppCompatActivity implements ZXingScannerView.
         //mScannerView.stopCamera();
     }
 
-    @Override
-    public void handleResult(final Result result) {
-        try {
-            String restId = String.valueOf(result.getText());
+    protected void onActivityResult(int requestCode, int grantResults, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, grantResults, data);
+        if (result.getContents() != null) {
+            String restID = result.getContents();
+            Toast.makeText(this, "Scanned Success", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra(Control.Restaurant_Scanned, restId);
+            intent.putExtra(Control.Restaurant_Scanned, restID);
             startActivity(intent);
-        } catch (Exception e) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setTitle("Scan Result");
-            builder1.setMessage("Please scan QR code on the table.");
-            builder1.setCancelable(true);
+        } else {
+            Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_SHORT).show();
 
-            builder1.setPositiveButton(
-                    "Yes",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            mScannerView.resumeCameraPreview(ScanActivity.this);
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
         }
     }
 
-//    private void updateLanguage(String language) {
-//        Context context = LocalHelper.setLocale(this, language);
-//        Resources resources = context.getResources();
-//
-//        scan_btn.setText(resources.getString(R.string.scanbtn));
-//        scanDesc.setText(resources.getString(R.string.scanDesc));
-//    }
+    private void updateLanguage(String language) {
+        Context context = LocalHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        buttonscan.setText(resources.getString(R.string.scanbtn));
+        scanDesc.setText(resources.getString(R.string.scanDesc));
+    }
 }

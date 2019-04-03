@@ -2,6 +2,7 @@ package com.example.myapplication.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -56,6 +57,8 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     DatabaseReference menu;
     DatabaseReference reviews;
 
+    ProgressDialog progressDialog;
+
     Menu currentMenu;
 
 
@@ -68,6 +71,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         firebaseDatabase = FirebaseDatabase.getInstance();
         menu =firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Menu");
         reviews = firebaseDatabase.getReference("Restaurant").child(Control.restID).child("details").child("Reviews");
+
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
@@ -82,6 +86,8 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             }
         });
 
+        progressDialog = new ProgressDialog(MenuDetailActivity.this);
+
         fdname = findViewById(R.id.foodname);
         description = findViewById(R.id.description);
         price = findViewById(R.id.foodprice);
@@ -89,7 +95,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         ratingBar = findViewById(R.id.ratingStar);
 
         quantity = findViewById(R.id.counter);
-        //TODO
+
         seeReviews = findViewById(R.id.reviewBtn);
         seeReviews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,9 +106,8 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
             }
         });
+
         add = findViewById(R.id.addBtn);
-
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +118,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
                         quantity.getNumber(),
                         currentMenu.getPrice()
                 ));
-                Toast.makeText(MenuDetailActivity.this, "Added to order", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuDetailActivity.this, "Added to basket", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         });
@@ -123,11 +128,10 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
         btnrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 showReview();
             }
         });
-
-
 
 
         collapsingToolbarLayout = findViewById(R.id.collapsetoolbar);
@@ -226,11 +230,14 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
     @Override
     public void onPositiveButtonClicked(int i, @NotNull String s) {
-        final Review review = new Review(Control.currentUser.getPhone(),menuId,String.valueOf(i),s,Control.restID);
+        progressDialog.setMessage("Adding Review...");
+        progressDialog.show();
+        final Review review = new Review(Control.currentUser.getName(),menuId,String.valueOf(i),s,Control.restID);
 
         reviews.push().setValue(review).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                progressDialog.dismiss();
               Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
 
             }

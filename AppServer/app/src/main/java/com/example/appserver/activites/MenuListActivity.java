@@ -94,7 +94,7 @@ public class MenuListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MenuListActivity.this, "Add new items", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(MenuListActivity.this, "Add new items", Toast.LENGTH_SHORT).show();
                 showDialog();
             }
         });

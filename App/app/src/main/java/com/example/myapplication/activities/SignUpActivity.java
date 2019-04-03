@@ -1,5 +1,6 @@
 package com.example.myapplication.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -35,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabaseRef;
 
+    ProgressDialog progressDialog;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
@@ -52,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.editPassword);
         Registerbtn = findViewById(R.id.buttonRegister);
         Loginbtn = findViewById(R.id.login);
+
+        progressDialog = new ProgressDialog(SignUpActivity.this);
 
         mDatabaseRef = FirebaseDatabase.getInstance();
         final DatabaseReference userTable = mDatabaseRef.getReference("Users");
@@ -79,19 +83,27 @@ public class SignUpActivity extends AppCompatActivity {
         Registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Signing up... ");
+                progressDialog.show();
+
                 if (name.getText().toString().isEmpty()) {
+                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, getText(R.string.fname_input), Toast.LENGTH_SHORT).show();
                     return;
                 } else if (email.getText().toString().isEmpty()) {
+                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (password.getText().toString().isEmpty()) {
+                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (phone.length() < 10) {
+                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(password.length() < 6){
+                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -102,18 +114,21 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             if (dataSnapshot.child(phone.getText().toString()).exists()){
+                                progressDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, "User exists, Please Login", Toast.LENGTH_SHORT).show();
                                 finish();
 
                             } else {
                                 User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
                                 userTable.child(phone.getText().toString()).setValue(user);
-                                Intent intent = new Intent(SignUpActivity.this, RestaurantActivity.class);
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(SignUpActivity.this, ScanActivity.class);
                                 startActivity(intent);
                                 //Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                 finish();
 
                             }
+                            progressDialog.dismiss();
 
                         }
 

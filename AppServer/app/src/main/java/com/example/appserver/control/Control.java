@@ -1,6 +1,10 @@
 package com.example.appserver.control;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.example.appserver.config.RemoteAPIService;
 import com.example.appserver.config.RetroClient;
 import com.example.appserver.model.MakeOrder;
@@ -42,6 +46,24 @@ public class Control {
         calendar.setTimeInMillis(time);
         StringBuilder date = new StringBuilder(android.text.format.DateFormat.format("dd-MM-yyyy HH:MM",calendar).toString());
         return date.toString();
+    }
+
+    public static boolean checkConnectivity(Context context){
+        ConnectivityManager connectivityManager =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager != null){
+
+            NetworkInfo[] infos = connectivityManager.getAllNetworkInfo();
+
+            if(infos != null){
+                for(int i =0; i < infos.length; i++){
+                    if(infos[i].getState() == NetworkInfo.State.CONNECTED);
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

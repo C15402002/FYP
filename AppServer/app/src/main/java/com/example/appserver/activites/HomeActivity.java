@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "Add new items", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(HomeActivity.this, "Add new items", Toast.LENGTH_SHORT).show();
                 showDialog();
             }
         });
@@ -113,7 +113,6 @@ public class HomeActivity extends AppCompatActivity
         //get menu
         recyclerView = findViewById(R.id.recycleView);
         recyclerView.setHasFixedSize(true);
-
 
         options = new FirebaseRecyclerOptions.Builder<Product_Type>().setQuery(product, Product_Type.class).build();
         adapter = new FirebaseRecyclerAdapter<Product_Type, ProductHolder>(options){
@@ -146,6 +145,7 @@ public class HomeActivity extends AppCompatActivity
                 });
                 holder.itemName.setText(model.getName());
             }
+
             @NonNull
             @Override
             public ProductHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

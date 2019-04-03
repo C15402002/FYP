@@ -5,17 +5,26 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activites.AboutActivity"
-            android:theme="@style/CustomTheme"></activity>
-        <activity android:name=".activites.OrderDetailActivity"
-            android:theme="@style/CustomTheme"/>
+        <activity android:name=".activites.StartActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activites.AboutActivity"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".activites.OrderDetailActivity"
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".activites.OrdersPlacedActivity"
             android:theme="@style/CustomTheme" />
@@ -27,13 +36,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activites.LoginActivity" />
-        <activity android:name=".activites.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activites.MainActivity"/>
 
         <service android:name=".interaction.FirebaseService">
             <intent-filter>

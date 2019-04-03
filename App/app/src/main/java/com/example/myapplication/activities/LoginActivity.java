@@ -1,5 +1,6 @@
 package com.example.myapplication.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabaseRef;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
@@ -45,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginbtn = findViewById(R.id.buttonLogin);
         registerbtn = findViewById(R.id.signUp);
+        progressDialog = new ProgressDialog(LoginActivity.this);
 
         mDatabaseRef = FirebaseDatabase.getInstance();
         final DatabaseReference userTable = mDatabaseRef.getReference("Users");
@@ -68,37 +72,53 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
                 if(Control.checkConnectivity(getBaseContext())) {
-                    userTable.addValueEventListener(new ValueEventListener() {
+                    progressDialog.setMessage("Logging in...");
+                    progressDialog.show();
 
+
+                    if (phone_input.getText().toString().isEmpty()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Please Enter Number", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else if (password_input.getText().toString().isEmpty()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    userTable.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            if (dataSnapshot.child(phone_input.getText().toString()).exists()) {
+                           if (dataSnapshot.child(phone_input.getText().toString()).exists()) {
 
                                 User user = dataSnapshot.child(phone_input.getText().toString()).getValue(User.class);
                                 user.setPhone(phone_input.getText().toString());
+
                                 if (!Boolean.parseBoolean(user.getIsStaff())) {
                                     if (user.getPassword().equals(password_input.getText().toString())) {
-
                                         Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(LoginActivity.this, RestaurantActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this, ScanActivity.class);
                                         Control.currentUser = user;
+                                       // progressDialog.dismiss();
                                         startActivity(intent);
                                         finish();
 
+
                                     } else {
+                                        progressDialog.dismiss();
                                         Toast.makeText(LoginActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
 
                                     }
+                                    progressDialog.dismiss();
                                 } else {
+                                    progressDialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "Cannot Login ", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
+                                progressDialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "user does not exist", Toast.LENGTH_SHORT).show();
                             }
 
@@ -111,11 +131,14 @@ public class LoginActivity extends AppCompatActivity {
                     });
 
                 }else {
+                    progressDialog.dismiss();
                     Toast.makeText(LoginActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
+
 
     private void updateLanguage(String language) {
         Context context = LocalHelper.setLocale(this, language);

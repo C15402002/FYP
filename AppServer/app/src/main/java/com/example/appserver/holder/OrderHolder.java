@@ -11,7 +11,7 @@ import com.example.appserver.R;
 
 public class OrderHolder extends RecyclerView.ViewHolder{
 
-    public TextView orderId, orderStatus, orderPrice, orderTable, orderDate;
+    public TextView orderId, orderStatus, orderPrice, orderTable, orderDate, orderPayMeth, orderPayProcess;
     public Button statusBtn, detailBtn, deleteBtn;
 
     public OrderHolder(@NonNull View itemView) {
@@ -21,6 +21,8 @@ public class OrderHolder extends RecyclerView.ViewHolder{
         orderPrice = itemView.findViewById(R.id.price);
         orderTable = itemView.findViewById(R.id.table);
         orderDate = itemView.findViewById(R.id.OrderDate);
+        orderPayMeth = itemView.findViewById(R.id.payment);
+        orderPayProcess = itemView.findViewById(R.id.paymentpos);
         statusBtn = itemView.findViewById(R.id.statusBtn);
         detailBtn = itemView.findViewById(R.id.detailbtn);
         deleteBtn = itemView.findViewById(R.id.deleteBtn);
