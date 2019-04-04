@@ -237,7 +237,7 @@ public class BasketActivity extends AppCompatActivity {
                     new Database(getBaseContext()).deleteFromBasket(Control.currentUser.getPhone());
 
                     notifyServer(order_num);
-                    Toast.makeText(BasketActivity.this, getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, "Getting waiter", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     finish();
                 }

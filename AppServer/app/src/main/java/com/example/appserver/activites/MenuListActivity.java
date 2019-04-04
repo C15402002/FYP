@@ -26,6 +26,7 @@ import com.example.appserver.holder.MenuHolder;
 import com.example.appserver.R;
 import com.example.appserver.control.Control;
 import com.example.appserver.model.Menu;
+import com.example.appserver.view.ItemClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -158,7 +159,7 @@ public class MenuListActivity extends AppCompatActivity {
         });
         alertDialog.show();
     }
-    private void loadMenuItems(String menuId) {
+    private void loadMenuItems(final String menuId) {
 
         options = new FirebaseRecyclerOptions.Builder<Menu>().setQuery(menuRef.orderByChild("foodId").equalTo(menuId), Menu.class).build();
         adapter = new FirebaseRecyclerAdapter<Menu, MenuHolder>(options){
@@ -178,6 +179,17 @@ public class MenuListActivity extends AppCompatActivity {
                     public void onError(Exception e) {
                         Toast.makeText(getApplicationContext(),"Could not get message", Toast.LENGTH_LONG).show();
 
+                    }
+                });
+                holder.setItemClickListener(new ItemClickedListener() {
+                    @Override
+                    public void onClick(View v, int pos, boolean isLongClicked) {
+
+                        // Toast.makeText(HomeActivity.this, "" + clicked.getName(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuListActivity.this, ReviewActivity.class);
+                        intent.putExtra("MenuId", adapter.getRef(pos).getKey());
+                        //intent.putExtra(Control.Review_DishesID, menuId);
+                        startActivity(intent);
                     }
                 });
             }

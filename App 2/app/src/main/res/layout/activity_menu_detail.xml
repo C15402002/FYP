@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MenuDetailActivity">
+
+     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsetoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:fitsSystemWindows="true"
+            app:contentScrim="#0e0d0e"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@color/greyOverlay">
+
+            <ImageView
+                android:id="@+id/foodimage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/food"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:title="@string/dishName"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/foodname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:padding="12dp"
+                        android:text="@string/dishName"
+                        android:textColor="@color/colorAccentDark"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_euro_symbol_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/foodprice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="9"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="1,000"
+                            android:textColor="@color/charcoal"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+
+                    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                        android:id="@+id/counter"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginBottom="5dp"
+                        app:backGroundColor="@color/colorAccent"
+                        app:finalNumber="20"
+                        app:initialNumber="1"
+                        app:textSize="10sp" />
+
+                    <Button
+                        android:id="@+id/addBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/green"
+                        android:text="@string/addBTN"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/ratingStar"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom|start"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:rating="0" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:lineSpacingMultiplier="1.5"
+                    android:padding="12dp"
+                    android:text="@string/dishDesc"
+                    android:textSize="18sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/reviewBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorAccentDark"
+                android:text="@string/reviewBTN"
+                android:textColor="@color/white"
+
+                />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/rate_btn"
+        android:background="@color/green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:elevation="6dp"
+        app:layout_anchor="@id/appbar"
+        app:useCompatPadding="true"
+        app:layout_anchorGravity="bottom|right|end"
+        app:pressedTranslationZ="12dp"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_star_black_24dp" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp">
+    
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/itemName"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:text="@string/dishName"
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/itemPrice"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:text="1234"
+                android:textAllCaps="true"
+                android:textStyle="italic"/>
+        </LinearLayout>
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/counter"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="end"
+            app:backGroundColor="@color/colorAccent"
+            app:initialNumber="1"
+            app:finalNumber="20"
+            app:textSize="10sp"
+            />
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

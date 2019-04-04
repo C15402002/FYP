@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/food"
+    tools:context=".activities.ScanActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/greyOverlay"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="120sp"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lucidacalligraphy"
+            android:layout_marginTop="50dp"
+            />
+        <TextView
+            android:id="@+id/scanDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scanDesc"
+            android:textSize="50sp"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="50dp"
+            />
+
+        <Button
+            android:id="@+id/scanBtn"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/scanbtn"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorAccent" />
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

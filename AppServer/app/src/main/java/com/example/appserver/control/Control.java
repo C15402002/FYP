@@ -26,6 +26,8 @@ public class Control {
     public static final String BASE_URL = "http://fcm.googleapis.com/";
     public static String PHONE_ID = "userPhone";
 
+    public static final String Review_DishesID = "MenuId";
+
     public static RemoteAPIService getCloudMessage(){
         return RetroClient.getClient(BASE_URL).create(RemoteAPIService.class);
     }

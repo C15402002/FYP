@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oui</string>
+    <string name="app_desc">welcome</string>
+    <string name="search">Search</string>
+    <string name="btn_logout">Logout</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_scan">Scan QR</string>
+    <string name="btnLogin">Login</string>
+    <string name="login">Already have an account? Login</string>
+    <string name="email">" Enter Email "</string>
+    <string name="password">Enter Password</string>
+    <string name="phone">Enter Phone Number</string>
+    <string name="btnSignup">Sign up</string>
+    <string name="signup">Dont have an account? sign up</string>
+    <string name="fname_input">"Enter First Name "</string>
+    <string name="username">Enter a username</string>
+    <string name="sname_input">Surname</string>
+    <string name="addBTN">ADD</string>
+    <string name="reviewBTN">See Reviews</string>
+    <string name="scanbtn">Press to scan</string>
+    <string name="scanDesc">Scan the QR code to see restaurant menu</string>
+    <string name="menu">Menu</string>
+    <string name="showNot">Nothing to show, please scan again or contact restaurant manager</string>
+    <string name="Status">"Status : "</string>
+    <string name="TableNo">"Table No : "</string>
+    <string name="aboutName">"Oui Restaurant is here to assist your every needs. "</string>
+    <string name="aboutDesc">" Scan QR code to see more about us: "</string>
+    <string name="total">"TOTAL: "</string>
+    <string name="placeOrder">Place Order</string>
+    <string name="enterTable">Enter table number</string>
+    <string name="comments">Comments</string>
+    <string name="payments">"Payment methods: "</string>
+    <string name="cash">Call waiter for cash payments</string>
+    <string name="language">Change Language</string>
+    <string name="emptyBasket">Basket is empty, add products!</string>
+    <string name="PaymentMeth">Please select a payment method!</string>
+    <string name="orderKit">Order sent to kitchen</string>
+    <string name="cancel">Cancel</string>
+    <string name="payCan">Payment cancelled</string>
+    <string name="payInval">Payment invalid</string>
+</resources>

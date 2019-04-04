@@ -114,15 +114,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if(adapter.getItem(position).getStatus().equals("2")){
-                            Toast.makeText(OrdersPlacedActivity.this, "Order can not be cancelled", Toast.LENGTH_SHORT).show();
-                        }else{
                             showUpdateDialog(adapter.getRef(position).getKey(), adapter.getItem(position));
-                        }
-
-                        if(adapter.getItem(position).getStatus().equals("1")){
-                            holder.orderPayProcess.setText("Paid");
-                        }
 
                     }
                 });
@@ -177,6 +169,10 @@ public class OrdersPlacedActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
                 item.setStatus(String.valueOf(materialSpinner.getSelectedIndex()));
                 orderPlaced.child(key_STAT).setValue(item);
+
+                if(item.getStatus().equals("1")){
+                    item.setPaymentProcess("Paid");
+                }
                 adapter.notifyDataSetChanged();
                 sendStatus(key_STAT,item);
 
