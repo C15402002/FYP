@@ -18,10 +18,10 @@ Administrator helps the restaurant manager to set up their two applications. The
   - Authentication: Firebase Auth for sign up
   - Paypal Sandbox, cash payments
   - ZXing Barcode Scanner 
-  - Retro2fit Client, REST Api
+  - Retrofit REST Api
   
   
 
  ## Demo
- #### OUI QR Code
+ #### video coming....
  
