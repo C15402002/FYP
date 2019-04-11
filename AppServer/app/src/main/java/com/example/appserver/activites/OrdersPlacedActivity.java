@@ -62,6 +62,7 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+       /// ((LinearLayoutManager) layoutManager).setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
 
         db = FirebaseDatabase.getInstance();
