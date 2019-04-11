@@ -23,5 +23,9 @@ Administrator helps the restaurant manager to set up their two applications. The
   
 
  ## Demo
- #### video coming....
+ #### YouTube Demostration
+ The following link contains a video demostration of this project
+ https://youtu.be/Y6iutf3f_SE
+
+ 
  
