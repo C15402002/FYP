@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.paperdb.Paper;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
 import com.example.myapplication.database.Database;
+import com.example.myapplication.helper.LocalHelper;
 import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.holder.ReviewHolder;
 import com.example.myapplication.model.Review;
@@ -41,6 +43,10 @@ public class SeeReviewsActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<Review> options;
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -67,6 +73,13 @@ public class SeeReviewsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+
         if(getIntent() != null){
             menuId = getIntent().getStringExtra(Control.Review_DishesID);
 
@@ -95,7 +108,7 @@ public class SeeReviewsActivity extends AppCompatActivity {
 
                 loadReviews(menuId);
             } else {
-                Toast.makeText(SeeReviewsActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SeeReviewsActivity.this, getResources().getString(R.string.interCon), Toast.LENGTH_SHORT).show();
                 return;
             }
         }

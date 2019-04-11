@@ -71,7 +71,44 @@
     <string name="payCan">Payment cancelled</string>
     <string name="payInval">Payment invalid</string>
 
+    <string name="facebook_key">1019095521619778</string>
+    <string name="facebook_login">fb1019095521619778</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="orderInfo">Please Enter Order Information</string>
+    <string name="DoneBtn">Done</string>
+    <string name="scanCan">Scanning Cancelled</string>
+    <string name="scanSuc">Scanning Success</string>
+    <string name="getWait">Getting waiter</string>
+    <string name="errorOrd">Error! Please order again</string>
+    <string name="interCon">Check internet connection</string>
+    <string name="errorMenu">Could not get menu, please scan again</string>
+    <string name="profile">Profile</string>
+    <string name="orderHis">Order History</string>
+    <string name="about">About</string>
+    <string name="SignOut">Sign Out</string>
+    <string name="loggingin">Logging in...</string>
+    <string name="success">Successful</string>
+    <string name="unsuccess">Unsuccessful</string>
+    <string name="errorLog">Cannot login</string>
+    <string name="notExist">User does not exist, please register</string>
+    <string name="lang">Choose Language</string>
+    <string name="addBask">Added to basket</string>
+    <string name="thank">Thank You</string>
+    <string name="submit">Submit</string>
+    <string name="poor">Poor</string>
+    <string name="notG">Not Great</string>
+    <string name="Meh">Meh</string>
+    <string name="great">Great</string>
+    <string name="amaze">Amazing</string>
+    <string name="review">Write a review</string>
+    <string name="reviewDesc">Please give this a rate and comment</string>
+    <string name="reviewHint">Comments here</string>
+    <string name="orderDel">Order cannot be deleted</string>
+    <string name="Exist">User exist, please login</string>
+    <string name="passAuth">Password must be greater than 6 values</string>
+    <string name="validEmail">Enter a valid email address</string>
+    <string name="delProf">Delete Profile</string>
+    <string name="translate">Cannot translate menu items</string>
+    <string name="updatPass">Change Password</string>
 
 </resources>

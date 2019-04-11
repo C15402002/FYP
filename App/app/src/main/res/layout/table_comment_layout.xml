@@ -11,13 +11,22 @@
         android:padding="20dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderInfo"
+            android:text="@string/orderInfo"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+
           <EditText
+              android:layout_marginTop="5dp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/edtTable"
               android:hint="@string/enterTable"
               android:inputType="number"
-              android:textSize="25sp"
+              android:textSize="15sp"
               android:textColorHint="@color/grey"
               android:textColor="@color/black"/>
 
@@ -27,7 +36,7 @@
               android:layout_height="wrap_content"
               android:id="@+id/editComment"
               android:hint="@string/comments"
-              android:textSize="20sp"
+              android:textSize="15sp"
               android:inputType="textMultiLine"
               android:textColorHint="@color/grey"
               android:textColor="@color/black"/>

@@ -15,38 +15,39 @@ import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
 
 import com.example.myapplication.helper.LocalHelper;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.Query;
 import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import io.paperdb.Paper;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanActivity extends AppCompatActivity  {
     //opens camera implements ZXingScannerView.ResultHandler
-    private ZXingScannerView mScannerView;
+
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference rest;
     TextView scanDesc;
     Button buttonscan;
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
         buttonscan = findViewById(R.id.scanBtn);
-        buttonscan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scanQR();
-            }
-        });
 
         scanDesc = findViewById(R.id.scanDesc);
 
@@ -61,6 +62,13 @@ public class ScanActivity extends AppCompatActivity  {
             Paper.book().write("language", "en");
         }
         updateLanguage((String)Paper.book().read("language"));
+        buttonscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scanQR();
+            }
+        });
+
     }
 
     public void scanQR() {
@@ -68,6 +76,7 @@ public class ScanActivity extends AppCompatActivity  {
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         intentIntegrator.setCameraId(0);
+        intentIntegrator.setPrompt(" ");
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setOrientationLocked(false);
         intentIntegrator.setBarcodeImageEnabled(false);
@@ -82,18 +91,22 @@ public class ScanActivity extends AppCompatActivity  {
     }
 
     protected void onActivityResult(int requestCode, int grantResults, Intent data) {
+        super.onActivityResult(requestCode, grantResults, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, grantResults, data);
+
         if (result.getContents() != null) {
             String restID = result.getContents();
-            Toast.makeText(this, "Scanned Success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.scanSuc), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra(Control.Restaurant_Scanned, restID);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Scanning cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.scanCan), Toast.LENGTH_SHORT).show();
 
         }
     }
+
+
 
     private void updateLanguage(String language) {
         Context context = LocalHelper.setLocale(this, language);

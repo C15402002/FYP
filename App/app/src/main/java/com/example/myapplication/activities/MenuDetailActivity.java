@@ -3,16 +3,21 @@ package com.example.myapplication.activities;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
+import com.example.myapplication.helper.LocalHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
+import io.paperdb.Paper;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -57,10 +62,12 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     DatabaseReference menu;
     DatabaseReference reviews;
 
-    ProgressDialog progressDialog;
-
     Menu currentMenu;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -86,7 +93,6 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
             }
         });
 
-        progressDialog = new ProgressDialog(MenuDetailActivity.this);
 
         fdname = findViewById(R.id.foodname);
         description = findViewById(R.id.description);
@@ -118,7 +124,7 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
                         quantity.getNumber(),
                         currentMenu.getPrice()
                 ));
-                Toast.makeText(MenuDetailActivity.this, "Added to basket", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuDetailActivity.this, getResources().getString(R.string.addBask), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         });
@@ -147,9 +153,17 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
                 getMenu(menuId);
                 getReview(menuId);
             }else{
-                Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.interCon), Toast.LENGTH_SHORT).show();
             }
         }
+
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+        updateLanguage((String)Paper.book().read("language"));
+
     }
 
     private void getMenu(String menuId){
@@ -201,12 +215,13 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
     }
 
     private void showReview() {
-        new AppRatingDialog.Builder().setPositiveButtonText("Submit")
-                .setNegativeButtonText("Cancel")
-                .setNoteDescriptions(Arrays.asList("Poor","Not Great","Meh","Great", "Amazing"))
-                .setDefaultRating(1).setTitle("Write a review")
-                .setDescription("Please give this a rate and comment")
-                .setHint("Comments here")
+        new AppRatingDialog.Builder().setPositiveButtonText(getResources().getString(R.string.submit))
+                .setNegativeButtonText(getResources().getString(R.string.cancel))
+                .setNoteDescriptions(Arrays.asList((getResources().getString(R.string.poor)),(getResources().getString(R.string.notG)),
+                        (getResources().getString(R.string.Meh)),(getResources().getString(R.string.great)),(getResources().getString(R.string.amaze))) )
+                .setDefaultRating(1).setTitle(getResources().getString(R.string.review))
+                .setDescription(getResources().getString(R.string.reviewDesc))
+                .setHint(getResources().getString(R.string.reviewHint))
                 .setHintTextColor(R.color.grey)
                 .setCommentTextColor(android.R.color.black)
                 .setCommentBackgroundColor(R.color.white)
@@ -230,19 +245,27 @@ public class MenuDetailActivity extends AppCompatActivity implements RatingDialo
 
     @Override
     public void onPositiveButtonClicked(int i, @NotNull String s) {
-        progressDialog.setMessage("Adding Review...");
-        progressDialog.show();
+
         final Review review = new Review(Control.currentUser.getName(),menuId,String.valueOf(i),s,Control.restID);
 
         reviews.push().setValue(review).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                progressDialog.dismiss();
-              Toast.makeText(MenuDetailActivity.this, "Thank you", Toast.LENGTH_SHORT).show();
+              Toast.makeText(MenuDetailActivity.this, getResources().getString(R.string.thank), Toast.LENGTH_SHORT).show();
 
             }
         });
 
+    }
+
+    private void updateLanguage(String language) {
+        Context context = LocalHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+        add.setText(resources.getString(R.string.addBTN));
+        seeReviews.setText(resources.getString(R.string.reviewBTN));
+        // phone_input.setText(resources.getString(R.string.phone));
+        // password_input.setText(resources.getString(R.string.password));
     }
 }
 

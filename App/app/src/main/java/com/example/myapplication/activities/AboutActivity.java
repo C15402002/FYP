@@ -9,18 +9,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.config.YoutubeConfig;
 import com.example.myapplication.helper.LocalHelper;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import java.nio.channels.AlreadyBoundException;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends YouTubeBaseActivity {
 
-    TextView textdesc, textname;
+    TextView  textname;
+    Button play;
+    YouTubePlayerView playerView;
+    YouTubePlayer.OnInitializedListener onInitializedListener;
+
+    private static final String TAG = "AboutActivity";
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -33,21 +47,9 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_app_bar_layout);
-        View view =getSupportActionBar().getCustomView();
+        Log.d(TAG,"onCreate: Starting..");
 
-        ImageButton imageButton= (ImageButton) findViewById(R.id.action_bar_back);
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        textdesc = findViewById(R.id.aboutDesc);
         textname = findViewById(R.id.aboutName);
 
         Paper.init(this);
@@ -57,6 +59,32 @@ public class AboutActivity extends AppCompatActivity {
         }
         updateLanguage((String)Paper.book().read("language"));
 
+        play = findViewById(R.id.play);
+        playerView = findViewById(R.id.viewVid);
+
+        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Log.d(TAG,"onClick: Initialized.");
+                youTubePlayer.loadVideo("RHJXzOZGgpk");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Log.d(TAG,"onClick: Initialized failed.");
+            }
+        };
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"onClick: Initializing YouTube Video ...");
+                playerView.initialize(YoutubeConfig.getYoutubeApiKey(), onInitializedListener);
+
+            }
+        });
+
+
     }
 
     private void updateLanguage(String language) {
@@ -64,6 +92,7 @@ public class AboutActivity extends AppCompatActivity {
         Resources resources = context.getResources();
 
         textname.setText(resources.getString(R.string.aboutName));
-        textdesc.setText(resources.getString(R.string.aboutDesc));
+
     }
+
 }

@@ -5,17 +5,24 @@ import android.app.ActionBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.paperdb.Paper;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
+import com.example.myapplication.helper.LocalHelper;
 import com.example.myapplication.holder.OrderHolder;
 import com.example.myapplication.model.MakeOrder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -35,6 +42,12 @@ public class OrderPlacedActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<MakeOrder> options;
     FirebaseRecyclerAdapter<MakeOrder, OrderHolder> adapter;
 
+    TextView status, tablenum, totalprice;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -72,6 +85,12 @@ public class OrderPlacedActivity extends AppCompatActivity {
             load(getIntent().getStringExtra("userPhone"));
         }
 
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+
     }
     private void load(String phone){
 
@@ -81,6 +100,10 @@ public class OrderPlacedActivity extends AppCompatActivity {
             @Override
             public OrderHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View v = (View) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.order_history,viewGroup,false);
+                status = v.findViewById(R.id.status);
+                tablenum = v.findViewById(R.id.tablenum);
+                totalprice = v.findViewById(R.id.totalprice);
+
                 return new OrderHolder(v);
             }
 
@@ -96,7 +119,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
                         if(adapter.getItem(position).getStatus().equals("0")){
                             cancelOrder(adapter.getRef(position).getKey());
                         }else{
-                            Toast.makeText(OrderPlacedActivity.this, "Order can not be cancelled", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OrderPlacedActivity.this, getResources().getString(R.string.orderDel), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -148,7 +171,6 @@ public class OrderPlacedActivity extends AppCompatActivity {
             adapter.startListening();
         }
     }
-
 
 
 }

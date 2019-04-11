@@ -7,20 +7,20 @@
         <item
             android:id="@+id/nav_scan"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Scan QR" />
+            android:title="@string/scanbtn" />
         <item
             android:id="@+id/nav_menu"
             android:icon="@drawable/ic_restaurant_menu"
-            android:title="Menu" />
+            android:title="@string/menu" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_circle_black_24dp"
-            android:title="Profile" />
+            android:title="@string/profile" />
 
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
-            android:title="Order History" />
+            android:title="@string/orderHis" />
 
     </group>
 
@@ -30,11 +30,15 @@
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_info_outline_black_24dp"
-                android:title="About Us" />
+                android:title="@string/about" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Available Restaurants" />
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_exit_to_app_black_24dp"
-                android:title="Sign Out" />
+                android:title="@string/SignOut" />
         </menu>
     </item>
 </menu>

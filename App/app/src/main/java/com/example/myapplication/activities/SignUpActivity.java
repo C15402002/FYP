@@ -36,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabaseRef;
 
-    ProgressDialog progressDialog;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
@@ -55,7 +54,6 @@ public class SignUpActivity extends AppCompatActivity {
         Registerbtn = findViewById(R.id.buttonRegister);
         Loginbtn = findViewById(R.id.login);
 
-        progressDialog = new ProgressDialog(SignUpActivity.this);
 
         mDatabaseRef = FirebaseDatabase.getInstance();
         final DatabaseReference userTable = mDatabaseRef.getReference("Users");
@@ -83,52 +81,50 @@ public class SignUpActivity extends AppCompatActivity {
         Registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Signing up... ");
-                progressDialog.show();
 
                 if (name.getText().toString().isEmpty()) {
-                    progressDialog.dismiss();
                     Toast.makeText(SignUpActivity.this, getText(R.string.fname_input), Toast.LENGTH_SHORT).show();
                     return;
-                } else if (email.getText().toString().isEmpty()) {
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
+                } else if (email.getText().toString().isEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.validEmail), Toast.LENGTH_SHORT).show();
                     return;
-                } else if (password.getText().toString().isEmpty()) {
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                }else if (phone.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.phone), Toast.LENGTH_SHORT).show();
                     return;
                 } else if (phone.length() < 10) {
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpActivity.this, "Enter valid phone number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.phone), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (password.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.password), Toast.LENGTH_SHORT).show();
                     return;
                 } else if(password.length() < 6){
-                    progressDialog.dismiss();
-                    Toast.makeText(SignUpActivity.this, "Password must be greater then 6 values", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.passAuth), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (Control.checkConnectivity(getBaseContext())) {
-                    userTable.addValueEventListener(new ValueEventListener() {
+                    userTable.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot data: dataSnapshot.getChildren()) {
+                                if (dataSnapshot.child(phone.getText().toString()).exists()) {
+                                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.Exist), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
-                            if (dataSnapshot.child(phone.getText().toString()).exists()){
-                                progressDialog.dismiss();
-                                Toast.makeText(SignUpActivity.this, "User exists, Please Login", Toast.LENGTH_SHORT).show();
-                                finish();
+                                } else {
 
-                            } else {
-                                User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
-                                userTable.child(phone.getText().toString()).setValue(user);
-                                progressDialog.dismiss();
-                                Intent intent = new Intent(SignUpActivity.this, ScanActivity.class);
-                                startActivity(intent);
-                                //Toast.makeText(SignUpActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                finish();
+                                    User user = new User(name.getText().toString(), email.getText().toString(), password.getText().toString());
+                                    userTable.child(phone.getText().toString()).setValue(user);
+                                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignUpActivity.this, ScanActivity.class);
+                                    startActivity(intent);
+                                    finish();
 
+                                }
                             }
-                            progressDialog.dismiss();
 
                         }
 
@@ -138,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.interCon), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

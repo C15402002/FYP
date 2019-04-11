@@ -5,11 +5,17 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.example.myapplication.R;
 import com.example.myapplication.helper.LocalHelper;
+import com.facebook.CallbackManager;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,11 +44,13 @@ import com.example.myapplication.model.Token;
 import com.example.myapplication.view.ProductClickedListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -61,6 +69,7 @@ public class HomeActivity extends AppCompatActivity
 
     //MaterialSearchBar materialSearchBar;
     CounterFab fab;
+
 
     String restId = "";
     @Override
@@ -131,7 +140,6 @@ public class HomeActivity extends AppCompatActivity
         email = header.findViewById(R.id.viewEmail);
         email.setText(Control.currentUser.getEmail());
 
-        //.child(db).addSingleValueEventListener(listener);
 
         //get product
         recyclerView = findViewById(R.id.recycleView);
@@ -144,12 +152,14 @@ public class HomeActivity extends AppCompatActivity
         }
         updateLanguage((String)Paper.book().read("language"));
 
+
         if (Control.restID != null && !Control.restID.isEmpty()) {
             if (Control.checkConnectivity(this)) {
+                //Toast.makeText(this, getResources().getString(R.string.translate), Toast.LENGTH_SHORT).show();
                 loadRest();
             }
             else {
-                Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.interCon), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -173,9 +183,7 @@ public class HomeActivity extends AppCompatActivity
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
-
-
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorMenu), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -192,6 +200,7 @@ public class HomeActivity extends AppCompatActivity
                 });
                 holder.itemName.setText(model.getName());
             }
+
 
             @NonNull
             @Override
@@ -241,29 +250,42 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
+            getResources().getString(R.string.profile);
+
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_menu) {
+            getResources().getString(R.string.menu);
             onBackPressed();
 
         }
         else if (id == R.id.nav_scan) {
+            getResources().getString(R.string.scanbtn);
             Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
             startActivity(intent);
 
         }else if (id == R.id.nav_history) {
+            getResources().getString(R.string.orderHis);
             Intent intent = new Intent(HomeActivity.this, OrderPlacedActivity.class);
             startActivity(intent);
         }else if (id == R.id.nav_about) {
+            getResources().getString(R.string.about);
             Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_signout) {
+        } else if (id == R.id.nav_share) {
+            //getResources().getString(R.string.about);
+            Intent intent = new Intent(HomeActivity.this, ShareRestaurantActivity.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_signout) {
+            getResources().getString(R.string.SignOut);
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -275,6 +297,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -282,25 +305,34 @@ public class HomeActivity extends AppCompatActivity
          startActivity(new Intent(HomeActivity.this, SearchFoodsActivity.class));
      }else if (id == R.id.english){
         Paper.book().write("language", "en");
-        updateLanguage((String)Paper.book().read("language"));
-        }else if (id == R.id.spanish){
+       // updateLanguage((String)Paper.book().read("language"));
+       Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
+       startActivity(intent);
+       finish();
+
+    }else if (id == R.id.spanish){
         Paper.book().write("language", "es");
-        updateLanguage((String)Paper.book().read("language"));
+        //updateLanguage((String)Paper.book().read("language"));
+        Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
+        startActivity(intent);
+        finish();
+    }else if (id == R.id.chinese){
+        Paper.book().write("language", "zh");
+        //updateLanguage((String)Paper.book().read("language"));
+        Intent intent = new Intent(HomeActivity.this, ScanActivity.class);
+        startActivity(intent);
+        finish();
     }
         return super.onOptionsItemSelected(item);
     }
 
+
     private void updateLanguage(String language) {
         Context context = LocalHelper.setLocale(this, language);
         Resources resources = context.getResources();
+
     }
 
-
-        @Override
-    protected void onPause() {
-        super.onPause();
-        //mScannerView.stopCamera();
-    }
 
 
     @Override
@@ -326,6 +358,7 @@ public class HomeActivity extends AppCompatActivity
         if(adapter!=null){
             adapter.startListening();
         }
+
     }
 
 }

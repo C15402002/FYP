@@ -16,7 +16,7 @@
         android:text="Profile"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@color/charcoal"
-        android:textSize="90sp" />
+        android:textSize="50sp" />
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -60,6 +60,26 @@
         android:layout_marginTop="20dp"
         android:id="@+id/editPhone"
         android:gravity="center"/>
+    <Button
+        android:id="@+id/updtPass"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:text="@string/updatPass"
+        android:layout_above="@+id/delProfile"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent" />
 
+    <Button
+        android:id="@+id/delProfile"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:text="@string/delProf"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/grey"/>
 
 </RelativeLayout>

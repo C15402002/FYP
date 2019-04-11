@@ -15,9 +15,13 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/spanish"
-
         android:orderInCategory="100"
-        android:title="Spanish"
+        android:title="Español"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/chinese"
+        android:orderInCategory="100"
+        android:title="中文"
         app:showAsAction="never" />
 
 </menu>

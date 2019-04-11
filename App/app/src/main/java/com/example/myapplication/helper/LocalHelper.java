@@ -14,10 +14,6 @@ import java.util.Locale;
 public class LocalHelper {
     private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
 
-//    public static Context onAttach(Context con){
-//        String lang = getPersistedData(con, Locale.getDefault().getLanguage());
-//        return setLocale(con, lang);
-//    }
     public static Context onAttach(Context con, String defLanugage){
         String lang = getPersistedData(con, Locale.getDefault().getLanguage());
         return setLocale(con, lang);

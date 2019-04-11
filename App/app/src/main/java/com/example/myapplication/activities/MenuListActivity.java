@@ -2,13 +2,17 @@ package com.example.myapplication.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import io.paperdb.Paper;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.control.Control;
+import com.example.myapplication.helper.LocalHelper;
 import com.example.myapplication.holder.MenuHolder;
 import com.example.myapplication.model.Menu;
 import com.example.myapplication.view.ProductClickedListener;
@@ -41,6 +46,10 @@ public class MenuListActivity extends AppCompatActivity {
 
     String product_typeId = "";
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -70,6 +79,12 @@ public class MenuListActivity extends AppCompatActivity {
             }
         });
 
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+
         if (getIntent() != null) {
             product_typeId = getIntent().getStringExtra("Product_TypeId");
         }
@@ -90,7 +105,7 @@ public class MenuListActivity extends AppCompatActivity {
 
                             @Override
                             public void onError(Exception e) {
-                                // Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
+                                 //Toast.makeText(getApplicationContext(), "Could not get message", Toast.LENGTH_LONG).show();
 
                             }
                         });
@@ -122,7 +137,7 @@ public class MenuListActivity extends AppCompatActivity {
                 adapter.startListening();
                 recyclerView.setAdapter(adapter);
             } else {
-                Toast.makeText(this, "Check Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.interCon), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -151,5 +166,6 @@ public class MenuListActivity extends AppCompatActivity {
             adapter.startListening();
         }
     }
+
 
 }

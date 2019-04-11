@@ -60,11 +60,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.text.BreakIterator;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -88,9 +90,16 @@ public class BasketActivity extends AppCompatActivity {
                                                         .clientId(Paypal.paypal_ID);
     String tablenum, notes;
 
-    ProgressDialog progressDialog;
+    AlertDialog.Builder alertDialog;
 
+     TextView  paymentMeth, orderInfo;
+    public BasketActivity() {
+    }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalHelper.onAttach(newBase, "en"));
+    }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -122,9 +131,8 @@ public class BasketActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.listOrder);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        progressDialog = new ProgressDialog(BasketActivity.this);
+
+
 
         Intent intent = new Intent(this, Paypal.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
@@ -138,7 +146,7 @@ public class BasketActivity extends AppCompatActivity {
                 if(listOfOrderPlaced.size() > 0) {
                     showAlertDialog();
                 }else {
-                    Toast.makeText(BasketActivity.this, getString(R.string.emptyBasket), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getResources().getString(R.string.emptyBasket), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -157,9 +165,20 @@ public class BasketActivity extends AppCompatActivity {
                onBackPressed();
             }
         });
+        Paper.init(this);
+        String lang = Paper.book().read("language");
+        if(lang == null){
+            Paper.book().write("language", "en");
+        }
+
+        updateLanguage((String)Paper.book().read("language"));
 
 
         loadBasket();
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
 
     }
 
@@ -181,42 +200,45 @@ public class BasketActivity extends AppCompatActivity {
 
         totalPrice.setText(numberFormat.format(total));
 
-
-
     }
 
     private void showAlertDialog(){
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(BasketActivity.this);
-        alertDialog.setTitle("Please Enter Order Information");
+        alertDialog = new AlertDialog.Builder(BasketActivity.this);
+        alertDialog.setTitle(getResources().getString(R.string.orderInfo));
+
+       final EditText tableEdit, commentEdit;
+
+       final   RadioButton payPal, cash;
+
 
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.table_comment_layout,null);
-
-        final EditText tableEdit = view.findViewById(R.id.edtTable);
-        final EditText commentEdit = view.findViewById(R.id.editComment);
-        final RadioButton payPal = view.findViewById(R.id.Paypal);
-        final RadioButton cash = view.findViewById(R.id.CallCash);
+        tableEdit = view.findViewById(R.id.edtTable);
+        commentEdit = view.findViewById(R.id.editComment);
+        paymentMeth = view.findViewById(R.id.payment);
+        orderInfo = view.findViewById(R.id.orderInfo);
+        payPal = view.findViewById(R.id.Paypal);
+        cash = view.findViewById(R.id.CallCash);
 
         alertDialog.setView(view);
         alertDialog.setIcon(R.drawable.ic_shopping_basket_black_24dp);
 
 
-        alertDialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(getResources().getString(R.string.DoneBtn), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 tablenum = tableEdit.getText().toString();
                 notes = commentEdit.getText().toString();
 
                 if(tablenum.isEmpty()){
-                    Toast.makeText(BasketActivity.this, "Please enter table number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getResources().getString(R.string.orderInfo), Toast.LENGTH_SHORT).show();
                 }
 
                 else if(!cash.isChecked() && !payPal.isChecked()){
-                    Toast.makeText(BasketActivity.this, getString(R.string.PaymentMeth), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BasketActivity.this, getResources().getString(R.string.PaymentMeth), Toast.LENGTH_SHORT).show();
 
                 }else if(cash.isChecked()){
-                    progressDialog.setMessage("Processing Order...");
-                    progressDialog.show();
+
 
                     MakeOrder makeOrder = new MakeOrder(Control.currentUser.getPhone(),
                             Control.currentUser.getEmail(),
@@ -237,13 +259,10 @@ public class BasketActivity extends AppCompatActivity {
                     new Database(getBaseContext()).deleteFromBasket(Control.currentUser.getPhone());
 
                     notifyServer(order_num);
-                    Toast.makeText(BasketActivity.this, "Getting waiter", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                    Toast.makeText(BasketActivity.this, getResources().getString(R.string.getWait), Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else if(payPal.isChecked()){
-                    progressDialog.setMessage("Retrieving PayPal...");
-                    progressDialog.show();
                     String formatTotal = totalPrice.getText().toString().replace("€","").replace(",","");
                     float sumTotal = Float.parseFloat(formatTotal);
 
@@ -253,14 +272,13 @@ public class BasketActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, palConfiguration);
                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
-                    progressDialog.dismiss();
                     startActivityForResult(intent, PAYPAL_REQUEST);
                 }
 
 
             }
         });
-        alertDialog.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -270,8 +288,8 @@ public class BasketActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PAYPAL_REQUEST) {
             if (resultCode == RESULT_OK) {
                 PaymentConfirmation paymentConfirmation = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
@@ -299,7 +317,7 @@ public class BasketActivity extends AppCompatActivity {
                         databaseReference.child(order_num).setValue(makeOrder);
                         new Database(getBaseContext()).deleteFromBasket(Control.currentUser.getPhone());
                         notifyServer(order_num);
-                        Toast.makeText(BasketActivity.this, getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BasketActivity.this, getResources().getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
                         finish();
 
                     } catch (JSONException e) {
@@ -309,10 +327,10 @@ public class BasketActivity extends AppCompatActivity {
                 }
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, getString(R.string.payCan), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.payCan), Toast.LENGTH_SHORT).show();
 
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Toast.makeText(this,  getString(R.string.payInval), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.payInval), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -330,17 +348,17 @@ public class BasketActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                             if(response.body().success == 1){
-                                Toast.makeText(BasketActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BasketActivity.this,  getResources().getString(R.string.orderKit), Toast.LENGTH_SHORT).show();
                                 finish();
                             } else{
-                                Toast.makeText(BasketActivity.this, "Error something happened! Please Order again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(BasketActivity.this, getResources().getString(R.string.errorOrd), Toast.LENGTH_SHORT).show();
 
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Response> call, Throwable t) {
-                            Toast.makeText(BasketActivity.this, "Error something happened!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BasketActivity.this, getResources().getString(R.string.errorOrd), Toast.LENGTH_SHORT).show();
                             Log.e("Error", t.getMessage());
                         }
                     });
@@ -356,6 +374,18 @@ public class BasketActivity extends AppCompatActivity {
 
 
     }
+
+    private void updateLanguage(String language) {
+        Context context = LocalHelper.setLocale(this, language);
+        Resources resources = context.getResources();
+
+
+        placeOrder.setText(resources.getString(R.string.placeOrder));
+        totalPrice.setText(resources.getString(R.string.total));
+
+
+    }
+
 
 }
 

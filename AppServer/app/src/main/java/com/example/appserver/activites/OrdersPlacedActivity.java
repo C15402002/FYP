@@ -62,8 +62,9 @@ public class OrdersPlacedActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-       /// ((LinearLayoutManager) layoutManager).setReverseLayout(true);
+        ((LinearLayoutManager) layoutManager).setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
+
 
         db = FirebaseDatabase.getInstance();
         orderPlaced = db.getReference("Restaurant").child(Control.currentUser.getRestId()).child("OrderPlaced");
@@ -133,7 +134,6 @@ public class OrdersPlacedActivity extends AppCompatActivity {
             }
 
         };
-
         adapter.notifyDataSetChanged();
         adapter.startListening();
         recyclerView.setAdapter(adapter);
