@@ -183,7 +183,7 @@ public class HomeActivity extends AppCompatActivity
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorMenu), Toast.LENGTH_LONG).show();
+                     //   Toast.makeText(getApplicationContext(), getResources().getString(R.string.errorMenu), Toast.LENGTH_LONG).show();
 
                     }
                 });

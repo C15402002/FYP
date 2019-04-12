@@ -82,7 +82,8 @@ public class OrderPlacedActivity extends AppCompatActivity {
             load(Control.currentUser.getPhone());
 
         }else{
-            load(getIntent().getStringExtra("userPhone"));
+           // load(getIntent().getStringExtra("userPhone"));
+            load(Control.currentUser.getPhone());
         }
 
         Paper.init(this);

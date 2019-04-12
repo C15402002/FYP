@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_scan"
             android:icon="@drawable/ic_menu_camera"
@@ -21,8 +20,6 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="@string/orderHis" />
-
-    </group>
 
     <item android:title="Other">
         <menu>

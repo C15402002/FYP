@@ -18,7 +18,9 @@ Administrator helps the restaurant manager to set up their two applications. The
   - Authentication: Firebase Auth for sign up
   - Paypal Sandbox, cash payments
   - ZXing Barcode Scanner 
-  - Retrofit REST Api
+  - Retrofit REST API
+  - FaceBook Developer API: Facebook sharing
+  - YouTube Developer API: Demostration video
   
   
 
