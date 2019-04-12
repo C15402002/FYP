@@ -117,7 +117,7 @@ public class ShareRestaurantActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull RestaurantHolder restaurantHolder, int i, @NonNull final Restaurant model) {
+            protected void onBindViewHolder(@NonNull final RestaurantHolder restaurantHolder, int i, @NonNull final Restaurant model) {
                 Picasso.get().load(model.getImage()).into(restaurantHolder.restImage);
                 restaurantHolder.restName.setText(model.getName());
 
